@@ -1,0 +1,191 @@
+{
+    "navbar": [
+        {
+          "id": 1,
+          "title": "Logo",
+          "Content-type": "IMG",
+          "src": "missing"
+        },
+        {
+            "id": 2,
+            "title": "Sobre mim",
+            "Content-type": "navbar-item",
+            "href": "#sobre-mim"
+            },
+            {
+            "id": 3,
+            "title": "Serviços",
+            "Content-type": "navbar-item",
+            "href": "#servicos"
+            },
+            {
+            "id": 4,
+            "title": "Depoimentos",
+            "Content-type": "navbar-item",
+            "href": "#depoimentos"
+            },
+            {
+            "id": 5,
+            "title": "Valores",
+            "Content-type": "navbar-item",
+            "href": "#valores"
+            },
+            {
+                "id": 6,
+                "title": "Contato",
+                "Content-type": "navbar-item",
+                "href": "#contato"
+            }
+    ],
+    "sobre-mim": [
+        {
+            "id": 1,
+            "title": "Logo",
+            "Content-type": "IMG",
+            "src": "missing"
+        },
+        {
+            "id": 2,
+            "title": "Serviços de fotografia em São Paulo",
+            "Content-type": "h2"
+        },
+        {
+            "id": 3,
+            "title": "(substituir) Adriana, a guardiã de momentos inesquecíveis, capturando a essência da felicidade em cada clique. Seja bem-vindo(a) ao meu mundo de memórias encantadas!",
+            "Content-type": "p"
+        },
+        {
+            "id": 4,
+            "title": "Entre em contato já!",
+            "Content-type": "button",
+            "href": "#contato"
+        },
+        {
+            "id": 5,
+            "title": "Imagens",
+            "Content-type": "IMG-gallery",
+            "src": ["missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing"]
+        }
+    ],
+    "servicos": [
+        {
+            "id": 1,
+            "title": "Serviços Oferecidos",
+            "description": "Conheça os serviços de fotografia oferecidos por Adriana Oliveira.",
+            "Content-type": "intro"
+        },
+        {
+            "id": 2,
+            "title": "Serviço 1",
+            "description": "Descrição do serviço 1",
+            "Content-type": "service"
+        },
+        {
+            "id": 3,
+            "title": "Serviço 2",
+            "description": "Descrição do serviço 2",
+            "Content-type": "service"
+        },
+        {
+            "id": 4,
+            "title": "Serviço 3",
+            "description": "Descrição do serviço 3",
+            "Content-type": "service"
+        },
+        {
+            "id": 5,
+            "title": "Serviço 4",
+            "description": "Descrição do serviço 4",
+            "Content-type": "service"
+        }
+    ],
+    "depoimentos": [
+        {
+            "id": 1,
+            "title": "Depoimentos",
+            "description": "Veja o que os clientes têm a dizer sobre o trabalho de Adriana Oliveira.",
+            "Content-type": "intro"
+        },
+        {
+            "id": 2,
+            "title": "Depoimento 1",
+            "description": "Descrição do depoimento 1",
+            "Content-type": "testimonial"
+        },
+        {
+            "id": 3,
+            "title": "Depoimento 2",
+            "description": "Descrição do depoimento 2",
+            "Content-type": "testimonial"
+        },
+        {
+            "id": 4,
+            "title": "Depoimento 3",
+            "description": "Descrição do depoimento 3",
+            "Content-type": "testimonial"
+        }
+    ],
+    "valores": [
+        {
+            "id": 1,
+            "title": "Valores",
+            "description": "Conheça os valores de Adriana Oliveira.",
+            "Content-type": "intro"
+        },
+        {
+            "id": 2,
+            "title": "Valor 1",
+            "description": "R$ X,00 por hora de trabalho",
+            "Content-type": "value"
+        },
+        {
+            "id": 3,
+            "title": "Valor 2",
+            "description": "R$ X,00 por hora de trabalho",
+            "Content-type": "value"
+        },
+        {
+            "id": 4,
+            "title": "Valor 3",
+            "description": "R$ X,00 por hora de trabalho",
+            "Content-type": "value"
+        }
+    ],
+    "contato": [
+        {
+            "id": 1,
+            "title": "Contato",
+            "description": "Entre em contato conosco através de nossas redes sociais ou solicite orçamentos através do formulário abaixo!",
+            "Content-type": "intro"
+        },
+        {
+            "id": 2,
+            "title": "Nome",
+            "description": "João Silva",
+            "Content-type": "contact"
+        },
+        {
+            "id": 3,
+            "title": "E-mail",
+            "description": "joao@email.com",
+            "Content-type": "contact"
+        },
+        {
+            "id": 4,
+            "title": "Telefone",
+            "description": "(11) 99999-9999",
+            "Content-type": "contact"
+        },
+        {
+            "id": 5,
+            "title": "Mensagem",
+            "description": "Digite sua mensagem aqui",
+            "Content-type": "contact"
+        },
+        {
+            "id": 6,
+            "title": "Enviar",
+            "Content-type": "button"
+        }
+    ]
+}
