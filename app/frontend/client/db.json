@@ -73,31 +73,49 @@
         {
             "id": 1,
             "title": "Serviços Oferecidos",
-            "description": "Conheça os serviços de fotografia oferecidos por Adriana Oliveira.",
+            "description": "Ofereço uma variedade de serviços de fotografia personalizados. Desde ensaios fotográficos até cobertura de eventos, estou aqui para capturar seus momentos especiais com qualidade e profissionalismo.",
             "Content-type": "intro"
         },
         {
             "id": 2,
-            "title": "Serviço 1",
-            "description": "Descrição do serviço 1",
+            "title": "Chá de Bebê",
+            "description": "Registre cada momento mágico do seu chá de bebê com fotografias encantadoras e cheias de amor. Preserve para sempre essas memórias especiais com o meu serviço de ensaio fotográfico personalizado.",
+            "icon": " https://i.ibb.co/FhpbHpd/bebe.png",
             "Content-type": "service"
         },
         {
             "id": 3,
-            "title": "Serviço 2",
-            "description": "Descrição do serviço 2",
+            "title": "Festas de Aniversário",
+            "description": "Transforme seu aniversário em memórias inesquecíveis com um ensaio fotográfico personalizado. Capturando cada momento especial, estou aqui para criar imagens que celebram a alegria e a felicidade do seu dia.",
+            "icon": "https://i.ibb.co/1Mgwz16/aniversario.png",
             "Content-type": "service"
         },
         {
             "id": 4,
-            "title": "Serviço 3",
-            "description": "Descrição do serviço 3",
+            "title": "Ensaios Boudoir",
+            "description": "Reviva sua sensualidade e confiança com um ensaio fotográfico boudoir. Deixe-me capturar sua beleza e elegância de forma delicada e empoderadora, criando memórias deslumbrantes para toda a vida.",
+            "icon": "https://i.ibb.co/9tWhHNY/mais18.png",
             "Content-type": "service"
         },
         {
             "id": 5,
-            "title": "Serviço 4",
-            "description": "Descrição do serviço 4",
+            "title": "Festas de 15 anos",
+            "description": "Transforme seus momentos inesquecíveis em memórias eternas com os ensaios fotográficos personalizados para festas de 15 anos, capturando toda a beleza e alegria desse momento único.",
+            "icon": "https://i.ibb.co/McCpPzj/15anos.png",
+            "Content-type": "service"
+        },
+         {
+            "id": 5,
+            "title": "Casamentos",
+            "description": "Registre o amor eterno em cada clique. Ofereço ensaios fotográficos de casamento repletos de emoção e beleza, capturando os momentos mais especiais deste dia inesquecível com delicadeza e maestria.",
+            "icon": "https://i.ibb.co/qFb0VgY/casamento.png",
+            "Content-type": "service"
+        },
+        {
+            "id": 6,
+            "title": "Eventos Corporativos",
+            "description": "Realizo ensaios fotográficos e cobertura de eventos corporativos, capturando a essência e o profissionalismo da sua empresa. Conte comigo para registrar momentos memoráveis e fortalecer sua imagem corporativa.",
+            "icon": "https://i.ibb.co/Pg6LRbt/event.png",
             "Content-type": "service"
         }
     ],

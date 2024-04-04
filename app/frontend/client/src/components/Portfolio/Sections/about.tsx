@@ -11,7 +11,7 @@ interface AboutProps {
 }
 export default function About({img, title, description, btnLink, btnText, imgGallery}: AboutProps) {
   return (
-    <Section id="sobre-mim">
+    <Section id="sobre-mim" bgColor="bg-accent">
       <div className="intro flex items-center justify-center flex-wrap">
         <div className="intro__img flex w-full justify-center items-center mb-12">
             <img src={img} alt="Logo" className="rounded-full" />

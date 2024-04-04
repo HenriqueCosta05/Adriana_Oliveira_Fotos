@@ -2,6 +2,7 @@ import NavBar from "../components/Portfolio/Navbar/NavBar";
 import About from "../components/Portfolio/Sections/About";
 import '../../db.json'
 import { useFetch } from '../hooks/useFetch';
+import Services from "../components/Portfolio/Sections/Services";
 
 export default function Portfolio() {
     const response = useFetch('../../db.json');
@@ -21,6 +22,12 @@ export default function Portfolio() {
     const aboutBtn = aboutData.find((obj) => obj.id === 4);
     const aboutImgGallery = aboutData.find((obj) => obj.id === 5);
 
+    //Services data
+    const servicesData = response && response.services ? response.services : [];
+
+    const servicesIntro = servicesData.find((obj) => obj.id === 1);
+
+
     return (
         <>
             <NavBar
@@ -36,6 +43,12 @@ export default function Portfolio() {
                 btnLink={aboutBtn ? aboutBtn.href : null}
                 imgGallery={aboutImgGallery ? aboutImgGallery.src : null}
             />
+            <Services 
+                introTitle={servicesIntro ? servicesIntro.title : null}
+                introDescription={servicesIntro ? servicesIntro.description : null}
+                info={servicesData.filter((obj) => obj.id !== 1)}
+            />
+
         </>
     );
 }
