@@ -39,12 +39,12 @@
                 "href": "#contato"
             }
     ],
-    "sobre-mim": [
+    "about": [
         {
             "id": 1,
             "title": "Logo",
             "Content-type": "IMG",
-            "src": "missing"
+            "src": "https://i.ibb.co/3FLms3n/henrique.jpg"
         },
         {
             "id": 2,
@@ -66,10 +66,10 @@
             "id": 5,
             "title": "Imagens",
             "Content-type": "IMG-gallery",
-            "src": ["missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing", "missing"]
+            "src": ["https://randompicturegenerator.com/img/cat-generator/g23df1a71328edcdfbd99c379dc1db9cd660740c148888bdae462cb9fdf397163f9810e50c17f24fd6f2952a264b53e68_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g3b840191b24b62c44d9cec4ac8db79e8212b646162b477671a39d6aa811aabdb4ff151059de20ffa556f76ad4360fdb1_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g219984c2f07ccbd870686d05396dd5b7673c758583e0ad9abd8f8a57512abf2c4557324882121eca0a12e6a1959dbc15_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g8903c086bd0ab3c739ad1e148d007dc5d4566fecf775c6a476620d7f76c68eae57a43451b4fe361a8ef8515d0224ba8a_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g7fb047a76a224ff051b42cb6d325c7226f3092e53b845ad93c0b03136c81ae450540cf84b37e0853486912521b45fbbe_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g90ff1911dbc875601b6b31894e8bafcde8e7a9c463eca0f104a5b2f8a57cba53f093be809f1a3501e3bdaedb5b68eb17_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g0da280343fac29a84fbf3dd8b50d8ce8dffcb92b9d8b8aa0af14c10409eed64367e042a5fec9642fc117abaf2e7bc529_640.jpg", "https://randompicturegenerator.com/img/cat-generator/gc00edab7adb15610f5e04f387ac5a2585612fba51d415550db303289bf14ee1724f88378f3382386b47cfdda58c229ba_640.jpg", "https://randompicturegenerator.com/img/cat-generator/gd289075a1c87a119496d8238bd50090bdb1e5c0d58db00f62ffa1b445aeeaa78424d38a473da6018ae4ab94fcab66d1f_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g26e58f1c43e31a45012ee73ca9f89c9de79374af892c5cd926ec8d9280305d44490283cfd869172c8f8ea322827287f3_640.jpg", "https://randompicturegenerator.com/img/cat-generator/gca334d297295ef878bd225ec1b36d0ca6cc237271d93833e0ece9c1b1e1df09b5aae3bd8eedc69514b97131d96d830c8_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g7a50f181bbdf29523261229f1494b71f0f5ecf791f1fba26437e8f1ab016f8297c0cd2665a7761faac6522124a94c558_640.jpg"]
         }
     ],
-    "servicos": [
+    "services": [
         {
             "id": 1,
             "title": "Serviços Oferecidos",
@@ -101,7 +101,7 @@
             "Content-type": "service"
         }
     ],
-    "depoimentos": [
+    "testimonials": [
         {
             "id": 1,
             "title": "Depoimentos",
@@ -127,7 +127,7 @@
             "Content-type": "testimonial"
         }
     ],
-    "valores": [
+    "prices": [
         {
             "id": 1,
             "title": "Valores",
@@ -153,7 +153,7 @@
             "Content-type": "value"
         }
     ],
-    "contato": [
+    "contact": [
         {
             "id": 1,
             "title": "Contato",

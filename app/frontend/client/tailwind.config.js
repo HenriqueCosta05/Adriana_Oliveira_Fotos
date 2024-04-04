@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 export default {
   content: [
     "./index.html",
@@ -15,13 +17,20 @@ export default {
       "success": "#AFBF9F",
       "warning": "#FFFEC8",
       "error": "#FF7F7F"
-     }
-  },
+    },
+    screens: {
+      "xxs": "320px",
+      "xs": "375px",
+      "xl": "1440px",
+      "xxl": "1920px",
+      ...defaultTheme.screens,
+    },
+    },
   plugins: [
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require("tailwindcss-radix")({
       variantPrefix: 'radix',
         }),
   ],
-}
+};
 
