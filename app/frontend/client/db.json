@@ -2,9 +2,11 @@
     "navbar": [
         {
           "id": 1,
-          "title": "Logo",
           "Content-type": "IMG",
-          "src": "missing"
+          "width": "40%",
+          "height": "20%",
+          "alt": "Logo da fotógrafa Adriana Oliveira",
+          "src": "https://i.ibb.co/3FLms3n/henrique.jpg" 
         },
         {
             "id": 2,
