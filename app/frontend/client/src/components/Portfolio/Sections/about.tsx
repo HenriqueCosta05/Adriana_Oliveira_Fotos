@@ -1,3 +1,4 @@
+import Image from "../../Shared/Image/Image";
 import Section from "./index";
 import Button from "react-bootstrap/Button";
 
@@ -11,7 +12,7 @@ interface AboutProps {
 }
 export default function About({img, title, description, btnLink, btnText, imgGallery}: AboutProps) {
   return (
-    <Section id="sobre-mim" bgColor="bg-accent">
+    <Section id="sobre-mim">
       <div className="intro flex items-center justify-center flex-wrap">
         <div className="intro__img flex w-full justify-center items-center mb-12">
             <img src={img} alt="Logo" className="rounded-full" />
@@ -24,7 +25,7 @@ export default function About({img, title, description, btnLink, btnText, imgGal
               
               <div className="img__gallery flex flex-wrap justify-center items-center ">
                   {imgGallery && imgGallery.map((img, index) => (
-                      <img key={index} src={img} alt="gallery" className="rounded-lg lg:w-2/5 xl:w-3/12 md:w-5/12 h-auto m-4 xxs:w-9/12" />
+                      <Image key={index} src={img} alt="gallery" className="rounded-lg lg:w-2/5 xl:w-3/12 md:w-5/12 h-auto m-4 xxs:w-9/12" />
                   ))
                   }
               </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 
 export const useFetch = (url) => {
@@ -19,5 +19,8 @@ export const useFetch = (url) => {
             });
     }, [url]);
 
-    return data;
+    
+    const memoizedData = useMemo(() => data, [data]);
+
+    return memoizedData;
 };

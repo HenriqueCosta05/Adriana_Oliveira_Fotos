@@ -1,8 +1,9 @@
-import NavBar from "../components/Portfolio/Navbar/NavBar";
-import About from "../components/Portfolio/Sections/About";
-import '../../db.json'
-import { useFetch } from '../hooks/useFetch';
-import Services from "../components/Portfolio/Sections/Services";
+import NavBar from "../../components/Portfolio/Navbar/NavBar";
+import About from "../../components/Portfolio/Sections/About";
+import '../../../db.json'
+import { useFetch } from '../../hooks/useFetch';
+import Services from "../../components/Portfolio/Sections/Services";
+import Testimonials from "../../components/Portfolio/Sections/Testimonials";
 
 export default function Portfolio() {
     const response = useFetch('../../db.json');
@@ -24,9 +25,11 @@ export default function Portfolio() {
 
     //Services data
     const servicesData = response && response.services ? response.services : [];
-
     const servicesIntro = servicesData.find((obj) => obj.id === 1);
 
+    //Testimonials data
+    const testimonialsData = response && response.testimonials ? response.testimonials : [];
+    const testimonialsIntro = testimonialsData.find((obj) => obj.id === 1);
 
     return (
         <>
@@ -48,7 +51,11 @@ export default function Portfolio() {
                 introDescription={servicesIntro ? servicesIntro.description : null}
                 info={servicesData.filter((obj) => obj.id !== 1)}
             />
-
+            <Testimonials
+                introTitle={testimonialsIntro ? testimonialsIntro.title : null}
+                introDescription={testimonialsIntro ? testimonialsIntro.description : null}
+                info={testimonialsData.filter((obj) => obj.id !== 1)}
+            />
         </>
     );
 }
