@@ -48,17 +48,17 @@
         },
         {
             "id": 2,
-            "title": "Serviços de fotografia em São Paulo",
+            "payload": "Serviços de fotografia em São Paulo",
             "Content-type": "h2"
         },
         {
             "id": 3,
-            "title": "(substituir) Adriana, a guardiã de momentos inesquecíveis, capturando a essência da felicidade em cada clique. Seja bem-vindo(a) ao meu mundo de memórias encantadas!",
+            "payload": "(substituir) Adriana, a guardiã de momentos inesquecíveis, capturando a essência da felicidade em cada clique. Seja bem-vindo(a) ao meu mundo de memórias encantadas!",
             "Content-type": "p"
         },
         {
             "id": 4,
-            "title": "Entre em contato já!",
+            "payload": "Entre em contato já!",
             "Content-type": "button",
             "href": "#contato"
         },
