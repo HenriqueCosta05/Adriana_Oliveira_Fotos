@@ -8,7 +8,7 @@ export default function Services({ data }) {
   return (
     intro && cardsInfo && (
       <>
-        <Section id="servicos" bgColor="bg-accent">
+        <Section id="servicos" bg="bg-accent">
           <div className="container">
             <h2 className="text-4xl font-black text-secondary">{intro.title}</h2>
             <p className="text-lg mx-auto text-center font-medium lg:w-1/2 w-11/12 my-4">{intro.description}</p>

@@ -1,221 +1,266 @@
 {
-    "navbar": [
-        {
-          "id": 1,
-          "Content-type": "IMG",
-          "width": "40%",
-          "height": "20%",
-          "alt": "Logo da fotógrafa Adriana Oliveira",
-          "src": "https://i.ibb.co/3FLms3n/henrique.jpg" 
-        },
-        {
-            "id": 2,
-            "title": "Sobre mim",
-            "Content-type": "navbar-item",
-            "href": "#sobre-mim"
-            },
-            {
-            "id": 3,
-            "title": "Serviços",
-            "Content-type": "navbar-item",
-            "href": "#servicos"
-            },
-            {
-            "id": 4,
-            "title": "Depoimentos",
-            "Content-type": "navbar-item",
-            "href": "#depoimentos"
-            },
-            {
-            "id": 5,
-            "title": "Valores",
-            "Content-type": "navbar-item",
-            "href": "#valores"
-            },
-            {
-                "id": 6,
-                "title": "Contato",
-                "Content-type": "navbar-item",
-                "href": "#contato"
-            }
-    ],
-    "about": [
-        {
-            "id": 1,
-            "title": "Logo",
-            "Content-type": "IMG",
-            "src": "https://i.ibb.co/3FLms3n/henrique.jpg"
-        },
-        {
-            "id": 2,
-            "payload": "Serviços de fotografia em São Paulo",
-            "Content-type": "h2"
-        },
-        {
-            "id": 3,
-            "payload": "(substituir) Adriana, a guardiã de momentos inesquecíveis, capturando a essência da felicidade em cada clique. Seja bem-vindo(a) ao meu mundo de memórias encantadas!",
-            "Content-type": "p"
-        },
-        {
-            "id": 4,
-            "payload": "Entre em contato já!",
-            "Content-type": "button",
-            "href": "#contato"
-        },
-        {
-            "id": 5,
-            "title": "Imagens",
-            "Content-type": "IMG-gallery",
-            "src": ["https://randompicturegenerator.com/img/cat-generator/g23df1a71328edcdfbd99c379dc1db9cd660740c148888bdae462cb9fdf397163f9810e50c17f24fd6f2952a264b53e68_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g3b840191b24b62c44d9cec4ac8db79e8212b646162b477671a39d6aa811aabdb4ff151059de20ffa556f76ad4360fdb1_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g219984c2f07ccbd870686d05396dd5b7673c758583e0ad9abd8f8a57512abf2c4557324882121eca0a12e6a1959dbc15_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g8903c086bd0ab3c739ad1e148d007dc5d4566fecf775c6a476620d7f76c68eae57a43451b4fe361a8ef8515d0224ba8a_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g7fb047a76a224ff051b42cb6d325c7226f3092e53b845ad93c0b03136c81ae450540cf84b37e0853486912521b45fbbe_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g90ff1911dbc875601b6b31894e8bafcde8e7a9c463eca0f104a5b2f8a57cba53f093be809f1a3501e3bdaedb5b68eb17_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g0da280343fac29a84fbf3dd8b50d8ce8dffcb92b9d8b8aa0af14c10409eed64367e042a5fec9642fc117abaf2e7bc529_640.jpg", "https://randompicturegenerator.com/img/cat-generator/gc00edab7adb15610f5e04f387ac5a2585612fba51d415550db303289bf14ee1724f88378f3382386b47cfdda58c229ba_640.jpg", "https://randompicturegenerator.com/img/cat-generator/gd289075a1c87a119496d8238bd50090bdb1e5c0d58db00f62ffa1b445aeeaa78424d38a473da6018ae4ab94fcab66d1f_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g26e58f1c43e31a45012ee73ca9f89c9de79374af892c5cd926ec8d9280305d44490283cfd869172c8f8ea322827287f3_640.jpg", "https://randompicturegenerator.com/img/cat-generator/gca334d297295ef878bd225ec1b36d0ca6cc237271d93833e0ece9c1b1e1df09b5aae3bd8eedc69514b97131d96d830c8_640.jpg", "https://randompicturegenerator.com/img/cat-generator/g7a50f181bbdf29523261229f1494b71f0f5ecf791f1fba26437e8f1ab016f8297c0cd2665a7761faac6522124a94c558_640.jpg"]
-        }
-    ],
-    "services": [
-        {
-            "id": 1,
-            "title": "Serviços Oferecidos",
-            "description": "Ofereço uma variedade de serviços de fotografia personalizados. Desde ensaios fotográficos até cobertura de eventos, estou aqui para capturar seus momentos especiais com qualidade e profissionalismo.",
-            "Content-type": "intro"
-        },
-        {
-            "id": 2,
-            "title": "Chá de Bebê",
-            "description": "Registre cada momento mágico do seu chá de bebê com fotografias encantadoras e cheias de amor. Preserve para sempre essas memórias especiais com o meu serviço de ensaio fotográfico personalizado.",
-            "icon": " https://i.ibb.co/FhpbHpd/bebe.png",
-            "Content-type": "service"
-        },
-        {
-            "id": 3,
-            "title": "Festas de Aniversário",
-            "description": "Transforme seu aniversário em memórias inesquecíveis com um ensaio fotográfico personalizado. Capturando cada momento especial, estou aqui para criar imagens que celebram a alegria e a felicidade do seu dia.",
-            "icon": "https://i.ibb.co/1Mgwz16/aniversario.png",
-            "Content-type": "service"
-        },
-        {
-            "id": 4,
-            "title": "Ensaios Boudoir",
-            "description": "Reviva sua sensualidade e confiança com um ensaio fotográfico boudoir. Deixe-me capturar sua beleza e elegância de forma delicada e empoderadora, criando memórias deslumbrantes para toda a vida.",
-            "icon": "https://i.ibb.co/9tWhHNY/mais18.png",
-            "Content-type": "service"
-        },
-        {
-            "id": 5,
-            "title": "Festas de 15 anos",
-            "description": "Transforme seus momentos inesquecíveis em memórias eternas com os ensaios fotográficos personalizados para festas de 15 anos, capturando toda a beleza e alegria desse momento único.",
-            "icon": "https://i.ibb.co/McCpPzj/15anos.png",
-            "Content-type": "service"
-        },
-         {
-            "id": 5,
-            "title": "Casamentos",
-            "description": "Registre o amor eterno em cada clique. Ofereço ensaios fotográficos de casamento repletos de emoção e beleza, capturando os momentos mais especiais deste dia inesquecível com delicadeza e maestria.",
-            "icon": "https://i.ibb.co/qFb0VgY/casamento.png",
-            "Content-type": "service"
-        },
-        {
-            "id": 6,
-            "title": "Eventos Corporativos",
-            "description": "Realizo ensaios fotográficos e cobertura de eventos corporativos, capturando a essência e o profissionalismo da sua empresa. Conte comigo para registrar momentos memoráveis e fortalecer sua imagem corporativa.",
-            "icon": "https://i.ibb.co/Pg6LRbt/event.png",
-            "Content-type": "service"
-        }
-    ],
-    "testimonials": [
-        {
-            "id": 1,
-            "title": "Depoimentos",
-            "description": "Veja o que os clientes têm a dizer sobre o trabalho de Adriana Oliveira.",
-            "Content-type": "intro"
-        },
-        {
-            "id": 2,
-            "title": "Henrique Costa",
-            "icon": "https://i.ibb.co/3FLms3n/henrique.jpg",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
-            "Content-type": "testimonial"
-        },
-        {
-            "id": 3,
-            "title": "Ricardo Moraes",
-            "icon": "https://avatars.githubusercontent.com/u/136482776?v=4",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
-            "Content-type": "testimonial"
-        },
-        {
-            "id": 4,
-            "title": "Thais Andrade",
-            "icon": "https://avatars.githubusercontent.com/u/134142404?v=4",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
-            "Content-type": "testimonial"
-        }, 
-        {
-            "id": 5,
-            "title": "Wanderson Ribeiro",
-            "icon": "https://i.ibb.co/3FLms3n/henrique.jpg",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
-            "Content-type": "testimonial"
-        }
-    ],
-    "prices": [
-        {
-            "id": 1,
-            "title": "Valores",
-            "description": "Conheça os valores de Adriana Oliveira.",
-            "Content-type": "intro"
-        },
-        {
-            "id": 2,
-            "title": "Valor 1",
-            "description": "R$ X,00 por hora de trabalho",
-            "Content-type": "value"
-        },
-        {
-            "id": 3,
-            "title": "Valor 2",
-            "description": "R$ X,00 por hora de trabalho",
-            "Content-type": "value"
-        },
-        {
-            "id": 4,
-            "title": "Valor 3",
-            "description": "R$ X,00 por hora de trabalho",
-            "Content-type": "value"
-        }
-    ],
-    "contact": [
-        {
-            "id": 1,
-            "title": "Contato",
-            "description": "Entre em contato conosco através de nossas redes sociais ou solicite orçamentos através do formulário abaixo!",
-            "Content-type": "intro"
-        },
-        {
-            "id": 2,
-            "title": "Nome",
-            "description": "João Silva",
-            "Content-type": "contact"
-        },
-        {
-            "id": 3,
-            "title": "E-mail",
-            "description": "joao@email.com",
-            "Content-type": "contact"
-        },
-        {
-            "id": 4,
-            "title": "Telefone",
-            "description": "(11) 99999-9999",
-            "Content-type": "contact"
-        },
-        {
-            "id": 5,
-            "title": "Mensagem",
-            "description": "Digite sua mensagem aqui",
-            "Content-type": "contact"
-        },
-        {
-            "id": 6,
-            "title": "Enviar",
-            "Content-type": "button"
-        }
-    ]
+  "navbar": [
+    {
+      "id": 1,
+      "Content-type": "IMG",
+      "width": "40%",
+      "height": "20%",
+      "alt": "Logo da fotógrafa Adriana Oliveira",
+      "src": "https://i.ibb.co/3FLms3n/henrique.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Sobre mim",
+      "Content-type": "navbar-item",
+      "href": "#sobre-mim"
+    },
+    {
+      "id": 3,
+      "title": "Serviços",
+      "Content-type": "navbar-item",
+      "href": "#servicos"
+    },
+    {
+      "id": 4,
+      "title": "Depoimentos",
+      "Content-type": "navbar-item",
+      "href": "#depoimentos"
+    },
+    {
+      "id": 5,
+      "title": "Preços",
+      "Content-type": "navbar-item",
+      "href": "#precos"
+    },
+    {
+      "id": 6,
+      "title": "Contato",
+      "Content-type": "navbar-item",
+      "href": "#contato"
+    }
+  ],
+  "about": [
+    {
+      "id": 1,
+      "title": "Logo",
+      "Content-type": "IMG",
+      "src": "https://i.ibb.co/3FLms3n/henrique.jpg",
+      "bakcgroundImage": "https://pixabay.com/get/gb2a8d2a5ae0cd0f6704036793e8b59a3ff0036e0b3312774bb5028a412edf37ef45a33a9636e678bb75bd2090c2d6b927d8194857cf71cd9bea14a626dc096d8_1280.jpg"
+    },
+    {
+      "id": 2,
+      "payload": "Serviços de fotografia em São Paulo",
+      "Content-type": "h2"
+    },
+    {
+      "id": 3,
+      "payload": "(substituir) Adriana, a guardiã de momentos inesquecíveis, capturando a essência da felicidade em cada clique. Seja bem-vindo(a) ao meu mundo de memórias encantadas!",
+      "Content-type": "p"
+    },
+    {
+      "id": 4,
+      "payload": "Entre em contato já!",
+      "Content-type": "button",
+      "href": "#contato"
+    },
+    {
+      "id": 5,
+      "title": "Imagens",
+      "Content-type": "IMG-gallery",
+      "src": [
+        "https://i.ibb.co/XXb9wjN/IMG-20240408-WA0022.jpg",
+        "https://i.ibb.co/6BghY6f/IMG-20240408-WA0023.jpg",
+        "https://i.ibb.co/sQBTGjB/IMG-20240408-WA0018.jpg",
+        "https://i.ibb.co/m4zn3T2/IMG-20240408-WA0019.jpg",
+        "https://i.ibb.co/m592cng/IMG-20240408-WA0020.jpg",
+        "https://i.ibb.co/2PSQKFL/IMG-20240408-WA0021.jpg"
+      ]
+    }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "title": "Serviços Oferecidos",
+      "description": "Ofereço uma variedade de serviços de fotografia personalizados. Desde ensaios fotográficos até cobertura de eventos, estou aqui para capturar seus momentos especiais com qualidade e profissionalismo.",
+      "Content-type": "intro"
+    },
+    {
+      "id": 2,
+      "title": "Chá de Bebê",
+      "description": "Registre cada momento mágico do seu chá de bebê com fotografias encantadoras e cheias de amor. Preserve para sempre essas memórias especiais com o meu serviço de ensaio fotográfico personalizado.",
+      "icon": " https://i.ibb.co/FhpbHpd/bebe.png",
+      "Content-type": "service"
+    },
+    {
+      "id": 3,
+      "title": "Festas de Aniversário",
+      "description": "Transforme seu aniversário em memórias inesquecíveis com um ensaio fotográfico personalizado. Capturando cada momento especial, estou aqui para criar imagens que celebram a alegria e a felicidade do seu dia.",
+      "icon": "https://i.ibb.co/1Mgwz16/aniversario.png",
+      "Content-type": "service"
+    },
+    {
+      "id": 4,
+      "title": "Ensaios Boudoir",
+      "description": "Reviva sua sensualidade e confiança com um ensaio fotográfico boudoir. Deixe-me capturar sua beleza e elegância de forma delicada e empoderadora, criando memórias deslumbrantes para toda a vida.",
+      "icon": "https://i.ibb.co/9tWhHNY/mais18.png",
+      "Content-type": "service"
+    },
+    {
+      "id": 5,
+      "title": "Festas de 15 anos",
+      "description": "Transforme seus momentos inesquecíveis em memórias eternas com os ensaios fotográficos personalizados para festas de 15 anos, capturando toda a beleza e alegria desse momento único.",
+      "icon": "https://i.ibb.co/McCpPzj/15anos.png",
+      "Content-type": "service"
+    },
+    {
+      "id": 5,
+      "title": "Casamentos",
+      "description": "Registre o amor eterno em cada clique. Ofereço ensaios fotográficos de casamento repletos de emoção e beleza, capturando os momentos mais especiais deste dia inesquecível com delicadeza e maestria.",
+      "icon": "https://i.ibb.co/qFb0VgY/casamento.png",
+      "Content-type": "service"
+    },
+    {
+      "id": 6,
+      "title": "Eventos Corporativos",
+      "description": "Realizo ensaios fotográficos e cobertura de eventos corporativos, capturando a essência e o profissionalismo da sua empresa. Conte comigo para registrar momentos memoráveis e fortalecer sua imagem corporativa.",
+      "icon": "https://i.ibb.co/Pg6LRbt/event.png",
+      "Content-type": "service"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "title": "Depoimentos",
+      "description": "Veja o que os clientes têm a dizer sobre o trabalho de Adriana Oliveira.",
+      "Content-type": "intro"
+    },
+    {
+      "id": 2,
+      "title": "Henrique Costa",
+      "icon": "https://i.ibb.co/3FLms3n/henrique.jpg",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
+      "Content-type": "testimonial"
+    },
+    {
+      "id": 3,
+      "title": "Ricardo Moraes",
+      "icon": "https://avatars.githubusercontent.com/u/136482776?v=4",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
+      "Content-type": "testimonial"
+    },
+    {
+      "id": 4,
+      "title": "Thais Andrade",
+      "icon": "https://avatars.githubusercontent.com/u/134142404?v=4",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
+      "Content-type": "testimonial"
+    },
+    {
+      "id": 5,
+      "title": "Wanderson Ribeiro",
+      "icon": "https://i.ibb.co/3FLms3n/henrique.jpg",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
+      "Content-type": "testimonial"
+    }
+  ],
+  "pricing": [
+    {
+      "id": 1,
+      "title": "Preços",
+      "description": "Conheça os valores dos serviços prestados por Adriana Oliveira.",
+      "Content-type": "intro"
+    },
+    {
+      "id": 2,
+      "title": "Valor 1",
+      "description": "R$ X,00 por hora de trabalho",
+      "Content-type": "value"
+    },
+    {
+      "id": 3,
+      "title": "Valor 2",
+      "description": "R$ X,00 por hora de trabalho",
+      "Content-type": "value"
+    },
+    {
+      "id": 4,
+      "title": "Valor 3",
+      "description": "R$ X,00 por hora de trabalho",
+      "Content-type": "value"
+    },
+    {
+      "id": 5,
+      "title": "Valor 4",
+      "description": "R$ X,00 por hora de trabalho",
+      "Content-type": "value"
+    },
+    {
+      "id": 6,
+      "title": "Valor 5",
+      "description": "R$ X,00 por hora de trabalho",
+      "Content-type": "value"
+    },
+    {
+      "id": 7,
+      "title": "Valor 6",
+      "description": "R$ X,00 por hora de trabalho",
+      "Content-type": "value"
+    }
+  ],
+  "contact": [
+    {
+      "id": 1,
+      "title": "Contato",
+      "description": "Entre em contato conosco através de nossas redes sociais ou solicite orçamentos através do formulário abaixo!",
+      "contentType": "intro"
+    },
+    {
+      "id": 2,
+      "label": "Nome Completo",
+      "name": "nome",
+      "placeholder": "João Silva",
+      "missingMessage": "Por favor, insira seu nome e sobrenome para contato.",
+      "invalidMessage": "Formato de nome inválido. Por favor, insira seu nome e sobrenome para contato.",
+      "inputType": "text",
+      "pattern": "^[a-zA-Z]+(\\s[a-zA-Z]+)+$",
+      "contentType": "contact"
+    },
+    {
+      "id": 3,
+      "label": "E-mail",
+      "name": "email",
+      "missingMessage": "Por favor, insira um endereço de e-mail.",
+      "pattern": "^[-.\\w]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+      "invalidMessage": "Formato de e-mail inválido. Por favor, insira um e-mail válido.",
+      "placeholder": "joao@email.com",
+      "inputType": "email",
+      "contentType": "contact"
+    },
+    {
+      "id": 4,
+      "label": "Celular",
+      "name": "celular",
+      "inputType": "tel",
+      "pattern": "^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$",
+      "missingMessage": "Por favor, insira um número de telefone válido.",
+      "invalidMessage": "Formato de telefone inválido. Por favor, insira um número de telefone válido.",
+      "placeholder": "(11) 99999-9999",
+      "contentType": "contact"
+    },
+
+    {
+      "id": 5,
+      "label": "Mensagem",
+      "inputType": "text",
+      "name": "mensagem",
+      "missingMessage": "Este campo não pode estar vazio.",
+      "placeholder": "Digite sua mensagem aqui, com a maior quantidade de detalhes possível.",
+      "contentType": "contact"
+    },
+    {
+      "id": 6,
+      "label": "Enviar",
+      "contentType": "button"
+    }
+  ]
 }

@@ -4,11 +4,11 @@ interface SectionProps {
 
   id: string;
   children: ReactElement;
-  bgColor?: string;
+  bg?: string;
 }
-export default function Section({ id, children, bgColor}: SectionProps) {
+export default function Section({ id, children, bg}: SectionProps) {
   return (
-    <section id={id} className={`w-full flex items-center justify-center flex-wrap py-20 text-center overflow-y-visible ${bgColor}`} >
+    <section id={id} className={`w-full flex items-center justify-center flex-wrap py-36 text-center overflow-y-visible ${bg}`} >
         {children}
     </section>
   )

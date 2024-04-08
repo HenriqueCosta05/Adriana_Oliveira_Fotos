@@ -12,7 +12,7 @@ export default function About({ data }) {
 
   return (
     <Section id="sobre-mim">
-      {logo && title && description && button && imgGallery && (
+        {logo && title && description && button && imgGallery && (
         <div className="intro flex items-center justify-center flex-wrap">
         <div className="intro__img flex w-full justify-center items-center mb-12">
             <Image src={logo.src} alt="Logo" className="rounded-full" />
@@ -31,7 +31,6 @@ export default function About({ data }) {
               </div>
       </div>
       )}
-      
     </Section>
   );
 }
