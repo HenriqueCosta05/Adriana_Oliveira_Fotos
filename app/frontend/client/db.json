@@ -3,10 +3,10 @@
     {
       "id": 1,
       "Content-type": "IMG",
-      "width": "40%",
-      "height": "20%",
+      "width": "120px",
+      "height": "auto",
       "alt": "Logo da fotógrafa Adriana Oliveira",
-      "src": "https://i.ibb.co/3FLms3n/henrique.jpg"
+      "src": "/logo.png"
     },
     {
       "id": 2,
@@ -44,7 +44,9 @@
       "id": 1,
       "title": "Logo",
       "Content-type": "IMG",
-      "src": "https://i.ibb.co/3FLms3n/henrique.jpg",
+      "src": "https://i.ibb.co/m592cng/IMG-20240408-WA0020.jpg",
+      "width": "auto",
+      "height": "auto",
       "bakcgroundImage": "https://pixabay.com/get/gb2a8d2a5ae0cd0f6704036793e8b59a3ff0036e0b3312774bb5028a412edf37ef45a33a9636e678bb75bd2090c2d6b927d8194857cf71cd9bea14a626dc096d8_1280.jpg"
     },
     {
