@@ -4,6 +4,7 @@ import Contact from "../../components/Portfolio/Sections/Contact";
 import Pricing from "../../components/Portfolio/Sections/Pricing";
 import Services from "../../components/Portfolio/Sections/Services";
 import Testimonials from "../../components/Portfolio/Sections/Testimonials";
+import Footer from "../../components/System/Footer";
 import { useFetch } from '../../hooks/useFetch';
 
 export default function Portfolio() {
@@ -36,6 +37,7 @@ export default function Portfolio() {
             <Testimonials data={testimonialsData} />
             <Pricing data={pricingData} />
             <Contact data={contactData} />
+            <Footer />
         </>
     );
 }
