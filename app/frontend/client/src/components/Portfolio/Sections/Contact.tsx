@@ -1,6 +1,12 @@
 import Button from "react-bootstrap/esm/Button";
 import Section from "./index.tsx";
 import * as Form from "@radix-ui/react-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSquareWhatsapp,
+  faSquareInstagram,
+  faSquareFacebook,
+} from "@fortawesome/free-brands-svg-icons";
 import { useState, useRef } from "react";
 
 export default function Contact({ data }) {
@@ -14,13 +20,33 @@ export default function Contact({ data }) {
     mensagem: "",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target.closest("Form");
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
-  };
+  const formRef = useRef(null);
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  const form = e.target.closest("form");
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      alert('Formulário enviado com sucesso! Entraremos em contato em até 2 dias úteis!');
+      
+    } else {
+      alert('Algo deu errado! Tente novamente mais tarde!');
+      // Handle failed form submission here
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
   const handleInputChange = (event) => {
     const inputs = document.querySelectorAll("input");
@@ -45,10 +71,33 @@ export default function Contact({ data }) {
             <p className="text-lg mx-auto text-center font-medium w-11/12 my-4">
               {introData.description}
             </p>
+            <div className="flex justify-center items-center">
+              <a href="#">
+                <FontAwesomeIcon
+                  icon={faSquareWhatsapp}
+                  style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
+                />
+              </a>
+              <a href="#">
+                <FontAwesomeIcon
+                  icon={faSquareInstagram}
+                  style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
+                />
+              </a>
+              <a href="#">
+                <FontAwesomeIcon
+                  icon={faSquareFacebook}
+                  style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
+                />
+              </a>
+            </div>
           </div>
           <Form.Root
             className="container bg-accent p-8 rounded-3 w-11/12"
             onSubmit={handleSubmit}
+            action="https://formsubmit.co/henriquebenedictocosta@gmail.com"
+            method="POST"
+            ref={formRef}
           >
             <h3 className="text-center text-secondary text-2xl font-black">
               Formulário de Interesse
@@ -119,7 +168,7 @@ export default function Contact({ data }) {
                     type={formData[1].inputType}
                     name={formData[1].name}
                     placeholder={formData[1].placeholder}
-                    pattern={formData[1].pattern}
+                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
                     onChange={handleInputChange}
                     required
                   />
@@ -193,6 +242,12 @@ export default function Contact({ data }) {
                   required
                 />
               </Form.Control>
+              <input type="hidden" name="_captcha" value="false" />
+              <input
+                type="hidden"
+                name="_autoresponse"
+                value="Formulário recebido com sucesso! Contataremos em até 2 dias úteis!"
+              />
             </Form.Field>
             <Form.Submit asChild>
               <Button
