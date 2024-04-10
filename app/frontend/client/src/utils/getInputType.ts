@@ -1,5 +1,8 @@
 export const getInputType = (key: string) => {
   switch (key) {
+    case "registryType":
+    case "individualOrCorporate":
+      return "select";
     case "email":
       return "email";
     case "phoneNumber":

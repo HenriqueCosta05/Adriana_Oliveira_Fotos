@@ -1,23 +1,17 @@
-import { Form } from "../components";
+import React, { useState } from "react";
+import { FormContext } from "../../../../contexts/forms/index";
 
-
-export default function MultiStepForm({numberOfSteps, inputs, name, buttonText, buttonType}) {
-  return (
-    <>
-      <Form.Root>
-        {Array(numberOfSteps).fill(null).map((_, stepIndex) => (
-          <Form.Step key={stepIndex} step={stepIndex} totalOfSteps={numberOfSteps}>
-            {Object.entries(inputs[`step${stepIndex+1}`][0]).map(([key, value], inputIndex) => {
-              const type = getInputType(key);
-              const label = key.charAt(0).toUpperCase() + key.slice(1);
-              return (
-                <Form.Input name={key} type={type} label={label} key={inputIndex} defaultValue={value} />
-              );
-            })}
-            <Form.Button buttonText={buttonText} buttonType={buttonType} />
-          </Form.Step>
-        ))}
-      </Form.Root>
-    </>
-  )
+interface MultiStepFormProps {
+  children: React.ReactNode;
 }
+
+export const MultiStepForm: React.FC<MultiStepFormProps> = ({ children }) => {
+  const [step, setStep] = useState(0);
+  const [formData, setFormData] = useState({});
+
+  return (
+    <FormContext.Provider value={{ step, setStep, formData, setFormData }}>
+      {children}
+    </FormContext.Provider>
+  );
+};

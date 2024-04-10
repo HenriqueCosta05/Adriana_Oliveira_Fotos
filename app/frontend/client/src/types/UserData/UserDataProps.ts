@@ -7,7 +7,7 @@ export interface UserDataProps {
             registryType: RegistryType;
             individualOrCorporate: IndividualOrCorporate;
             name: string;
-            surname?: string;
+            surname: string;
             email: string;
             birthDate: Date;
             cpf: string;

@@ -1,9 +1,14 @@
+import React, { useContext, ReactNode} from "react";
+import { FormContext } from "../../../../contexts/forms/index";
 
-export default function FormStep({step, totalOfSteps, children}) {
-  return (
-    <>
-      <h2 className="">Etapa {step}/{totalOfSteps}</h2>
-      {children}
-    </>
-  )
+interface FormStepProps {
+  step: number;
+  children: ReactNode;
 }
+
+export const FormStep: React.FC<FormStepProps> = ({ step, children }) => {
+  const formContext = useContext(FormContext);
+  const currentStep = formContext?.step;
+
+  return currentStep === step ? <>{children}</> : null;
+};
