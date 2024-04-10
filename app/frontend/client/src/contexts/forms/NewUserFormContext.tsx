@@ -1,14 +1,9 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { UserDataProps } from "../../types/UserData/UserDataProps";
 
-export const NewUserFormContext = createContext<UserDataProps | undefined>(
-  undefined
-);
-
-export function useNewUserFormContext() {
-  const form = useContext(NewUserFormContext);
-
-  if (form === undefined) {
-    throw new Error("useFormContext must be used within a FormContext");
-  }
-}
+export const NewUserFormContext = createContext({
+  form: UserDataProps,
+  setForm: (
+    form: typeof UserDataProps | ((form: typeof UserDataProps) => typeof UserDataProps)
+  ) => {},
+});

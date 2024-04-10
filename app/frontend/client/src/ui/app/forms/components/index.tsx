@@ -1,7 +1,7 @@
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 import FormRoot from "./FormRoot";
-import FormStep from "./FormStep";
+import FormStep from "./FormStepper";
 
 export const Form = {
   Step: FormStep,
