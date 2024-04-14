@@ -11,7 +11,6 @@ export const useFetch = (url) => {
             },
         })
             .then(response => {
-                console.log('Data fetched: ', response.data);
                 setData(response.data);
             })
             .catch(error => {
