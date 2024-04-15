@@ -3,6 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import NewUserFormContext from "../../../../../../contexts/forms/NewUserFormContext";
 import Button from "react-bootstrap/esm/Button";
 import * as Form from "@radix-ui/react-form";
+import * as Switch from '@radix-ui/react-switch';
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
 
 export const StepTwo = () => {
@@ -23,61 +24,99 @@ export const StepTwo = () => {
     handleNext();
   };
   return (
-    <Form.Root onSubmit={handleSubmit(onSubmit)}>
+    <Form.Root
+      onSubmit={handleSubmit(onSubmit)}
+      className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-3 m-4"
+    >
+      <h1 className="text-3xl font-bold text-center mb-4 text-secondary">
+        Novo Cliente
+      </h1>
+      <p className="text-3x1 font-bold text-center mb-9 text-secondary">
+        {" "}
+        Preferências de Contato (3/3)
+      </p>
       <Form.Field name="SMS-Preferences">
-        <Form.Label htmlFor="sms">Receber avisos por SMS?</Form.Label>
-        <Controller
-          name="receiveSMS"
-          control={control}
-          defaultValue=""
-          {...register("receiveSMS")}
-          render={({ field }) => (
-            <input
-              type="checkbox"
-              id="sms"
-              {...field}
-              onChange={(e) => {
-                field.onChange(e);
-                setData((prevData) => ({
-                  ...prevData,
-                  stepThree: {
-                    ...prevData.stepThree,
-                    receiveSMS: e.target.checked,
-                  },
-                }));
-              }}
-            />
-          )}
-        />
+        <div className="flex flex-wrap items-baseline justify-evenly">
+          <Form.Label
+            htmlFor="sms"
+            className="text-secondary text-[15px] leading-none pr-[15px]"
+          >
+            Receber avisos por SMS?
+          </Form.Label>
+          <Controller
+            name="receiveSMS"
+            control={control}
+            defaultValue=""
+            {...register("receiveSMS")}
+            render={({ field }) => (
+              <Switch.Root
+                className="w-[42px] h-[25px] bg-neutral A6 rounded-full relative shadow-[0_2px_10px] shadow-neutral A4 focus:shadow-[0_0_0_2px] focus:shadow-neutral data-[state=checked]:bg-secondary outline-none cursor-default "
+                id="sms"
+                {...field}
+                onCheckedChange={(checked) => {
+                  setData((prevData) => ({
+                    ...prevData,
+                    stepThree: {
+                      ...prevData.stepThree,
+                      receiveSMS: checked,
+                    },
+                  }));
+                }}
+              >
+                <Switch.Thumb className="block w-[21px] h-[21px] bg-neutral rounded-full shadow-[0_2px_2px] shadow-blackA4 transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[19px]" />
+              </Switch.Root>
+            )}
+          />
+        </div>
       </Form.Field>
       <Form.Field name="Email-Preferences">
-        <Form.Label htmlFor="street">Receber avisos por E-mail?</Form.Label>
-        <Controller
-          name="receiveEmail"
-          control={control}
-          defaultValue=""
-          {...register("receiveEmail")}
-          render={({ field }) => (
-            <input
-              type="checkbox"
-              id="email"
-              {...field}
-              onChange={(e) => {
-                field.onChange(e);
-                setData((prevData) => ({
-                  ...prevData,
-                  stepThree: {
-                    ...prevData.stepThree,
-                    receiveEmail: e.target.checked,
-                  },
-                }));
-              }}
-            />
-          )}
-        />
+        <div className="flex flex-wrap items-center justify-evenly my-6">
+          <Form.Label
+            htmlFor="receive-email"
+            className="text-secondary text-[15px] leading-none pr-[15px]"
+          >
+            Receber avisos por E-mail?
+          </Form.Label>
+          <Controller
+            name="receiveEmail"
+            control={control}
+            defaultValue=""
+            {...register("receiveEmail")}
+            render={({ field }) => (
+              <Switch.Root
+                className="w-[42px] h-[25px] bg-neutral A6 rounded-full relative shadow-[0_2px_10px] shadow-neutral A4 focus:shadow-[0_0_0_2px] focus:shadow-neutral data-[state=checked]:bg-secondary outline-none cursor-default "
+                id="sms"
+                {...field}
+                onCheckedChange={(checked) => {
+                  setData((prevData) => ({
+                    ...prevData,
+                    stepThree: {
+                      ...prevData.stepThree,
+                      receiveEmail: checked,
+                    },
+                  }));
+                }}
+              >
+                <Switch.Thumb className="block w-[21px] h-[21px] bg-neutral rounded-full shadow-[0_2px_2px] shadow-blackA4 transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[19px]" />
+              </Switch.Root>
+            )}
+          />
+        </div>
       </Form.Field>
-      <Button onClick={prev}>Voltar</Button>
-      <Button onClick={handleSubmit(onSubmit)}>Enviar</Button>
+      <div className="flex flex-wrap items-baseline justify-between">
+        <Button
+          onClick={prev}
+          className="w-5/12 bg-success border-none focus:bg-secondary"
+        >
+          Voltar
+        </Button>
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          className="w-5/12 bg-success border-none focus:bg-secondary"
+        >
+          Enviar
+        </Button>
+      </div>
     </Form.Root>
   );
 };

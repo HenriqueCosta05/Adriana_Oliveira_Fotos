@@ -3,6 +3,7 @@ import { Provider } from '../../../../../contexts/forms/NewUserFormContext'
 import { StepOne } from '../components/Steps/StepOne'
 import { StepTwo } from '../components/Steps/StepTwo'
 import StepThree from '../components/Steps/StepThree'
+import { useFetch } from '../../../../../hooks/useFetch'
 
 
 const stepOneInitialData = {
@@ -47,7 +48,7 @@ export const UserForm = () => {
         stepOne: stepOneInitialData,
         stepTwo: stepTwoInitialData,
         stepThree: stepThreeInitialData
-    })
+    })    
 
     const [step, setStep] = useState(1);
 
@@ -63,18 +64,33 @@ export const UserForm = () => {
     const prev = () => setStep(step - 1);
 
     const sendData = () => {
-        console.log(data);
-      setData({
+        console.log(data)
+        /* fetch('http://localhost:8000/app/novo-cliente', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Sucesso:', data);
+            setData({
         stepOne: stepOneInitialData,
         stepTwo: stepTwoInitialData,
         stepThree: stepThreeInitialData,
       });
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+      */
     };
+    
     
 
     return (
         <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
-            <h2>Novo Cliente</h2>
             <main>{renderStep(step)}</main>
         </Provider>
     )
