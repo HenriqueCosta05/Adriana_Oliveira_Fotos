@@ -1,8 +1,7 @@
 from fastapi import APIRouter
 from config.mongodb_config import colecao
 from models.Cliente import Cliente
-from helpers.encriptar_senha import encriptar_senha
-from helpers import consultar_banco
+from helpers.consultar_banco import consultar_banco
 
 router = APIRouter()
 

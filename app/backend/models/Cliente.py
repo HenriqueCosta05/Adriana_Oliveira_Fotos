@@ -5,20 +5,20 @@ from models.TipoRegistro import TipoRegistro
 from pydantic import BaseModel
 
 class Cliente(BaseModel):
-    registryType: TipoRegistro
-    personType: TipoPessoa
+    registryType: str
+    personType: str
     name: str
     surname: str
     email: str
     phone: str
-    birthDate: Optional[str]
+    birthDate: Optional[str] = None
     zip: str
     city: str
     state: str
     street: str
     streetNumber: str
-    complement: Optional[str]
+    complement: Optional[str] = None
     neighborhood: str
     receiveSMS: bool
     receiveEmail: bool
-    accountType: Optional[Conta]
+    accountType: Optional[Conta] = None
