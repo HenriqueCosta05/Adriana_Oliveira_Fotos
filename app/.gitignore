@@ -25,4 +25,4 @@ dist-ssr
 
 #Backend modules
 /backend/backend
-/__pycache__
+/backend/__pycache__

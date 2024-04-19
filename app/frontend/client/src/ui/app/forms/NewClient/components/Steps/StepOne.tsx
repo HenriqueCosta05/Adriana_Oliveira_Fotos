@@ -1,13 +1,29 @@
-import { useContext } from "react";
+import { useContext, useState} from "react";
+import { initialData } from "../../pages/UserForm";
 import { Controller, useForm } from "react-hook-form";
-import * as Form from "@radix-ui/react-form";
+import {
+  Button,
+  TextInput,
+  Label,
+  Select,
+  Datepicker,
+  Flowbite,
+} from "flowbite-react";
+import { HiMail } from "react-icons/hi";
+import { FaPhoneAlt } from "react-icons/fa";
 import NewUserFormContext from "../../../../../../contexts/forms/NewUserFormContext";
-import Button from "react-bootstrap/esm/Button";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
+import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
 
 export const StepOne = () => {
   const { data, setData, handleNext } = useContext(NewUserFormContext);
-  const { control, handleSubmit, register, formState: {errors}, } = useForm<UserDataProps["stepOne"]>({
+
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<UserDataProps["stepOne"]>({
     defaultValues: data.stepOne,
   });
 
@@ -33,48 +49,36 @@ export const StepOne = () => {
   ];
 
   return (
-    <Form.Root
+    <form
       onSubmit={handleSubmit(onSubmit)}
       className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 my-4"
     >
-      <Form.Field name="registryType" className="mb-[20px]">
+      <div className="mb-[20px]">
         <h1 className="text-3xl font-bold text-center mb-9 text-secondary">
-          Novo Cliente{" "}
+          Formulário de Cliente{" "}
         </h1>
         <p className="text-3x1 font-bold text-center mb-9 text-secondary">
           {" "}
           Informações Básicas (1/3)
         </p>
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="registryType"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Tipo de cadastro
-          </Form.Label>
+            value="Tipo de cadastro:"
+          />
           <Controller
             name="registryType"
             control={control}
-            defaultValue=""
+            defaultValue={data.stepOne.registryType || ""}
+            rules={{ required: "Tipo de cadastro é obrigatório" }}
             render={({ field }) => (
-              <select
+              <Select
+                id="registryType"
+                value={field.value}
+                onChange={field.onChange}
+                color={errors.registryType ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
-                {...register("registryType", {
-                  required: "Tipo de cadastro é obrigatório",
-                })}
-                onChange={(e) => {
-                  field.onChange(e);
-                  setData({
-                    ...data,
-                    stepOne: {
-                      ...data.stepOne,
-                      registryType: {
-                        prospection: e.target.value === "prospection",
-                        client: e.target.value === "client",
-                      },
-                    },
-                  });
-                }}
               >
                 <option disabled value="">
                   Selecione...
@@ -84,47 +88,36 @@ export const StepOne = () => {
                     {option.label}
                   </option>
                 ))}
-              </select>
+              </Select>
             )}
           />
+
           {errors && errors.registryType && (
             <span className="text-red-500 font-medium text-[14px]">
               {errors.registryType.message}
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="personType" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="personType"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Tipo de pessoa
-          </Form.Label>
+            value="Tipo de pessoa:"
+          />
           <Controller
             name="personType"
             control={control}
-            defaultValue=""
+            defaultValue={data.stepOne.personType || ""}
+            rules={{ required: "Tipo de pessoa é obrigatório" }}
             render={({ field }) => (
-              <select
+              <Select
+                value={field.value}
+                id="personType"
+                onChange={field.onChange}
+                color={errors.personType ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
-                {...register("personType", {
-                  required: "Tipo de pessoa é obrigatório",
-                })}
-                onChange={(e) => {
-                  field.onChange(e);
-                  setData({
-                    ...data,
-                    stepOne: {
-                      ...data.stepOne,
-                      personType: {
-                        physicalPerson: e.target.value === "physicalPerson",
-                        legalPerson: e.target.value === "legalPerson",
-                      },
-                    },
-                  });
-                }}
               >
                 <option disabled value="">
                   Selecione...
@@ -134,7 +127,7 @@ export const StepOne = () => {
                     {option.label}
                   </option>
                 ))}
-              </select>
+              </Select>
             )}
           />
           {errors && errors.personType && (
@@ -143,23 +136,23 @@ export const StepOne = () => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="name" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="name"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Nome
-          </Form.Label>
+            value="Nome:"
+          />
           <Controller
             name="name"
             control={control}
-            defaultValue=""
+            defaultValue={data.stepOne.name || ""}
             render={() => (
-              <input
+              <TextInput
+                color={errors.name ? "failure" : "primary"}
                 type="text"
-                placeholder="Digite seu nome..."
+                placeholder="Digite o nome do cliente..."
                 className="w-11/12 text-center rounded-lg p-2"
                 id="name"
                 {...register("name", { required: "Nome é obrigatório" })}
@@ -172,24 +165,24 @@ export const StepOne = () => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="surname" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="surname"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Sobrenome
-          </Form.Label>
+            value="Sobrenome:"
+          />
           <Controller
             name="surname"
             control={control}
-            defaultValue=""
+            defaultValue={data.stepOne.surname || ""}
             render={() => (
-              <input
+              <TextInput
                 type="text"
+                color={errors.surname ? "failure" : "primary"}
                 id="surname"
-                placeholder="Digite seu sobrenome..."
+                placeholder="Digite o sobrenome do cliente..."
                 className="w-11/12 text-center rounded-lg p-2"
                 {...register("surname", {
                   required: "Sobrenome é obrigatório",
@@ -203,25 +196,26 @@ export const StepOne = () => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="email" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="email"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            E-mail
-          </Form.Label>
+            value="E-mail:"
+          />
           <Controller
             name="email"
             control={control}
-            defaultValue=""
+            defaultValue={data.stepOne.email || ""}
             render={() => (
-              <input
+              <TextInput
+                icon={HiMail}
+                color={errors.email ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
                 type="email"
                 id="email"
-                placeholder="Digite seu email..."
+                placeholder="Digite o e-mail do cliente..."
                 {...register("email", { required: "E-mail é obrigatório" })}
               />
             )}
@@ -232,25 +226,26 @@ export const StepOne = () => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="phone" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="phone"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Telefone
-          </Form.Label>
+            value="Telefone:"
+          />
           <Controller
             name="phone"
             control={control}
-            defaultValue=""
+            defaultValue={data.stepOne.phone || ""}
             render={() => (
-              <input
+              <TextInput
                 type="text"
+                color={errors.phone ? "failure" : "primary"}
+                icon={FaPhoneAlt}
                 className="w-11/12 text-center rounded-lg p-2"
                 id="phone"
-               placeholder="Digite seu celular..."
+                placeholder="Digite o celular do cliente..."
                 {...register("phone", { required: "Telefone é obrigatório" })}
               />
             )}
@@ -261,33 +256,50 @@ export const StepOne = () => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="birthDate" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="birthDate"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Data de nascimento
-          </Form.Label>
+            value="Data de nascimento:"
+          />
           <Controller
-            name="birthDate"
             control={control}
-            defaultValue=""
-            render={() => (
-              <input
-                type="date"
-                id="birthDate"
-                {...register("birthDate")}
-                className="w-11/12 text-center rounded-lg p-2"
-              />
+            name="birthDate"
+            defaultValue={data.stepOne.birthDate || ""}
+            render={({ field }) => (
+              <>
+                <Flowbite theme={{ theme: customTheme }}>
+                  <Datepicker
+                    maxDate={new Date()}
+                    language="pt-BR"
+                    id="birthDate"
+                    placeholder="Selecione a data de nascimento..."
+                    labelTodayButton="Hoje"
+                    labelClearButton="Limpar"
+                    onSelectedDateChanged={(date) => field.onChange(date)}
+                    className="w-11/12 rounded-lg p-2"
+                  />
+                </Flowbite>
+                <input
+                  type="hidden"
+                  value={field.value ? field.value : ""}
+                  {...register("birthDate")}
+                />
+              </>
             )}
           />
         </div>
-      </Form.Field>
-      <div className="flex flex-wrap items-baseline justify-center">
-              <Button onClick={handleSubmit(onSubmit)} className="w-11/12 bg-success border-none focus:bg-secondary">Próximo</Button>
       </div>
-    </Form.Root>
+      <div className="flex flex-wrap items-baseline justify-center">
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          className="w-11/12 bg-success border-none focus:bg-secondary"
+        >
+          Próximo
+        </Button>
+      </div>
+    </form>
   );
 };

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Section from "./index.tsx";
 import * as Form from "@radix-ui/react-form";
@@ -10,8 +11,8 @@ import {
 import { useState, useRef } from "react";
 
 export default function Contact({ data }) {
-  const introData = data && data[0];
-  const formData = data && data.filter((item, index) => index > 0 && index < 5);
+  const introData = useMemo(() => data && data[0], [data]);
+  const formData = useMemo(() => data && data.filter((item, index) => index > 0 && index < 5), [data]);
 
   const [formInput, setFormInput] = useState({
     nome: "",
@@ -41,7 +42,7 @@ export default function Contact({ data }) {
       
     } else {
       alert('Algo deu errado! Tente novamente mais tarde!');
-      // Handle failed form submission here
+      
     }
   } catch (error) {
     console.error('Error:', error);
@@ -235,7 +236,7 @@ export default function Contact({ data }) {
               </Form.Message>
               <Form.Control asChild>
                 <textarea
-                  className="box-border resize-none w-full min-w-full inline-flex h-[100px] items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
+                  className="placeholder:absolute placeholder:left-4 placeholder:top-2 box-border resize-none w-full min-w-full inline-flex h-[100px] items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
                   name={formData[3].name}
                   placeholder={formData[3].placeholder}
                   onChange={handleInputChange}

@@ -1,6 +1,4 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import {Avatar, Dropdown, Navbar} from 'flowbite-react'
 import Image from "../../../../components/Shared/Image/Image";
 
 export default function NavBar({ data }) {
@@ -10,37 +8,48 @@ export default function NavBar({ data }) {
 
   return (
     <>
-      <Navbar expand="lg" bg="primary">
-        <Container>
-          <Navbar.Brand href="#">
-            {logo && (
-              <Image
-                src={logo.src}
-                alt={logo.alt}
-                width={logo.width}
-                height={logo.height}
-                className="rounded-full"
-              />
-            )}
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse
-            id="basic-navbar-nav"
-            className="justify-content-lg-end"
+      <Navbar fluid className="bg-primary">
+        <Navbar.Brand href="#">
+          <Image
+            src={logo && logo.src}
+            className="ml-3"
+            alt="Logo"
+            width="100"
+            height="100"
+          />
+        </Navbar.Brand>
+        <div className="flex mr-2 md:order-2">
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar className="mr-2" alt="Configurações do usuário" rounded />
+            }
           >
-            <Nav>
-              {links.map((link, index) => (
-                <Nav.Link
-                  key={index}
-                  href={link}
-                  className="font-bold text-neutral mx-2"
-                >
-                  {texts[index]}
-                </Nav.Link>
-              ))}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
+            <Dropdown.Header>
+              <span className="block text-sm">Usuário</span>
+              <span className="block truncate text-sm font-medium">
+                user@example.com
+              </span>
+            </Dropdown.Header>
+            <Dropdown.Item>Menu Inicial</Dropdown.Item>
+            <Dropdown.Item>Configurações</Dropdown.Item>
+            <Dropdown.Item>Escolher fotos</Dropdown.Item>
+            <Dropdown.Divider />
+          </Dropdown>
+          <Navbar.Toggle className="bg-primary focus:bg-primary active:bg-primary border-none active:border-none" />
+        </div>
+        <Navbar.Collapse >
+          {links &&
+            links.map((link, index) => (
+              <Navbar.Link
+                href={link}
+                className="font-medium text-[15px] text-center text-white flex align-top"
+              >
+                {texts[index]}
+              </Navbar.Link>
+            ))}
+        </Navbar.Collapse>
       </Navbar>
     </>
   );

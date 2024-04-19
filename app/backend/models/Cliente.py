@@ -1,8 +1,9 @@
 from typing import Optional
-from models.TipoPessoa import TipoPessoa
+from datetime import datetime
 from models.Conta import Conta
-from models.TipoRegistro import TipoRegistro
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
+import dateutil.parser as dt_parser
+
 
 class Cliente(BaseModel):
     registryType: str
@@ -11,7 +12,7 @@ class Cliente(BaseModel):
     surname: str
     email: str
     phone: str
-    birthDate: Optional[str] = None
+    birthDate: Optional[datetime] = None
     zip: str
     city: str
     state: str
@@ -21,4 +22,8 @@ class Cliente(BaseModel):
     neighborhood: str
     receiveSMS: bool
     receiveEmail: bool
-    accountType: Optional[Conta] = None
+    accountType: Optional[dict] = Conta(user=True, administrador=False).dict()
+    
+    @validator('birthDate', pre=True)
+    def parse_birthDate(cls, value):
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))

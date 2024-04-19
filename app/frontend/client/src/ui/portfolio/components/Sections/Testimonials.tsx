@@ -1,11 +1,15 @@
+import {useMemo} from 'react';
 import Card from "react-bootstrap/Card";
 import Image from "../../../../components/Shared/Image/Image";
 import Section from "./index";
 import Carousel from "react-bootstrap/Carousel";
 
 export default function Testimonials({ data }) {
-  const intro = data && data[0];
-  const info = data && data.filter((card, index) => index !== 0);
+  const intro = useMemo(() => data && data[0], [data]);
+  const info = useMemo(
+    () => data && data.filter((card, index) => index !== 0),
+    [data]
+  );
 
   return (
     intro &&
@@ -20,8 +24,8 @@ export default function Testimonials({ data }) {
         <div className="container md:flex md:flex-wrap md:justify-center md:items-center xxs:block xxs:mx-auto overflow-y-visible">
           <Carousel className="w-full overflow-y-visible" data-bs-theme="dark">
             {info &&
-              info.map((infoObj) => (
-                <Carousel.Item interval={3000}>
+              info.map((infoObj, index) => (
+                <Carousel.Item key={index} interval={3000}>
                   <Card
                     className="lg:w-5/12 mx-auto py-10 m-auto flex justify-center items-center xxs:w-full rounded-3xl"
                     bg="info"
@@ -30,10 +34,10 @@ export default function Testimonials({ data }) {
                   >
                     <Image
                       className="xl:w-2/12 xxs:w-3/5 md:w-1/5 my-4 rounded-full"
-                      alt="Profile"
+                      alt="Avaliações de clientes"
                       src={infoObj.icon}
                     />
-                    <Card.Body style={{ zIndex: 50, overflow: "visible" }}>
+                    <Card.Body>
                       <Card.Text className="text-warning text-2xl">
                         ★★★★★
                       </Card.Text>

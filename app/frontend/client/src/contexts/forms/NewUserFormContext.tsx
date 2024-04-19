@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
-const FormContext = createContext({});
+const NewUserFormContext = createContext({});
 
-export default FormContext;
+export default NewUserFormContext;
 
-export const { Provider, Consumer } = FormContext;
+export const { Provider, Consumer } = NewUserFormContext;

@@ -3,7 +3,7 @@ from config.mongodb_config import colecao
 
 router = APIRouter()
 
-@router.delete('/cliente/{email}')
+@router.delete('/app/excluir-cliente/{email}')
 def deletar_cliente(email: str):
     try:
         cliente_existente = colecao.find_one({"email": email.lower()})

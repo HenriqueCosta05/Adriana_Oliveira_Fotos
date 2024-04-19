@@ -1,13 +1,14 @@
+import { useMemo } from "react";
 import Image from "../../../../components/Shared/Image/Image";
 import Section from "./index";
 import Button from "react-bootstrap/Button";
 
 export default function About({ data }) {
-  const logo = data && data[0];
-  const title = data && data[1];
-  const description = data && data[2];
-  const button = data && data[3];
-  const imgGallery = data && data[4] && data[4].src;
+  const logo = useMemo(() => data && data[0], [data]);
+  const title = useMemo(() => data && data[1], [data]);
+  const description = useMemo(() => data && data[2], [data]);
+  const button = useMemo(() => data && data[3], [data]);
+  const imgGallery = useMemo(() => data && data[4] && data[4].src, [data]);
 
   return (
     <Section id="sobre-mim">
@@ -45,6 +46,8 @@ export default function About({ data }) {
                 <Image
                   key={index}
                   src={img}
+                  width=""
+                  height=""
                   alt="gallery"
                   className="rounded-lg lg:w-2/5 xl:w-3/12 md:w-5/12 h-auto m-4 xxs:w-9/12"
                 />

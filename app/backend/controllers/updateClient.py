@@ -5,7 +5,7 @@ from models.Cliente import Cliente
 
 router = APIRouter()
 
-@router.put('/cliente/{email}')
+@router.put('/app/editar-cliente/{id}')
 def atualizar_cliente(email: str, cliente: Cliente):
     try:
         cliente_existente = colecao.find_one({"email": email.lower()})
@@ -14,20 +14,23 @@ def atualizar_cliente(email: str, cliente: Cliente):
 
         update_data = {
             "$set": {
+                "registryType": cliente.registryType,
+                "personType": cliente.personType,
                 "name": cliente.name.lower(),
+                "surname": cliente.surname.lower(),
                 "email": cliente.email.lower(),
-                "subname": cliente.subname.lower(),
-                "birthdate": cliente.birthdate,
-                "cpf": cliente.cpf,
                 "phone": cliente.phone,
-                "cep": cliente.cep,
-                "addres": cliente.addres.lower(),
-                "addresNumber": cliente.addresNumber,
-                "complement": cliente.neighborhood.lower(),
-                "neighborhood": cliente.neighborhood.lower(),
+                "birthDate": cliente.birthDate,
+                "zip": cliente.zip,
                 "city": cliente.city.lower(),
                 "state": cliente.state.lower(),
-                "password": encriptar_senha(cliente.password),
+                "street": cliente.street.lower(),
+                "streetNumber": cliente.streetNumber,
+                "complement": cliente.complement.lower() if cliente.complement else None,
+                "neighborhood": cliente.neighborhood.lower(),
+                "receiveSMS": cliente.receiveSMS,
+                "receiveEmail": cliente.receiveEmail,
+                "accountType": cliente.accountType
             }
         }
         colecao.update_one({"email": email.lower()}, update_data)
@@ -38,4 +41,3 @@ def atualizar_cliente(email: str, cliente: Cliente):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    

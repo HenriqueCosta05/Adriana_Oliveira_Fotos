@@ -1,36 +1,121 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Provider } from "../../../../../contexts/forms/NewUserFormContext";
 import { StepOne } from "../components/Steps/StepOne";
 import { StepTwo } from "../components/Steps/StepTwo";
-import StepThree from "../components/Steps/StepThree";
-import { useFetch } from "../../../../../hooks/useFetch";
+import StepThree  from "../components/Steps/StepThree";
+import { Modal, Button } from "flowbite-react";
+import { fetchData, sendData } from "../../../../../services/userDataService";
 
-const stepOneInitialData = {
-  registryType: { prospection: false, client: false },
-  personType: { physicalPerson: false, legalPerson: false },
-  name: "",
-  surname: "",
-  email: "",
-  phone: "",
-  birthDate: "",
+const initialData = {
+  stepOne: {
+    registryType: { prospection: false, client: false },
+    personType: { physicalPerson: false, legalPerson: false },
+    name: "",
+    surname: "",
+    email: "",
+    phone: "",
+    birthDate: "",
+  },
+  stepTwo: {
+    zip: "",
+    city: "",
+    state: "",
+    street: "",
+    streetNumber: "",
+    complement: "",
+    neighborhood: "",
+  },
+  stepThree: {
+    receiveSMS: false,
+    receiveEmail: false,
+  },
 };
 
-const stepTwoInitialData = {
-  zip: "",
-  city: "",
-  state: "",
-  street: "",
-  streetNumber: "",
-  complement: "",
-  neighborhood: "",
+export const UserForm = () => {
+  const { userEmail } = useParams();
+  const [method, setMethod] = useState("POST");
+  const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(initialData);
+  const [modal, setModal] = useState({
+    isOpen: false,
+    type: "error",
+    message: "",
+  });
+
+  useEffect(() => {
+    if (userEmail) {
+      setMethod("PUT");
+      fetchData(userEmail)
+        .then((response) => {
+          setData(response);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setModal({
+            isOpen: true,
+            type: "error",
+            message: "Error fetching data",
+          });
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [userEmail]);
+
+  const handleNext = async () => {
+    if (step === 3) {
+      try {
+        await sendData(userEmail, data);
+        setModal({
+          isOpen: true,
+          type: "success",
+          message: "Cliente cadastrado com sucesso.",
+        });
+      } catch (error) {
+        setModal({
+          isOpen: true,
+          type: "error",
+          message: "Erro ao cadastrar cliente!",
+        });
+      }
+    } else {
+      setStep(step + 1);
+    }
+  };
+
+  const prev = () => setStep(step - 1);
+
+  if (loading) return <div>Carregando...</div>;
+
+  return (
+    <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
+      <div>
+        {renderStep(step)}
+        <Modal
+          open={modal.isOpen}
+          onClose={() => setModal({ ...modal, isOpen: false })}
+        >
+          <Modal.Header>
+            {modal.type === "success" ? "Sucesso!" : "Erro"}
+          </Modal.Header>
+          <Modal.Body>
+            <p>{modal.message}</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => setModal({ ...modal, isOpen: false })}>
+              Fechar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    </Provider>
+  );
 };
 
-const stepThreeInitialData = {
-  receiveSMS: false,
-  receiveEmail: false,
-};
-
-const renderStep = (step) => {
+function renderStep(step) {
   switch (step) {
     case 1:
       return <StepOne />;
@@ -41,59 +126,4 @@ const renderStep = (step) => {
     default:
       return <StepOne />;
   }
-};
-export const UserForm = () => {
-  const [data, setData] = useState({
-    stepOne: stepOneInitialData,
-    stepTwo: stepTwoInitialData,
-    stepThree: stepThreeInitialData,
-  });
-
-  const [step, setStep] = useState(1);
-
-  const handleNext = () => {
-    if (step === 3) {
-      sendData();
-      setStep(1);
-      return;
-    }
-    setStep(step + 1);
-  };
-
-  const prev = () => setStep(step - 1);
-
-  const sendData = () => {
-    const flattenedData = {
-      ...data.stepOne,
-      ...data.stepTwo,
-      ...data.stepThree,
-    };
-    console.log(flattenedData);
-    fetch("http://localhost:8000/app/novo-cliente", {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify(flattenedData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Sucesso:", data);
-        setData({
-          stepOne: stepOneInitialData,
-          stepTwo: stepTwoInitialData,
-          stepThree: stepThreeInitialData,
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
-  return (
-    <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
-      <main>{renderStep(step)}</main>
-    </Provider>
-  );
-};
+}

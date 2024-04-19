@@ -1,8 +1,9 @@
+import { useMemo } from "react";
 import Section from "./index";
 
 export default function Pricing({ data }) {
-  const intro = data && data[0];
-  const pricesData = data && data.filter((price, index) => index !== 0);
+  const intro = useMemo(() => data && data[0], [data]);
+  const pricesData = useMemo(() => data && data.filter((price, index) => index !== 0), [data]);
 
   if (!intro || !pricesData) {
     return null;
@@ -18,8 +19,8 @@ export default function Pricing({ data }) {
         <div className="flex flex-wrap xl:justify-around w-full">
           {pricesData.map((price) => (
             <div key={price.title} className="flex items-center justify-between lg:m-8 xxs:m-4 border-b-2 xl:w-1/3 w-full border-black border-dotted">
-              <p className="">{price.title}</p>
-              <p className="">{price.description}</p>
+              <p>{price.title}</p>
+              <p>{price.description}</p>
             </div>
           ))}
         </div>

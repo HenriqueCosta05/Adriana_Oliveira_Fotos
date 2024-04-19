@@ -1,5 +1,5 @@
-from enum import Enum
+from pydantic import BaseModel
 
-class Conta(Enum):
-    user = True
-    administrador = False
+class Conta(BaseModel):
+    user: bool
+    administrador: bool

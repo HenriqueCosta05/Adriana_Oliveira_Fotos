@@ -1,10 +1,16 @@
 import { useContext, useEffect} from "react";
 import { Controller, useForm } from "react-hook-form";
 import NewUserFormContext from "../../../../../../contexts/forms/NewUserFormContext";
-import Button from "react-bootstrap/esm/Button";
+import {
+  Button,
+  TextInput,
+  Label,
+  Select,
+  Datepicker,
+  Flowbite,
+} from "flowbite-react";
 import * as Form from "@radix-ui/react-form";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
-import { useFetch } from "../../../../../../hooks/useFetch";
 
 export const StepTwo = () => {
   const { data, setData, handleNext, prev } = useContext(NewUserFormContext);
@@ -43,7 +49,7 @@ const onSubmit = (data) => {
 
 
   return (
-    <Form.Root
+    <form
       onSubmit={handleSubmit(onSubmit)}
       className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 m-4"
     >
@@ -54,23 +60,23 @@ const onSubmit = (data) => {
         {" "}
         Dados de Endereço (2/3)
       </p>
-      <Form.Field name="zip" className="mb-[30px]">
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="zip"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            CEP
-          </Form.Label>
+            value="CEP:"
+          />
 
           <Controller
             name="zip"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input
+              <TextInput
                 type="text"
-                placeholder="Digite seu CEP..."
+                placeholder="Digite o CEP do Cliente..."
+                color={errors.zip ? "failure" : "success"}
                 className="w-11/12 text-center rounded-lg p-2"
                 id="zip"
                 {...field}
@@ -84,25 +90,25 @@ const onSubmit = (data) => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="street" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="street"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Rua
-          </Form.Label>
+            value="Logradouro:"
+          />
           <Controller
             name="street"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input
+              <TextInput
                 type="text"
                 id="street"
+                color={errors.street ? "failure" : "success"}
                 className="w-11/12 text-center rounded-lg p-2"
-                placeholder="Digite seu logradouro..."
+                placeholder="Digite o logradouro..."
                 {...field}
                 {...register("street", {
                   required: "O logradouro é obrigatório",
@@ -116,22 +122,22 @@ const onSubmit = (data) => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="streetNumber" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="streetNumber"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Número
-          </Form.Label>
+            value="Número do logradouro:"
+          />
           <Controller
             name="streetNumber"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input
+              <TextInput
                 type="text"
+                color={errors.streetNumber ? "failure" : "success"}
                 placeholder="Digite o número do seu logradouro..."
                 id="streetNumber"
                 className="w-11/12 text-center rounded-lg p-2"
@@ -148,21 +154,20 @@ const onSubmit = (data) => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="complement" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="complement"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Complemento
-          </Form.Label>
+            value="Complemento:"
+          />
           <Controller
             name="complement"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input
+              <TextInput
                 type="text"
                 id="complement"
                 placeholder="Digite o complemento, se necessário..."
@@ -172,24 +177,24 @@ const onSubmit = (data) => {
             )}
           />
         </div>
-      </Form.Field>
-      <Form.Field name="neighborhood" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="neighborhood"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Bairro
-          </Form.Label>
+            value="Bairro:"
+          />
           <Controller
             name="neighborhood"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input
+              <TextInput
                 type="text"
+                color={errors.neighborhood ? "failure" : "success"}
                 id="neighborhood"
-                placeholder="Digite seu bairro..."
+                placeholder="Digite o bairro..."
                 className="w-11/12 text-center rounded-lg p-2"
                 {...field}
                 {...register("neighborhood", {
@@ -204,23 +209,23 @@ const onSubmit = (data) => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="city" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="city"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Cidade
-          </Form.Label>
+            value="Cidade:"
+          />
           <Controller
             name="city"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input
+              <TextInput
                 type="text"
-                placeholder="Digite sua cidade..."
+                color={errors.city ? "failure" : "success"}
+                placeholder="Digite a cidade..."
                 className="w-11/12 text-center rounded-lg p-2"
                 id="city"
                 {...field}
@@ -234,24 +239,24 @@ const onSubmit = (data) => {
             </span>
           )}
         </div>
-      </Form.Field>
-      <Form.Field name="state" className="mb-[30px]">
+      </div>
+      <div className="mb-[30px]">
         <div className="flex flex-wrap items-baseline justify-center">
-          <Form.Label
+          <Label
             htmlFor="state"
             className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-          >
-            Estado
-          </Form.Label>
+            value="Estado:"
+          />
           <Controller
             name="state"
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <input
+              <TextInput
+                color={errors.state ? "failure" : "success"}
                 type="text"
                 id="state"
-                placeholder="Digite seu estado..."
+                placeholder="Digite o estado..."
                 className="w-11/12 text-center rounded-lg p-2"
                 {...field}
                 {...register("state", { required: "Estado é obrigatório" })}
@@ -264,7 +269,7 @@ const onSubmit = (data) => {
             </span>
           )}
         </div>
-      </Form.Field>
+      </div>
       <div className="flex flex-wrap items-baseline justify-between">
         <Button
           onClick={prev}
@@ -279,7 +284,7 @@ const onSubmit = (data) => {
           Próximo
         </Button>
       </div>
-    </Form.Root>
+    </form>
   );
 };
 
