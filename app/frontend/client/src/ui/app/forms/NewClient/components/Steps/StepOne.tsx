@@ -87,7 +87,8 @@ export const StepOne = () => {
             defaultValue={data.stepOne.registryType || ""}
             rules={{ required: "Tipo de cadastro é obrigatório" }}
             render={({ field }) => (
-              <select
+              <Select
+                defaultValue=""
                 id="registryType"
                 name="registryType"
                 value={field.value}
@@ -103,7 +104,7 @@ export const StepOne = () => {
                     {option.label}
                   </option>
                 ))}
-              </select>
+              </Select>
             )}
           />
 
@@ -124,13 +125,12 @@ export const StepOne = () => {
           <Controller
             name="personType"
             control={control}
-            defaultValue={data.stepOne.personType || ""}
+            defaultValue=""
             rules={{ required: "Tipo de pessoa é obrigatório" }}
-            render={({ field }) => (
-              <select
+            render={({ field, onChange, value}) => (
+              <Select
                 id="personType"
                 name="personType"
-                value={field.value}
                 onChange={field.onChange}
                 color={errors.personType ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
@@ -143,7 +143,7 @@ export const StepOne = () => {
                     {option.label}
                   </option>
                 ))}
-              </select>
+              </Select>
             )}
           />
 
