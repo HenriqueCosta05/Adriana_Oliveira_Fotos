@@ -1,4 +1,4 @@
-import { useContext, useState} from "react";
+import { useContext, useState, useEffect } from "react";
 import { initialData } from "../../pages/UserForm";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -22,6 +22,7 @@ export const StepOne = () => {
     control,
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<UserDataProps["stepOne"]>({
     defaultValues: data.stepOne,
@@ -38,14 +39,27 @@ export const StepOne = () => {
     handleNext();
   };
 
+  useEffect(() => {
+    reset({
+      registryType: data.stepOne.registryType,
+      personType: data.stepOne.personType,
+      name: data.stepOne.name,
+      surname: data.stepOne.surname,
+      email: data.stepOne.email,
+      phone: data.stepOne.phone,
+      birthDate: data.stepOne.birthDate,
+    });
+  }, [reset]);
+
+  //Transferir para outra pasta
   const registryTypeOptions = [
-    { value: "prospection", label: "Prospecção" },
-    { value: "client", label: "Cliente" },
+    { value: "Prospecção", label: "Prospecção" },
+    { value: "Cliente", label: "Cliente" },
   ];
 
   const personTypeOptions = [
-    { value: "physicalPerson", label: "Pessoa Física" },
-    { value: "legalPerson", label: "Pessoa Jurídica" },
+    { value: "Pessoa Física", label: "Pessoa Física" },
+    { value: "Pessoa Jurídica", label: "Pessoa Jurídica" },
   ];
 
   return (
@@ -73,8 +87,9 @@ export const StepOne = () => {
             defaultValue={data.stepOne.registryType || ""}
             rules={{ required: "Tipo de cadastro é obrigatório" }}
             render={({ field }) => (
-              <Select
+              <select
                 id="registryType"
+                name="registryType"
                 value={field.value}
                 onChange={field.onChange}
                 color={errors.registryType ? "failure" : "primary"}
@@ -88,7 +103,7 @@ export const StepOne = () => {
                     {option.label}
                   </option>
                 ))}
-              </Select>
+              </select>
             )}
           />
 
@@ -112,9 +127,10 @@ export const StepOne = () => {
             defaultValue={data.stepOne.personType || ""}
             rules={{ required: "Tipo de pessoa é obrigatório" }}
             render={({ field }) => (
-              <Select
-                value={field.value}
+              <select
                 id="personType"
+                name="personType"
+                value={field.value}
                 onChange={field.onChange}
                 color={errors.personType ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
@@ -127,9 +143,10 @@ export const StepOne = () => {
                     {option.label}
                   </option>
                 ))}
-              </Select>
+              </select>
             )}
           />
+
           {errors && errors.personType && (
             <span className="text-red-500 font-medium text-[14px]">
               {errors.personType.message}
@@ -155,6 +172,7 @@ export const StepOne = () => {
                 placeholder="Digite o nome do cliente..."
                 className="w-11/12 text-center rounded-lg p-2"
                 id="name"
+                name="name"
                 {...register("name", { required: "Nome é obrigatório" })}
               />
             )}
@@ -180,6 +198,7 @@ export const StepOne = () => {
             render={() => (
               <TextInput
                 type="text"
+                name="surname"
                 color={errors.surname ? "failure" : "primary"}
                 id="surname"
                 placeholder="Digite o sobrenome do cliente..."
@@ -214,6 +233,7 @@ export const StepOne = () => {
                 color={errors.email ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
                 type="email"
+                name="surname"
                 id="email"
                 placeholder="Digite o e-mail do cliente..."
                 {...register("email", { required: "E-mail é obrigatório" })}
@@ -241,6 +261,7 @@ export const StepOne = () => {
             render={() => (
               <TextInput
                 type="text"
+                name="phone"
                 color={errors.phone ? "failure" : "primary"}
                 icon={FaPhoneAlt}
                 className="w-11/12 text-center rounded-lg p-2"
@@ -275,6 +296,7 @@ export const StepOne = () => {
                     maxDate={new Date()}
                     language="pt-BR"
                     id="birthDate"
+                    name="birthDate"
                     placeholder="Selecione a data de nascimento..."
                     labelTodayButton="Hoje"
                     labelClearButton="Limpar"

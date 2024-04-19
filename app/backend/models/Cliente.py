@@ -2,7 +2,6 @@ from typing import Optional
 from datetime import datetime
 from models.Conta import Conta
 from pydantic import BaseModel, validator
-import dateutil.parser as dt_parser
 
 
 class Cliente(BaseModel):
@@ -24,6 +23,9 @@ class Cliente(BaseModel):
     receiveEmail: bool
     accountType: Optional[dict] = Conta(user=True, administrador=False).dict()
     
+    #Validação de campos específicos
     @validator('birthDate', pre=True)
     def parse_birthDate(cls, value):
-        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+        if isinstance(value, str):
+            return datetime.fromisoformat(value.replace("Z", "+00:00"))
+        return value

@@ -19,6 +19,7 @@ export default function NavBar({ data }) {
           />
         </Navbar.Brand>
         <div className="flex mr-2 md:order-2">
+          {/* Adicionar renderização condicional de acordo com o usuário */}
           <Dropdown
             arrowIcon={false}
             inline
