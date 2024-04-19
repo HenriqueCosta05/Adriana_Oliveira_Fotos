@@ -5,48 +5,51 @@ import {
   Button,
   TextInput,
   Label,
-  Select,
-  Datepicker,
-  Flowbite,
 } from "flowbite-react";
-import * as Form from "@radix-ui/react-form";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
 
-export const StepTwo = () => {
+export const StepTwo = ({ prevData }: { prevData?: any }) => {
   const { data, setData, handleNext, prev } = useContext(NewUserFormContext);
 
-    const { control, handleSubmit, register, watch, setValue, formState: {errors}} = useForm<UserDataProps["stepTwo"]>({
-  defaultValues: data.stepTwo,
-});
+  const {
+    control,
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<UserDataProps["stepTwo"]>({
+    defaultValues: data.stepTwo || prevData,
+  });
 
-    const zipCode = watch("zip");
+  const zipCode = watch("zip");
 
-useEffect(() => {
-  const refactoredZipCode = zipCode && zipCode.replace("-", "").replace(" ", "");
-  if (refactoredZipCode && refactoredZipCode.length === 8) {
-    fetch(`https://viacep.com.br/ws/${refactoredZipCode}/json/`)
-      .then(response => response.json())
-      .then(data => {
-        setValue("street", data.logradouro);
-        setValue("city", data.localidade);
-        setValue("state", data.uf);
-        setValue("neighborhood", data.bairro);
-      })
-      .catch(error => console.error(error));
-  }
-}, [zipCode, setValue]);
+  useEffect(() => {
+    const refactoredZipCode =
+      zipCode && zipCode.replace("-", "").replace(" ", "");
+    if (refactoredZipCode && refactoredZipCode.length === 8) {
+      fetch(`https://viacep.com.br/ws/${refactoredZipCode}/json/`)
+        .then((response) => response.json())
+        .then((data) => {
+          setValue("street", data.logradouro);
+          setValue("city", data.localidade);
+          setValue("state", data.uf);
+          setValue("neighborhood", data.bairro);
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [zipCode, setValue]);
 
-const onSubmit = (data) => {
-  setData((prevData) => ({
-    ...prevData,
-    stepTwo: {
-      ...prevData.stepTwo,
-      ...data,
-    },
-  }));
-  handleNext();
-    };
-
+  const onSubmit = (data) => {
+    setData((prevFormData) => ({
+      ...prevFormData,
+      stepTwo: {
+        ...prevFormData.stepTwo,
+        ...data,
+      },
+    }));
+    handleNext();
+  };
 
   return (
     <form
@@ -71,7 +74,6 @@ const onSubmit = (data) => {
           <Controller
             name="zip"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextInput
                 type="text"
@@ -101,7 +103,6 @@ const onSubmit = (data) => {
           <Controller
             name="street"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextInput
                 type="text"
@@ -133,7 +134,6 @@ const onSubmit = (data) => {
           <Controller
             name="streetNumber"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextInput
                 type="text"
@@ -165,7 +165,6 @@ const onSubmit = (data) => {
           <Controller
             name="complement"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextInput
                 type="text"
@@ -188,7 +187,6 @@ const onSubmit = (data) => {
           <Controller
             name="neighborhood"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextInput
                 type="text"
@@ -220,10 +218,10 @@ const onSubmit = (data) => {
           <Controller
             name="city"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextInput
                 type="text"
+                defaultValue=""
                 color={errors.city ? "failure" : "success"}
                 placeholder="Digite a cidade..."
                 className="w-11/12 text-center rounded-lg p-2"
@@ -250,7 +248,6 @@ const onSubmit = (data) => {
           <Controller
             name="state"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <TextInput
                 color={errors.state ? "failure" : "success"}

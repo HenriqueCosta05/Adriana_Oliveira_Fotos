@@ -3,21 +3,23 @@ import { Controller, useForm } from "react-hook-form";
 import NewUserFormContext from "../../../../../../contexts/forms/NewUserFormContext";
 import Button from "react-bootstrap/esm/Button";
 import * as Form from "@radix-ui/react-form";
-import * as Switch from '@radix-ui/react-switch';
+import * as Switch from "@radix-ui/react-switch";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
 
-export const StepTwo = () => {
+export const StepThree = ({ prevData }: { prevData?: any }) => {
   const { data, setData, handleNext, prev } = useContext(NewUserFormContext);
 
-  const { control, handleSubmit, register} = useForm<UserDataProps["stepThree"]>({
-    defaultValues: data.stepThree,
+  const { control, handleSubmit, register } = useForm<
+    UserDataProps["stepThree"]
+  >({
+    defaultValues: data.stepThree || prevData,
   });
 
   const onSubmit = (formData) => {
-    setData((prevData) => ({
-      ...prevData,
+    setData((prevFormData) => ({
+      ...prevFormData,
       stepThree: {
-        ...prevData.stepThree,
+        ...prevFormData.stepThree,
         ...formData,
       },
     }));
@@ -44,9 +46,7 @@ export const StepTwo = () => {
             Receber avisos por SMS?
           </Form.Label>
           <Controller
-            name="receiveSMS"
             control={control}
-            defaultValue=""
             {...register("receiveSMS")}
             render={({ field }) => (
               <Switch.Root
@@ -54,10 +54,10 @@ export const StepTwo = () => {
                 id="sms"
                 {...field}
                 onCheckedChange={(checked) => {
-                  setData((prevData) => ({
-                    ...prevData,
+                  setData((prevFormData) => ({
+                    ...prevFormData,
                     stepThree: {
-                      ...prevData.stepThree,
+                      ...prevFormData.stepThree,
                       receiveSMS: checked,
                     },
                   }));
@@ -80,7 +80,6 @@ export const StepTwo = () => {
           <Controller
             name="receiveEmail"
             control={control}
-            defaultValue=""
             {...register("receiveEmail")}
             render={({ field }) => (
               <Switch.Root
@@ -88,10 +87,10 @@ export const StepTwo = () => {
                 id="sms"
                 {...field}
                 onCheckedChange={(checked) => {
-                  setData((prevData) => ({
-                    ...prevData,
+                  setData((prevFormData) => ({
+                    ...prevFormData,
                     stepThree: {
-                      ...prevData.stepThree,
+                      ...prevFormData.stepThree,
                       receiveEmail: checked,
                     },
                   }));
@@ -121,4 +120,3 @@ export const StepTwo = () => {
   );
 };
 
-export default StepTwo;

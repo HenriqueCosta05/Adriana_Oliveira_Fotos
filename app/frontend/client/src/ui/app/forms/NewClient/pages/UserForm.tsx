@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Provider } from "../../../../../contexts/forms/NewUserFormContext";
 import { StepOne } from "../components/Steps/StepOne";
 import { StepTwo } from "../components/Steps/StepTwo";
-import StepThree  from "../components/Steps/StepThree";
+import { StepThree } from "../components/Steps/StepThree";
 import { Modal, Button } from "flowbite-react";
 import { fetchData, sendData } from "../../../../../services/userDataService";
 
@@ -96,39 +96,39 @@ export const UserForm = () => {
   if (loading) return <div>Carregando...</div>;
 
   return (
-    <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
-      <div>
-        {renderStep(step)}
-        <Modal
-          open={modal.isOpen}
-          onClose={() => setModal({ ...modal, isOpen: false })}
-        >
-          <Modal.Header>
-            {modal.type === "success" ? "Sucesso!" : "Erro"}
-          </Modal.Header>
-          <Modal.Body>
-            <p>{modal.message}</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={() => setModal({ ...modal, isOpen: false })}>
-              Fechar
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-    </Provider>
+    <>
+      <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
+        {renderStep(step, method, data)}
+      </Provider>
+      <Modal
+        open={modal.isOpen}
+        onClose={() => setModal({ ...modal, isOpen: false })}
+      >
+        <Modal.Header>
+          {modal.type === "success" ? "Sucesso!" : "Erro"}
+        </Modal.Header>
+        <Modal.Body>
+          <p>{modal.message}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setModal({ ...modal, isOpen: false })}>
+            Fechar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 
-function renderStep(step) {
+function renderStep(step, method, data) {
   switch (step) {
     case 1:
-      return <StepOne />;
+      return method === "POST" ? <StepOne /> : <StepOne prevData={data} />;
     case 2:
-      return <StepTwo />;
+      return method === "POST" ? <StepTwo /> : <StepTwo prevData={data} />;
     case 3:
-      return <StepThree />;
+      return method === "POST" ? <StepThree /> : <StepThree prevData={data} />;
     default:
-      return <StepOne />;
+      return method === "POST" ? <StepOne /> : <StepOne prevData={data} />;
   }
 }

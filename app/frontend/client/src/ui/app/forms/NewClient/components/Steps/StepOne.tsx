@@ -15,41 +15,28 @@ import NewUserFormContext from "../../../../../../contexts/forms/NewUserFormCont
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
 import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
 
-export const StepOne = () => {
+export const StepOne = ({prevData}: {prevData?:any}) => {
   const { data, setData, handleNext } = useContext(NewUserFormContext);
 
   const {
     control,
     handleSubmit,
     register,
-    reset,
     formState: { errors },
   } = useForm<UserDataProps["stepOne"]>({
-    defaultValues: data.stepOne,
+    defaultValues: data.stepOne || prevData,
   });
 
   const onSubmit = (data) => {
-    setData((prevData) => ({
-      ...prevData,
+    setData((prevFormData) => ({
+      ...prevFormData,
       stepOne: {
-        ...prevData.stepOne,
+        ...prevFormData.stepOne,
         ...data,
       },
     }));
     handleNext();
   };
-
-  useEffect(() => {
-    reset({
-      registryType: data.stepOne.registryType,
-      personType: data.stepOne.personType,
-      name: data.stepOne.name,
-      surname: data.stepOne.surname,
-      email: data.stepOne.email,
-      phone: data.stepOne.phone,
-      birthDate: data.stepOne.birthDate,
-    });
-  }, [reset]);
 
   //Transferir para outra pasta
   const registryTypeOptions = [
@@ -84,15 +71,13 @@ export const StepOne = () => {
           <Controller
             name="registryType"
             control={control}
-            defaultValue={data.stepOne.registryType || ""}
             rules={{ required: "Tipo de cadastro é obrigatório" }}
             render={({ field }) => (
               <Select
-                defaultValue=""
+              {...field}
+                {...register("registryType", { required: "Tipo de cadastro é obrigatório" })}
                 id="registryType"
                 name="registryType"
-                value={field.value}
-                onChange={field.onChange}
                 color={errors.registryType ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
               >
@@ -125,14 +110,14 @@ export const StepOne = () => {
           <Controller
             name="personType"
             control={control}
-            defaultValue={data.stepOne.personType || ""}
             rules={{ required: "Tipo de pessoa é obrigatório" }}
             render={({ field }) => (
               <Select
+                {...field}
+                {...register("personType", { required: "Tipo de pessoa é obrigatório" })}
                 id="personType"
                 name="personType"
-                value={field.value}
-                onChange={(e) => field.onChange(e.target.value.toString())}
+                
                 color={errors.personType ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
               >
@@ -165,15 +150,14 @@ export const StepOne = () => {
           <Controller
             name="name"
             control={control}
-            defaultValue={data.stepOne.name || ""}
-            render={() => (
+            render={({field}) => (
               <TextInput
+                {...field}
                 color={errors.name ? "failure" : "primary"}
                 type="text"
                 placeholder="Digite o nome do cliente..."
                 className="w-11/12 text-center rounded-lg p-2"
                 id="name"
-                name="name"
                 {...register("name", { required: "Nome é obrigatório" })}
               />
             )}
@@ -195,11 +179,10 @@ export const StepOne = () => {
           <Controller
             name="surname"
             control={control}
-            defaultValue={data.stepOne.surname || ""}
-            render={() => (
+            render={({field}) => (
               <TextInput
                 type="text"
-                name="surname"
+                {...field}
                 color={errors.surname ? "failure" : "primary"}
                 id="surname"
                 placeholder="Digite o sobrenome do cliente..."
@@ -227,14 +210,13 @@ export const StepOne = () => {
           <Controller
             name="email"
             control={control}
-            defaultValue={data.stepOne.email || ""}
-            render={() => (
+            render={({field}) => (
               <TextInput
+              {...field}
                 icon={HiMail}
                 color={errors.email ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
                 type="email"
-                name="surname"
                 id="email"
                 placeholder="Digite o e-mail do cliente..."
                 {...register("email", { required: "E-mail é obrigatório" })}
@@ -258,11 +240,10 @@ export const StepOne = () => {
           <Controller
             name="phone"
             control={control}
-            defaultValue={data.stepOne.phone || ""}
-            render={() => (
+            render={({field}) => (
               <TextInput
+                {...field}
                 type="text"
-                name="phone"
                 color={errors.phone ? "failure" : "primary"}
                 icon={FaPhoneAlt}
                 className="w-11/12 text-center rounded-lg p-2"
@@ -289,7 +270,6 @@ export const StepOne = () => {
           <Controller
             control={control}
             name="birthDate"
-            defaultValue={data.stepOne.birthDate || ""}
             render={({ field }) => (
               <>
                 <Flowbite theme={{ theme: customTheme }}>
@@ -307,7 +287,7 @@ export const StepOne = () => {
                 </Flowbite>
                 <input
                   type="hidden"
-                  value={field.value ? field.value : ""}
+                  {...field}
                   {...register("birthDate")}
                 />
               </>
