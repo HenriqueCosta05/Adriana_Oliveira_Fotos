@@ -1,7 +1,7 @@
 export interface UserDataProps {
   stepOne: {
-    registryType: { prospection: boolean; client: boolean; }
-    personType: { physicalPerson: boolean; legalPerson: boolean; }
+    registryType: string;
+    personType: string;
     name: string;
     surname?: string;
     email: string;

@@ -9,7 +9,7 @@ const handleErrors = (response) => {
 };
 
 export const fetchData = async (email) => {
-  const response = await fetch(`${API}/consultar-clientes?email=${email}`);
+  const response = await fetch(`${API}/consultar-cliente?email=${email}`);
   const data = await handleErrors(response).json();
   return data;
 };

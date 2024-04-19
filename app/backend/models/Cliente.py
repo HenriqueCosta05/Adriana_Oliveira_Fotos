@@ -27,5 +27,6 @@ class Cliente(BaseModel):
     @validator('birthDate', pre=True)
     def parse_birthDate(cls, value):
         if isinstance(value, str):
-            return datetime.fromisoformat(value.replace("Z", "+00:00"))
+            date_string = value.split('T')[0]
+            return datetime.strptime(date_string, '%Y-%m-%d').date()
         return value

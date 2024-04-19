@@ -125,13 +125,14 @@ export const StepOne = () => {
           <Controller
             name="personType"
             control={control}
-            defaultValue=""
+            defaultValue={data.stepOne.personType || ""}
             rules={{ required: "Tipo de pessoa é obrigatório" }}
-            render={({ field, onChange, value}) => (
+            render={({ field }) => (
               <Select
                 id="personType"
                 name="personType"
-                onChange={field.onChange}
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value.toString())}
                 color={errors.personType ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
               >

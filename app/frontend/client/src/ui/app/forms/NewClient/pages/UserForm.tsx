@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Provider } from "../../../../../contexts/forms/NewUserFormContext";
 import { StepOne } from "../components/Steps/StepOne";
@@ -9,8 +9,8 @@ import { fetchData, sendData } from "../../../../../services/userDataService";
 
 const initialData = {
   stepOne: {
-    registryType: { prospection: false, client: false },
-    personType: { physicalPerson: false, legalPerson: false },
+    registryType: "",
+    personType: "",
     name: "",
     surname: "",
     email: "",
