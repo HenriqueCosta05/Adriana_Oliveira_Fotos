@@ -43,10 +43,7 @@ export const StepTwo = ({ prevData }: { prevData?: any }) => {
   const onSubmit = (data) => {
     setData((prevFormData) => ({
       ...prevFormData,
-      stepTwo: {
-        ...prevFormData.stepTwo,
-        ...data,
-      },
+      stepTwo: data
     }));
     handleNext();
   };
@@ -57,7 +54,7 @@ export const StepTwo = ({ prevData }: { prevData?: any }) => {
       className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 m-4"
     >
       <h1 className="text-3xl font-bold text-center mb-8 text-secondary">
-        Novo Cliente
+        Formulário de Cliente{" "}
       </h1>
       <p className="text-3x1 font-bold text-center mb-9 text-secondary">
         {" "}

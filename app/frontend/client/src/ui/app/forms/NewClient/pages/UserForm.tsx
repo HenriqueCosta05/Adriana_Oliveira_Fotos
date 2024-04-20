@@ -101,7 +101,7 @@ export const UserForm = () => {
         {renderStep(step, method, data)}
       </Provider>
       <Modal
-        open={modal.isOpen}
+        show={modal.isOpen}
         onClose={() => setModal({ ...modal, isOpen: false })}
       >
         <Modal.Header>

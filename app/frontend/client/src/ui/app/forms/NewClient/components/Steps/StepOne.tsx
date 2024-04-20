@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect } from "react";
-import { initialData } from "../../pages/UserForm";
 import { Controller, useForm } from "react-hook-form";
 import {
   Button,
@@ -30,10 +29,7 @@ export const StepOne = ({prevData}: {prevData?:any}) => {
   const onSubmit = (data) => {
     setData((prevFormData) => ({
       ...prevFormData,
-      stepOne: {
-        ...prevFormData.stepOne,
-        ...data,
-      },
+      stepOne: data,
     }));
     handleNext();
   };

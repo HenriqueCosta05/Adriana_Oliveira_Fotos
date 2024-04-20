@@ -28,12 +28,12 @@ export default function NavBar({ data }) {
             }
           >
             <Dropdown.Header>
-              <span className="block text-sm">Usuário</span>
+              <span className="block text-sm">Adriana Oliveira</span>
               <span className="block truncate text-sm font-medium">
-                user@example.com
+                adriana@example.com
               </span>
             </Dropdown.Header>
-            <Dropdown.Item>Menu Inicial</Dropdown.Item>
+            <Dropdown.Item href='/app/clientes'>Gerenciamento de Clientes</Dropdown.Item>
             <Dropdown.Item>Configurações</Dropdown.Item>
             <Dropdown.Item>Escolher fotos</Dropdown.Item>
             <Dropdown.Divider />

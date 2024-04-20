@@ -18,10 +18,7 @@ export const StepThree = ({ prevData }: { prevData?: any }) => {
   const onSubmit = (formData) => {
     setData((prevFormData) => ({
       ...prevFormData,
-      stepThree: {
-        ...prevFormData.stepThree,
-        ...formData,
-      },
+      stepThree: formData,
     }));
     handleNext();
   };
@@ -31,7 +28,7 @@ export const StepThree = ({ prevData }: { prevData?: any }) => {
       className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-3 m-4"
     >
       <h1 className="text-3xl font-bold text-center mb-4 text-secondary">
-        Novo Cliente
+        Formulário de Cliente{" "}
       </h1>
       <p className="text-3x1 font-bold text-center mb-9 text-secondary">
         {" "}
