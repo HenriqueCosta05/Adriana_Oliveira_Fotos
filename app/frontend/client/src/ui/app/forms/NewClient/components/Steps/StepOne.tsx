@@ -14,7 +14,11 @@ import NewUserFormContext from "../../../../../../contexts/forms/NewUserFormCont
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
 import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
 
-export const StepOne = ({prevData}: {prevData?:any}) => {
+interface StepOneProps {
+  prevData?: any;
+  method?: any;
+}
+export const StepOne = ({prevData, method}: StepOneProps) => {
   const { data, setData, handleNext } = useContext(NewUserFormContext);
 
   const {
@@ -26,14 +30,16 @@ export const StepOne = ({prevData}: {prevData?:any}) => {
     defaultValues: data.stepOne || prevData,
   });
 
-  const onSubmit = (data) => {
-    setData((prevFormData) => ({
-      ...prevFormData,
-      stepOne: data,
-    }));
-    handleNext();
-  };
-
+ const onSubmit = (formData) => {
+     setData((prevFormData) => ({
+       ...prevFormData,
+       stepOne: formData,
+     }));
+   handleNext();
+   }
+   
+   
+  
   //Transferir para outra pasta
   const registryTypeOptions = [
     { value: "Prospecção", label: "Prospecção" },

@@ -8,7 +8,11 @@ import {
 } from "flowbite-react";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
 
-export const StepTwo = ({ prevData }: { prevData?: any }) => {
+interface StepTwoProps {
+  prevData?: any;
+  method?: any;
+}
+export const StepTwo = ({prevData, method}: StepTwoProps) => {
   const { data, setData, handleNext, prev } = useContext(NewUserFormContext);
 
   const {
@@ -39,11 +43,11 @@ export const StepTwo = ({ prevData }: { prevData?: any }) => {
         .catch((error) => console.error(error));
     }
   }, [zipCode, setValue]);
-
-  const onSubmit = (data) => {
+  
+  const onSubmit = (formData) => {
     setData((prevFormData) => ({
       ...prevFormData,
-      stepTwo: data
+      stepTwo: formData,
     }));
     handleNext();
   };

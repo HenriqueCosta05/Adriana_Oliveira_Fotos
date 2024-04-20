@@ -57,7 +57,7 @@ export const UserForm = () => {
           setModal({
             isOpen: true,
             type: "error",
-            message: "Error fetching data",
+            message: "Erro ao recuperar dados do servidor! Tente novamente mais tarde",
           });
         });
     } else {
@@ -73,17 +73,20 @@ export const UserForm = () => {
           ...data.stepTwo,
           ...data.stepThree,
         };
+        if(method === "PUT") {
+           await sendData(userEmail, flattenedData);
+        }
         await sendData(userEmail, flattenedData);
         setModal({
           isOpen: true,
           type: "success",
-          message: "Cliente cadastrado com sucesso.",
+          message: "Cliente cadastrado ou atualizado com sucesso.",
         });
       } catch (error) {
         setModal({
           isOpen: true,
           type: "error",
-          message: "Erro ao cadastrar cliente!",
+          message: "Erro ao cadastrar ou atualizar cliente! Tente novamente mais tarde!",
         });
       }
     } else {
@@ -123,12 +126,24 @@ export const UserForm = () => {
 function renderStep(step, method, data) {
   switch (step) {
     case 1:
-      return method === "POST" ? <StepOne /> : <StepOne prevData={data} />;
+      return method === "POST" ? <StepOne method={method} /> : <StepOne prevData={data} method={method} />;
     case 2:
-      return method === "POST" ? <StepTwo /> : <StepTwo prevData={data} />;
+      return method === "POST" ? (
+        <StepTwo method={method} />
+      ) : (
+        <StepTwo prevData={data} method={method} />
+      );
     case 3:
-      return method === "POST" ? <StepThree /> : <StepThree prevData={data} />;
+      return method === "POST" ? (
+        <StepThree method={method}/>
+      ) : (
+        <StepThree prevData={data} method={method} />
+      );
     default:
-      return method === "POST" ? <StepOne /> : <StepOne prevData={data} />;
+      return method === "POST" ? (
+        <StepOne />
+      ) : (
+        <StepOne prevData={data} method={method} />
+      );
   }
 }

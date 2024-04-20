@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect} from "react";
 import { Controller, useForm } from "react-hook-form";
 import NewUserFormContext from "../../../../../../contexts/forms/NewUserFormContext";
 import Button from "react-bootstrap/esm/Button";
@@ -6,7 +6,12 @@ import * as Form from "@radix-ui/react-form";
 import * as Switch from "@radix-ui/react-switch";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
 
-export const StepThree = ({ prevData }: { prevData?: any }) => {
+interface StepThreeProps {
+  prevData?: any;
+  method?: any;
+}
+
+export const StepThree = ({prevData, method}: StepThreeProps) => {
   const { data, setData, handleNext, prev } = useContext(NewUserFormContext);
 
   const { control, handleSubmit, register } = useForm<
@@ -14,14 +19,15 @@ export const StepThree = ({ prevData }: { prevData?: any }) => {
   >({
     defaultValues: data.stepThree || prevData,
   });
+  
+ const onSubmit = (formData) => {
+   setData((prevFormData) => ({
+     ...prevFormData,
+    stepThree: formData,
+   }));
+   handleNext();
+ };
 
-  const onSubmit = (formData) => {
-    setData((prevFormData) => ({
-      ...prevFormData,
-      stepThree: formData,
-    }));
-    handleNext();
-  };
   return (
     <Form.Root
       onSubmit={handleSubmit(onSubmit)}
