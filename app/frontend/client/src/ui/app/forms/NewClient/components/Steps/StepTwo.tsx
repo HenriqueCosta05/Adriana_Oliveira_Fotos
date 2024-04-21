@@ -44,13 +44,13 @@ export const StepTwo = ({prevData, method}: StepTwoProps) => {
     }
   }, [zipCode, setValue]);
   
-  const onSubmit = (formData) => {
-    setData((prevFormData) => ({
-      ...prevFormData,
-      stepTwo: formData,
-    }));
-    handleNext();
-  };
+ const onSubmit = (formData) => {
+   setData((prevFormData) => ({
+     ...prevFormData,
+     stepTwo: formData,
+   }));
+   handleNext();
+ };
 
   return (
     <form

@@ -11,35 +11,38 @@ export const useFillData = () => {
 
   return (
     data &&
-    data.map((client, index) => {
-        return (
-          <>
-            <DeleteModal />
-            <Table.Row key={index}>
-              <Table.Cell className="text-center">
-                {client.name} {client.surname}
-              </Table.Cell>
-              <Table.Cell className="text-center">{client.email}</Table.Cell>
-              <Table.Cell className="text-center">{client.phone}</Table.Cell>
-              <Table.Cell className="flex justify-center">
-                <Dropdown label="Ações">
-                  <Dropdown.Item
-                    href={`/app/editar-cliente/${client.email}`}
-                    icon={FaEdit}
-                  >
-                    Editar
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    icon={MdDelete}
-                    onClick={() => handleDelete(client.email)}
-                  >
-                    Excluir
-                  </Dropdown.Item>
-                </Dropdown>
-              </Table.Cell>
-            </Table.Row>
-          </>
-        );
+    data.map((client) => {
+      return (
+        <>
+          <DeleteModal />
+          <Table.Row key={client.id}>
+            <Table.Cell className="text-center">
+              {client.registryType}
+            </Table.Cell>
+            <Table.Cell className="text-center">
+              {client.name} {client.surname}
+            </Table.Cell>
+            <Table.Cell className="text-center">{client.email}</Table.Cell>
+            <Table.Cell className="text-center">{client.phone}</Table.Cell>
+            <Table.Cell className="flex justify-center">
+              <Dropdown label="Ações">
+                <Dropdown.Item
+                  href={`/app/editar-cliente/${client.id}`} 
+                  icon={FaEdit}
+                >
+                  Editar
+                </Dropdown.Item>
+                <Dropdown.Item
+                  icon={MdDelete}
+                  onClick={() => handleDelete(client.id)} 
+                >
+                  Excluir
+                </Dropdown.Item>
+              </Dropdown>
+            </Table.Cell>
+          </Table.Row>
+        </>
+      );
     })
   );
 };

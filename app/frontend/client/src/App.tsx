@@ -13,7 +13,7 @@ function App() {
 
         <Route path="/app/clientes" element={<CRUD />} />
         <Route path="/app/novo-cliente" element={<UserForm />} />
-        <Route path="/app/editar-cliente/:userEmail" element={<UserForm />} />
+        <Route path="/app/editar-cliente/:id" element={<UserForm />} />
       </Routes>
     </BrowserRouter>
   );

@@ -30,14 +30,13 @@ export const StepOne = ({prevData, method}: StepOneProps) => {
     defaultValues: data.stepOne || prevData,
   });
 
- const onSubmit = (formData) => {
+   const onSubmit = (formData) => {
      setData((prevFormData) => ({
-       ...prevFormData,
+       ...prevFormData.stepOne,
        stepOne: formData,
      }));
-   handleNext();
-   }
-   
+     handleNext();
+   };
    
   
   //Transferir para outra pasta
@@ -77,7 +76,6 @@ export const StepOne = ({prevData, method}: StepOneProps) => {
             render={({ field }) => (
               <Select
               {...field}
-                {...register("registryType", { required: "Tipo de cadastro é obrigatório" })}
                 id="registryType"
                 name="registryType"
                 color={errors.registryType ? "failure" : "primary"}
@@ -112,7 +110,6 @@ export const StepOne = ({prevData, method}: StepOneProps) => {
           <Controller
             name="personType"
             control={control}
-            rules={{ required: "Tipo de pessoa é obrigatório" }}
             render={({ field }) => (
               <Select
                 {...field}

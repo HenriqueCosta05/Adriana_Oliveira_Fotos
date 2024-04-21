@@ -8,15 +8,15 @@ const handleErrors = (response) => {
   return response;
 };
 
-export const fetchData = async (email) => {
-  const response = await fetch(`${API}/consultar-cliente?email=${email}`);
-  const data = await handleErrors(response).json();
+export const fetchData = async (id: string) => {
+  const response = await fetch(`${API}/consultar-cliente?id=${id}`);
+  const data = await response.json();
   return data;
 };
 
-export const sendData = async (email?: string, data) => {
-  const url = email ? `${API}/editar-cliente/${email}` : `${API}/novo-cliente`;
-  const method = email ? "PUT" : "POST";
+export const sendData = async (id?: string, data) => {
+  const url = id ? `${API}/editar-cliente/${id}` : `${API}/novo-cliente`;
+  const method = id ? "PUT" : "POST";
   
   const response = await fetch(url, {
     method: method,

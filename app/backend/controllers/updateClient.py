@@ -1,13 +1,14 @@
 from fastapi import APIRouter, HTTPException
 from config.mongodb_config import colecao
 from models.Cliente import Cliente
+from bson.objectid import ObjectId
 
 router = APIRouter()
 
-@router.put('/app/editar-cliente/{email}')
-def atualizar_cliente(email: str, cliente: Cliente):
+@router.put('/app/editar-cliente/{id}')
+def atualizar_cliente(id, cliente: Cliente):
     try:
-        cliente_existente = colecao.find_one({"email": email.lower()})
+        cliente_existente = colecao.find_one({"_id": ObjectId(id)})
         if cliente_existente is None:
             raise HTTPException(status_code=404, detail="Cliente não encontrado")
     
@@ -31,10 +32,10 @@ def atualizar_cliente(email: str, cliente: Cliente):
                 "receiveEmail": cliente.receiveEmail,
             }
         }
-        colecao.update_one({"email": email.lower()}, update_data)
+        colecao.update_one({"_id": ObjectId(id)}, update_data)
     
-        cliente_atualizado = colecao.find_one({"email": cliente.email.lower()})
-        cliente_atualizado['email'] = str(cliente_atualizado['email'])
+        cliente_atualizado = colecao.find_one({"_id": ObjectId(id)})
+        cliente_atualizado['_id'] = str(cliente_atualizado['_id'])
         return {"aviso": "Cliente atualizado com sucesso", "cliente": cliente_atualizado}
     
     except Exception as e:

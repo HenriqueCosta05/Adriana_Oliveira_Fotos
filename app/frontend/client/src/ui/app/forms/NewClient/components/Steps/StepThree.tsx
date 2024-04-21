@@ -20,14 +20,14 @@ export const StepThree = ({prevData, method}: StepThreeProps) => {
     defaultValues: data.stepThree || prevData,
   });
   
- const onSubmit = (formData) => {
-   setData((prevFormData) => ({
-     ...prevFormData,
-    stepThree: formData,
-   }));
-   handleNext();
- };
-
+const onSubmit = (formData) => {
+     setData((prevFormData) => ({
+       ...prevFormData,
+       stepThree: formData,
+     }));
+     handleNext();
+  };
+  
   return (
     <Form.Root
       onSubmit={handleSubmit(onSubmit)}

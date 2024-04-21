@@ -5,6 +5,7 @@ from pydantic import BaseModel, validator
 
 
 class Cliente(BaseModel):
+    id: Optional[str] = None
     registryType: str
     personType: str
     name: str

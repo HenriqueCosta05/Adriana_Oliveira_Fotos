@@ -33,7 +33,7 @@ const initialData = {
 };
 
 export const UserForm = () => {
-  const { userEmail } = useParams();
+  const { id } = useParams();
   const [method, setMethod] = useState("POST");
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -45,9 +45,9 @@ export const UserForm = () => {
   });
 
   useEffect(() => {
-    if (userEmail) {
+    if (id) {
       setMethod("PUT");
-      fetchData(userEmail)
+      fetchData(id)
         .then((response) => {
           setData(response);
           setLoading(false);
@@ -57,13 +57,14 @@ export const UserForm = () => {
           setModal({
             isOpen: true,
             type: "error",
-            message: "Erro ao recuperar dados do servidor! Tente novamente mais tarde",
+            message:
+              "Erro ao recuperar dados do servidor! Tente novamente mais tarde",
           });
         });
     } else {
       setLoading(false);
     }
-  }, [userEmail]);
+  }, [id]);
 
   const handleNext = async () => {
     if (step === 3) {
@@ -73,10 +74,7 @@ export const UserForm = () => {
           ...data.stepTwo,
           ...data.stepThree,
         };
-        if(method === "PUT") {
-           await sendData(userEmail, flattenedData);
-        }
-        await sendData(userEmail, flattenedData);
+        await sendData(id, flattenedData);
         setModal({
           isOpen: true,
           type: "success",
@@ -86,7 +84,8 @@ export const UserForm = () => {
         setModal({
           isOpen: true,
           type: "error",
-          message: "Erro ao cadastrar ou atualizar cliente! Tente novamente mais tarde!",
+          message:
+            "Erro ao cadastrar ou atualizar cliente! Tente novamente mais tarde!",
         });
       }
     } else {
@@ -126,7 +125,11 @@ export const UserForm = () => {
 function renderStep(step, method, data) {
   switch (step) {
     case 1:
-      return method === "POST" ? <StepOne method={method} /> : <StepOne prevData={data} method={method} />;
+      return method === "POST" ? (
+        <StepOne method={method} />
+      ) : (
+        <StepOne prevData={data} method={method} />
+      );
     case 2:
       return method === "POST" ? (
         <StepTwo method={method} />
@@ -135,7 +138,7 @@ function renderStep(step, method, data) {
       );
     case 3:
       return method === "POST" ? (
-        <StepThree method={method}/>
+        <StepThree method={method} />
       ) : (
         <StepThree prevData={data} method={method} />
       );

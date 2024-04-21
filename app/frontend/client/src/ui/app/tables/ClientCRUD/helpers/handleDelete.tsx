@@ -3,10 +3,10 @@ import { Button, Modal } from "flowbite-react";
 
 export const useDeleteModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-    const [email, setEmail] = useState(null);
+    const [id, setId] = useState(null);
 
-  const handleDelete = (clientEmail) => {
-    setEmail(clientEmail);
+  const handleDelete = (id) => {
+    setId(id);
     setIsOpen(true);
   };
 
@@ -25,7 +25,7 @@ export const useDeleteModal = () => {
           Cancelar
         </Button>
         <Button className="bg-danger" onClick={() => {
-          fetch(`http://localhost:8000/app/excluir-cliente/${email}`, {
+          fetch(`http://localhost:8000/app/excluir-cliente/${id}`, {
             method: "DELETE",
           }).then(() => {
             alert("Cliente excluído com sucesso!")
