@@ -7,6 +7,7 @@ import {
   Label,
 } from "flowbite-react";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
+import UserNavbar from "../../../../components/UserNavbar";
 
 interface StepTwoProps {
   prevData?: any;
@@ -53,6 +54,8 @@ export const StepTwo = ({prevData, method}: StepTwoProps) => {
  };
 
   return (
+    <>
+    <UserNavbar/>
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 m-4"
@@ -282,7 +285,8 @@ export const StepTwo = ({prevData, method}: StepTwoProps) => {
           Próximo
         </Button>
       </div>
-    </form>
+      </form>
+      </>
   );
 };
 

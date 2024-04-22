@@ -5,6 +5,7 @@ import Button from "react-bootstrap/esm/Button";
 import * as Form from "@radix-ui/react-form";
 import * as Switch from "@radix-ui/react-switch";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
+import UserNavbar from "../../../../components/UserNavbar";
 
 interface StepThreeProps {
   prevData?: any;
@@ -14,7 +15,7 @@ interface StepThreeProps {
 export const StepThree = ({prevData, method}: StepThreeProps) => {
   const { data, setData, handleNext, prev } = useContext(NewUserFormContext);
 
-  const { control, handleSubmit, register, useController} = useForm<
+  const { control, handleSubmit, register} = useForm<
     UserDataProps["stepThree"]
   >({
     defaultValues: {
@@ -33,6 +34,8 @@ const onSubmit = (formData) => {
   };
   
   return (
+    <>
+    <UserNavbar/>
     <Form.Root
       onSubmit={handleSubmit(onSubmit)}
       className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-3 m-4"
@@ -120,7 +123,8 @@ const onSubmit = (formData) => {
           Enviar
         </Button>
       </div>
-    </Form.Root>
+      </Form.Root>
+      </>
   );
 };
 

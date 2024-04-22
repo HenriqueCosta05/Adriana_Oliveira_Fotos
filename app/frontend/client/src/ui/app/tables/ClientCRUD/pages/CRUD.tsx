@@ -11,6 +11,9 @@ export default function CRUD() {
   return (
     <>
       <UserNavbar />
+      <h1 className="text-3xl font-bold text-center my-8 text-cyan-800">
+        Gerenciamento de Clientes
+      </h1>
       <Button
         className="w-max p-2 mx-auto mt-20 flex overflow-x-auto"
         href="/app/novo-cliente"

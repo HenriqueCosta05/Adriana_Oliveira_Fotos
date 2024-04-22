@@ -13,6 +13,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import NewUserFormContext from "../../../../../../contexts/forms/NewUserFormContext";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
 import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
+import UserNavbar from "../../../../components/UserNavbar";
 
 interface StepOneProps {
   prevData?: any;
@@ -51,6 +52,8 @@ export const StepOne = ({prevData}: StepOneProps) => {
   ];
 
   return (
+    <>
+    <UserNavbar/>
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 my-4"
@@ -303,5 +306,6 @@ export const StepOne = ({prevData}: StepOneProps) => {
         </Button>
       </div>
     </form>
+    </>
   );
 };
