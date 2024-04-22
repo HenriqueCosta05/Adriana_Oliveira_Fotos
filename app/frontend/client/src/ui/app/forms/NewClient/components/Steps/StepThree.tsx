@@ -14,16 +14,20 @@ interface StepThreeProps {
 export const StepThree = ({prevData, method}: StepThreeProps) => {
   const { data, setData, handleNext, prev } = useContext(NewUserFormContext);
 
-  const { control, handleSubmit, register } = useForm<
+  const { control, handleSubmit, register, reset } = useForm<
     UserDataProps["stepThree"]
   >({
-    defaultValues: data.stepThree || prevData,
+    defaultValues: {
+      receiveSMS: false,
+      receiveEmail: false,
+      ...(data || prevData),
+    },
   });
   
 const onSubmit = (formData) => {
      setData((prevFormData) => ({
        ...prevFormData,
-       stepThree: formData,
+       ...formData,
      }));
      handleNext();
   };
@@ -56,15 +60,15 @@ const onSubmit = (formData) => {
                 className="w-[42px] h-[25px] bg-neutral A6 rounded-full relative shadow-[0_2px_10px] shadow-neutral A4 focus:shadow-[0_0_0_2px] focus:shadow-neutral data-[state=checked]:bg-secondary outline-none cursor-default "
                 id="sms"
                 {...field}
+                checked={prevData?.receiveSMS || false}
                 onCheckedChange={(checked) => {
                   setData((prevFormData) => ({
                     ...prevFormData,
-                    stepThree: {
-                      ...prevFormData.stepThree,
-                      receiveSMS: checked,
-                    },
+                    receiveSMS: checked,
                   }));
+                  field.onChange(checked)
                 }}
+                
               >
                 <Switch.Thumb className="block w-[21px] h-[21px] bg-neutral rounded-full shadow-[0_2px_2px] shadow-blackA4 transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[19px]" />
               </Switch.Root>
@@ -81,7 +85,6 @@ const onSubmit = (formData) => {
             Receber avisos por E-mail?
           </Form.Label>
           <Controller
-            name="receiveEmail"
             control={control}
             {...register("receiveEmail")}
             render={({ field }) => (
@@ -89,13 +92,11 @@ const onSubmit = (formData) => {
                 className="w-[42px] h-[25px] bg-neutral A6 rounded-full relative shadow-[0_2px_10px] shadow-neutral A4 focus:shadow-[0_0_0_2px] focus:shadow-neutral data-[state=checked]:bg-secondary outline-none cursor-default "
                 id="sms"
                 {...field}
+                checked={prevData?.receiveEmail || false}
                 onCheckedChange={(checked) => {
                   setData((prevFormData) => ({
                     ...prevFormData,
-                    stepThree: {
-                      ...prevFormData.stepThree,
-                      receiveEmail: checked,
-                    },
+                    receiveEmail: checked,
                   }));
                 }}
               >

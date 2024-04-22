@@ -23,7 +23,7 @@ export const StepTwo = ({prevData, method}: StepTwoProps) => {
     setValue,
     formState: { errors },
   } = useForm<UserDataProps["stepTwo"]>({
-    defaultValues: data.stepTwo || prevData,
+    defaultValues: data || prevData,
   });
 
   const zipCode = watch("zip");
@@ -47,7 +47,7 @@ export const StepTwo = ({prevData, method}: StepTwoProps) => {
  const onSubmit = (formData) => {
    setData((prevFormData) => ({
      ...prevFormData,
-     stepTwo: formData,
+     ...formData,
    }));
    handleNext();
  };

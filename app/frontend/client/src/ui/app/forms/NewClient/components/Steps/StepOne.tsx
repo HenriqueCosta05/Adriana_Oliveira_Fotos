@@ -16,9 +16,9 @@ import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomT
 
 interface StepOneProps {
   prevData?: any;
-  method?: any;
 }
-export const StepOne = ({prevData, method}: StepOneProps) => {
+
+export const StepOne = ({prevData}: StepOneProps) => {
   const { data, setData, handleNext } = useContext(NewUserFormContext);
 
   const {
@@ -27,13 +27,13 @@ export const StepOne = ({prevData, method}: StepOneProps) => {
     register,
     formState: { errors },
   } = useForm<UserDataProps["stepOne"]>({
-    defaultValues: data.stepOne || prevData,
+    defaultValues: data || prevData,
   });
 
    const onSubmit = (formData) => {
      setData((prevFormData) => ({
-       ...prevFormData.stepOne,
-       stepOne: formData,
+       ...prevFormData,
+       ...formData,
      }));
      handleNext();
    };

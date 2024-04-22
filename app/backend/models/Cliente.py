@@ -12,7 +12,7 @@ class Cliente(BaseModel):
     surname: str
     email: str
     phone: str
-    birthDate: Optional[datetime] = None
+    birthDate: Optional[datetime] = ''
     zip: str
     city: str
     state: str
@@ -25,9 +25,14 @@ class Cliente(BaseModel):
     accountType: Optional[dict] = Conta(user=True, administrador=False).dict()
     
     #Validação de campos específicos
-    @validator('birthDate', pre=True)
+    @validator('birthDate', pre=True, always=True)
     def parse_birthDate(cls, value):
+        if value is None or value == '':
+            return None
         if isinstance(value, str):
-            date_string = value.split('T')[0]
-            return datetime.strptime(date_string, '%Y-%m-%d').date()
+            try:
+                date_string = value.split('T')[0]
+                return datetime.strptime(date_string, '%Y-%m-%d').date()
+            except ValueError:
+                return None
         return value

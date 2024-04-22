@@ -21,7 +21,7 @@ def cadastrar_banco(novo_cliente: Cliente):
     "surname": novo_cliente.surname.lower(),
     "email": novo_cliente.email.lower(),
     "phone": novo_cliente.phone,
-    "birthDate": novo_cliente.birthDate,
+    "birthDate": novo_cliente.birthDate if novo_cliente.birthDate else None,
     "zip": novo_cliente.zip,
     "city": novo_cliente.city.lower(),
     "state": novo_cliente.state.lower(),

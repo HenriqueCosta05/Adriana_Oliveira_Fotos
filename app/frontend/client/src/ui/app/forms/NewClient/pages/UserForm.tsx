@@ -69,12 +69,7 @@ export const UserForm = () => {
   const handleNext = async () => {
     if (step === 3) {
       try {
-        const flattenedData = {
-          ...data.stepOne,
-          ...data.stepTwo,
-          ...data.stepThree,
-        };
-        await sendData(id, flattenedData);
+        await sendData(id, data);
         setModal({
           isOpen: true,
           type: "success",
