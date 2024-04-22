@@ -4,6 +4,7 @@ import { Dropdown } from "flowbite-react";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useDeleteModal } from "../helpers/handleDelete";
+import { customTheme } from "../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme"; 
 
 export const useFillData = () => {
   const data = useFetch("http://localhost:8000/app/consultar-clientes");
@@ -25,7 +26,7 @@ export const useFillData = () => {
             <Table.Cell className="text-center">{client.email}</Table.Cell>
             <Table.Cell className="text-center">{client.phone}</Table.Cell>
             <Table.Cell className="flex justify-center">
-              <Dropdown label="Ações">
+              <Dropdown label="Ações" theme={customTheme}>
                 <Dropdown.Item
                   href={`/app/editar-cliente/${client.id}`} 
                   icon={FaEdit}

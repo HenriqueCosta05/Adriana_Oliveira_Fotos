@@ -14,7 +14,7 @@ interface StepThreeProps {
 export const StepThree = ({prevData, method}: StepThreeProps) => {
   const { data, setData, handleNext, prev } = useContext(NewUserFormContext);
 
-  const { control, handleSubmit, register, reset } = useForm<
+  const { control, handleSubmit, register, useController} = useForm<
     UserDataProps["stepThree"]
   >({
     defaultValues: {
