@@ -84,7 +84,7 @@ export const StepOne = ({prevData}: StepOneProps) => {
                 color={errors.registryType ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
               >
-                <option disabled value="">
+                <option disabled selected value="">
                   Selecione...
                 </option>
                 {registryTypeOptions.map((option) => (
@@ -123,7 +123,7 @@ export const StepOne = ({prevData}: StepOneProps) => {
                 color={errors.personType ? "failure" : "primary"}
                 className="w-11/12 text-center rounded-lg p-2"
               >
-                <option disabled value="">
+                <option disabled selected value="">
                   Selecione...
                 </option>
                 {personTypeOptions.map((option) => (
