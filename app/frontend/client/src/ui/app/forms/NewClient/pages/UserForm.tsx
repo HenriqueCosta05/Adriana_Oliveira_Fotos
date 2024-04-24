@@ -88,6 +88,11 @@ export const UserForm = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setModal({ ...modal, isOpen: false });
+    window.location.href = "/app/clientes";
+  };
+
   const prev = () => setStep(step - 1);
 
   if (loading) return <div>Carregando...</div>;
@@ -108,9 +113,7 @@ export const UserForm = () => {
           <p>{modal.message}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => setModal({ ...modal, isOpen: false })}>
-            Fechar
-          </Button>
+          <Button onClick={handleCloseModal}>Fechar</Button>
         </Modal.Footer>
       </Modal>
     </>
