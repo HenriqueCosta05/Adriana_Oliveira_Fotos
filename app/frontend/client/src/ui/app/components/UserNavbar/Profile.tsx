@@ -10,10 +10,10 @@ export default function Profile() {
       <Dropdown.Header>
         <span className="block text-sm">Adriana Oliveira</span>
       </Dropdown.Header>
-      <Dropdown.Item href="#">Tela Inicial</Dropdown.Item>
+      <Dropdown.Item href="/">Página Inicial</Dropdown.Item>
       <Dropdown.Item href="/app/clientes">Clientes</Dropdown.Item>
       <Dropdown.Item href="#">Galerias</Dropdown.Item>
-      <Dropdown.Item href="#">Agenda</Dropdown.Item>
+      <Dropdown.Item href="/app/agenda">Agenda</Dropdown.Item>
       <Dropdown.Item href="#">Despesas/Receitas</Dropdown.Item>
     </Dropdown>
   );
