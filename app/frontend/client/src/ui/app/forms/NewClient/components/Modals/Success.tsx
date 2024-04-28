@@ -1,19 +1,20 @@
 import { Button, Modal } from "flowbite-react";
 
-export default function ErrorModal({ modal, setModal, handleCloseModal, message}) {
-  const errorMessage = message;
-    
+export default function InvalidFormErrors({
+  modal,
+  setModal,
+  handleCloseModal,
+}) {
+
   return (
     <>
       <Modal
         show={modal.isOpen}
         onClose={() => setModal({ ...modal, isOpen: false })}
       >
-        <Modal.Header>
-          Erro
-        </Modal.Header>
+        <Modal.Header>Sucesso</Modal.Header>
         <Modal.Body>
-          <p>{errorMessage}</p>
+          <p>Cliente cadastrado ou atualizado com sucesso.</p>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleCloseModal}>Fechar</Button>

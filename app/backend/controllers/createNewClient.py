@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-from fastapi import HTTPException
+from fastapi import APIRouter, HTTPException
 from config.mongodb_config import colecao
 from models.Cliente import Cliente
 from helpers.consultar_banco import consultar_banco
@@ -12,7 +11,7 @@ def cadastrar_banco(novo_cliente: Cliente):
     
     for cliente_existente in clientes:
         if cliente_existente.email == novo_cliente.email.lower():
-            raise HTTPException(status_code=400, detail="Cliente já possui conta criada com este email")
+            raise HTTPException(status_code=400, detail="Email já cadastrado no sistema. Tente novamente com outro.")
     
     cliente_novo = {
     "registryType": novo_cliente.registryType,

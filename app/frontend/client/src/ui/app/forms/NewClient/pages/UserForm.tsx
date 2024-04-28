@@ -4,8 +4,9 @@ import { Provider } from "../../../../../contexts/forms/NewUserFormContext";
 import { StepOne } from "../components/Steps/StepOne";
 import { StepTwo } from "../components/Steps/StepTwo";
 import { StepThree } from "../components/Steps/StepThree";
-import { Modal, Button } from "flowbite-react";
-import { fetchData, sendData } from "../../../../../services/userDataService";
+import { fetchData, sendData } from "../../../../../services/DataService";
+import Success from "../components/Modals/Success";
+import ErrorModal from "../components/Modals/Error";
 
 const initialData = {
   stepOne: {
@@ -34,13 +35,14 @@ const initialData = {
 
 export const UserForm = () => {
   const { id } = useParams();
+  const [errorMessage, setErrorMessage] = useState("");
   const [method, setMethod] = useState("POST");
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(initialData);
   const [modal, setModal] = useState({
     isOpen: false,
-    type: "error",
+    type: "",
     message: "",
   });
 
@@ -53,12 +55,10 @@ export const UserForm = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Error:", error);
           setModal({
             isOpen: true,
-            type: "error",
-            message:
-              "Erro ao recuperar dados do servidor! Tente novamente mais tarde",
+            type: "Error",
+            message: "",
           });
         });
     } else {
@@ -66,27 +66,28 @@ export const UserForm = () => {
     }
   }, [id]);
 
-  const handleNext = async () => {
-    if (step === 3) {
-      try {
-        await sendData(id, data);
-        setModal({
-          isOpen: true,
-          type: "success",
-          message: "Cliente cadastrado ou atualizado com sucesso.",
-        });
-      } catch (error) {
-        setModal({
-          isOpen: true,
-          type: "error",
-          message:
-            "Erro ao cadastrar ou atualizar cliente! Tente novamente mais tarde!",
-        });
-      }
-    } else {
-      setStep(step + 1);
+ const handleNext = async () => {
+  if (step === 3) {
+    try {
+      await sendData(id, data);
+      setModal({
+        isOpen: true,
+        type: "success",
+        message: ""
+      });
+    } catch (error) {
+      const message = error.message;
+      setErrorMessage(message);
+      setModal({
+        isOpen: true,
+        type: "Error",
+        message: errorMessage,
+      });
     }
-  };
+  } else {
+    setStep(step + 1);
+  }
+};
 
   const handleCloseModal = () => {
     setModal({ ...modal, isOpen: false });
@@ -102,20 +103,7 @@ export const UserForm = () => {
       <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
         {renderStep(step, method, data)}
       </Provider>
-      <Modal
-        show={modal.isOpen}
-        onClose={() => setModal({ ...modal, isOpen: false })}
-      >
-        <Modal.Header>
-          {modal.type === "success" ? "Sucesso!" : "Erro"}
-        </Modal.Header>
-        <Modal.Body>
-          <p>{modal.message}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleCloseModal}>Fechar</Button>
-        </Modal.Footer>
-      </Modal>
+      {renderModal(modal, setModal, handleCloseModal, errorMessage)}
     </>
   );
 };
@@ -146,5 +134,29 @@ function renderStep(step, method, data) {
       ) : (
         <StepOne prevData={data} method={method} />
       );
+  }
+}
+
+function renderModal(modal, setModal, handleCloseModal, errorMessage) {
+  switch (modal.type) {
+    case "success":
+      return (
+        <Success
+          modal={modal}
+          setModal={setModal}
+          handleCloseModal={handleCloseModal}
+        />
+      );
+    case "Error":
+      return (
+        <ErrorModal
+          modal={modal}
+          setModal={setModal}
+          handleCloseModal={handleCloseModal}
+          message={errorMessage}
+        />
+      );
+    default:
+      break;
   }
 }

@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from exceptions.email_in_use import EmailInUse
 from config.mongodb_config import colecao
 from models.Cliente import Cliente
 from bson.objectid import ObjectId
@@ -12,6 +13,10 @@ def atualizar_cliente(id, cliente: Cliente):
         if cliente_existente is None:
             raise HTTPException(status_code=404, detail="Cliente não encontrado")
     
+        cliente_com_mesmo_email = colecao.find_one({"email": cliente.email.lower()})
+        if cliente_com_mesmo_email and str(cliente_com_mesmo_email['_id']) != id:
+            raise EmailInUse(cliente.email.lower())
+                
         update_data = {
             "$set": {
                 "registryType": cliente.registryType,

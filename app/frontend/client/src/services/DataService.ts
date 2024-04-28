@@ -1,15 +1,22 @@
 const API = "http://localhost:8000/app";
 
-const handleErrors = (response) => {
+const handleErrors = async (response) => {
   if (!response.ok) {
-    console.error("Algo deu errado", response);
-    throw Error(response.statusText);
+    let errorMessage;
+    try {
+      const errorBody = await response.json();
+      errorMessage = errorBody.detail;
+    } catch (e) {
+      console.error('Erro ao converter mensagem de erro', e);
+    }
+    throw Error(errorMessage);
   }
   return response;
 };
 
 export const fetchData = async (id: string) => {
   const response = await fetch(`${API}/consultar-cliente?id=${id}`);
+  await handleErrors(response); 
   const data = await response.json();
   return data;
 };
@@ -25,7 +32,7 @@ export const sendData = async (id?: string, data) => {
     },
     body: JSON.stringify(data)
   });
-  
-  const responseData = await handleErrors(response).json();
-  return responseData;
+
+  await handleErrors(response);
+  return response.json();
 };
