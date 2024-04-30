@@ -25,4 +25,5 @@ dist-ssr
 
 #Backend modules
 /backend/backend
-/backend/__pycache__
+/__pycache__
+/backend/token.json

@@ -13,45 +13,34 @@ export default function About({ data }) {
   return (
     <Section id="sobre-mim">
       {logo && title && description && button && imgGallery && (
-        <div className="intro flex items-center justify-center flex-wrap">
-          <div className="intro__img flex w-full justify-center items-center mb-12">
-            <Image
-              src={logo.src}
-              alt="Logo"
-              width={logo.width}
-              height={logo.height}
-              className="rounded-full lg:w-1/6 w-5/12"
-            />
-          </div>
-          <div className="intro__title block mx-auto">
-            <h2 className="text-4xl font-black text-secondary">
+        <div className="container">
+          <div className="row">
+            <h2 className="italic col-lg-6 xs:w-11/12 lg:w-1/2 mx-auto text-4xl font-black text-secondary m-40 p-10">
               {title.payload}
+              <p className="text-lg mx-auto text-center font-medium lg:w-1/2 w-11/12 my-4">
+                {description.payload}
+              </p>
             </h2>
-            <p className="text-lg mx-auto text-center font-medium lg:w-1/2 w-11/12 my-4">
-              {description.payload}
-            </p>
-            <Button
-              variant="secondary"
-              href={button.href}
-              className="my-4 md:p-4 lg:mx-auto"
-            >
-              {button.payload}
-            </Button>
-          </div>
 
-          <div className="img__gallery flex flex-wrap justify-center items-center ">
-            {Array.isArray(imgGallery) &&
-              imgGallery &&
-              imgGallery.map((img, index) => (
-                <Image
-                  key={index}
-                  src={img}
-                  width=""
-                  height=""
-                  alt="gallery"
-                  className="rounded-lg lg:w-2/5 xl:w-3/12 md:w-5/12 h-auto m-4 xxs:w-9/12"
-                />
-              ))}
+            <div className="col-lg-6 xs:w-11/12 lg:w-1/2 mx-auto">
+              <Image
+                src={imgGallery}
+                alt="imagem"
+                className="mx-auto w-11/12 lg:w-3/4 my-4"
+              />
+            </div>
+
+            <div className="intro flex items-center justify-center flex-wrap">
+              <div className="intro__title block mx-auto">
+                <Button
+                  variant="secondary"
+                  href={button.href}
+                  className="my-4 md:p-4 lg:mx-auto"
+                >
+                  {button.payload}
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       )}

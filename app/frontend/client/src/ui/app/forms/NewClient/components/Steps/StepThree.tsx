@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import NewUserFormContext from "../../../../../../contexts/forms/NewUserFormContext";
+import NewUserFormContext from "../../../../../../contexts/forms/FormContext";
 import Button from "react-bootstrap/esm/Button";
 import * as Form from "@radix-ui/react-form";
 import * as Switch from "@radix-ui/react-switch";
@@ -67,9 +67,9 @@ export const StepThree = ({ prevData, method }: StepThreeProps) => {
                   onCheckedChange={(checked) => {
                     field.onChange(checked);
                     setData((prevFormData) => ({
-                    ...prevFormData,
-                    receiveSMS: checked,
-                  }));
+                      ...prevFormData,
+                      receiveSMS: checked,
+                    }));
                   }}
                 >
                   <Switch.Thumb className="block w-[21px] h-[21px] bg-neutral rounded-full shadow-[0_2px_2px] shadow-blackA4 transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[19px]" />

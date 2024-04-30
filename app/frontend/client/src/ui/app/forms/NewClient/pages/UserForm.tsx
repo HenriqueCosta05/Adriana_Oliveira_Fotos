@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Provider } from "../../../../../contexts/forms/NewUserFormContext";
+import { Provider } from "../../../../../contexts/forms/FormContext";
 import { StepOne } from "../components/Steps/StepOne";
 import { StepTwo } from "../components/Steps/StepTwo";
 import { StepThree } from "../components/Steps/StepThree";
-import { fetchData, sendData } from "../../../../../services/DataService";
-import Success from "../components/Modals/Success";
-import ErrorModal from "../components/Modals/Error";
+import { fetchData, sendData } from "../../../../../services/UserDataService";
+import Success from "../../../modals/client/Success";
+import ErrorModal from "../../../modals/client/Error";
 
 const initialData = {
   stepOne: {
@@ -66,28 +66,28 @@ export const UserForm = () => {
     }
   }, [id]);
 
- const handleNext = async () => {
-  if (step === 3) {
-    try {
-      await sendData(id, data);
-      setModal({
-        isOpen: true,
-        type: "success",
-        message: ""
-      });
-    } catch (error) {
-      const message = error.message;
-      setErrorMessage(message);
-      setModal({
-        isOpen: true,
-        type: "Error",
-        message: errorMessage,
-      });
+  const handleNext = async () => {
+    if (step === 3) {
+      try {
+        await sendData(id, data);
+        setModal({
+          isOpen: true,
+          type: "success",
+          message: "",
+        });
+      } catch (error) {
+        const message = error.message;
+        setErrorMessage(message);
+        setModal({
+          isOpen: true,
+          type: "Error",
+          message: errorMessage,
+        });
+      }
+    } else {
+      setStep(step + 1);
     }
-  } else {
-    setStep(step + 1);
-  }
-};
+  };
 
   const handleCloseModal = () => {
     setModal({ ...modal, isOpen: false });

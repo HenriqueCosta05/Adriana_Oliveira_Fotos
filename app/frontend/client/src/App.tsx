@@ -5,6 +5,7 @@ import "./components/Shared/BootstrapCustomTheme.scss";
 import { UserForm } from "./ui/app/forms/NewClient/pages/UserForm";
 import CRUD from "./ui/app/tables/ClientCRUD/pages/CRUD";
 import Agenda from "./ui/app/calendar/Calendar";
+import { AppointmentForm } from "./ui/app/forms/Appointments/NewApointment/pages/NewApointment";
 function App() {
   return (
     <BrowserRouter>
@@ -16,7 +17,8 @@ function App() {
         <Route path="/app/novo-cliente" element={<UserForm />} />
         <Route path="/app/editar-cliente/:id" element={<UserForm />} />
 
-        <Route path="/app/agenda" element={<Agenda/>} />
+        <Route path="/app/agenda" element={<Agenda />} />
+        <Route path="/app/novo-compromisso" element={<AppointmentForm />} />
       </Routes>
     </BrowserRouter>
   );

@@ -12,7 +12,10 @@ import { useState, useRef } from "react";
 
 export default function Contact({ data }) {
   const introData = useMemo(() => data && data[0], [data]);
-  const formData = useMemo(() => data && data.filter((item, index) => index > 0 && index < 5), [data]);
+  const formData = useMemo(
+    () => data && data.filter((item, index) => index > 0 && index < 5),
+    [data]
+  );
 
   const [formInput, setFormInput] = useState({
     nome: "",
@@ -24,30 +27,30 @@ export default function Contact({ data }) {
   const formRef = useRef(null);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const form = e.target.closest("form");
-  const formData = new FormData(form);
+    e.preventDefault();
+    const form = e.target.closest("form");
+    const formData = new FormData(form);
 
-  try {
-    const response = await fetch(form.action, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        alert(
+          "Formulário enviado com sucesso! Entraremos em contato em até 2 dias úteis!"
+        );
+      } else {
+        alert("Algo deu errado! Tente novamente mais tarde!");
       }
-    });
-
-    if (response.ok) {
-      alert('Formulário enviado com sucesso! Entraremos em contato em até 2 dias úteis!');
-      
-    } else {
-      alert('Algo deu errado! Tente novamente mais tarde!');
-      
+    } catch (error) {
+      console.error("Error:", error);
     }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
+  };
 
   const handleInputChange = (event) => {
     const inputs = document.querySelectorAll("input");
@@ -65,34 +68,12 @@ export default function Contact({ data }) {
     <Section id="contato">
       {introData && formData && (
         <div>
-          <div className="intro">
-            <h2 className="text-4xl font-black text-secondary">
-              {introData.title}
-            </h2>
-            <p className="text-lg mx-auto text-center font-medium w-11/12 my-4">
-              {introData.description}
-            </p>
-            <div className="flex justify-center items-center">
-              <a href="#">
-                <FontAwesomeIcon
-                  icon={faSquareWhatsapp}
-                  style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
-                />
-              </a>
-              <a href="#">
-                <FontAwesomeIcon
-                  icon={faSquareInstagram}
-                  style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
-                />
-              </a>
-              <a href="#">
-                <FontAwesomeIcon
-                  icon={faSquareFacebook}
-                  style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
-                />
-              </a>
-            </div>
-          </div>
+          <h2 className="italic text-4xl font-black text-secondary">
+            {introData.title}
+          </h2>
+          <p className="italic text-lg mx-auto text-center font-medium w-11/12 my-4">
+            {introData.description}
+          </p>
           <Form.Root
             className="container bg-accent p-8 rounded-3 w-11/12"
             onSubmit={handleSubmit}
@@ -259,6 +240,28 @@ export default function Contact({ data }) {
               </Button>
             </Form.Submit>
           </Form.Root>
+          <div className="intro">
+            <div className="flex justify-center items-center">
+              <a href="#">
+                <FontAwesomeIcon
+                  icon={faSquareWhatsapp}
+                  style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
+                />
+              </a>
+              <a href="#">
+                <FontAwesomeIcon
+                  icon={faSquareInstagram}
+                  style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
+                />
+              </a>
+              <a href="#">
+                <FontAwesomeIcon
+                  icon={faSquareFacebook}
+                  style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
+                />
+              </a>
+            </div>
+          </div>
         </div>
       )}
     </Section>

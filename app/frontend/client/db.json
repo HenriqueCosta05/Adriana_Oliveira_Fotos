@@ -56,7 +56,7 @@
     },
     {
       "id": 3,
-      "payload": "(substituir) Adriana, a guardiã de momentos inesquecíveis, capturando a essência da felicidade em cada clique. Seja bem-vindo(a) ao meu mundo de memórias encantadas!",
+      "payload": "Adriana, a guardiã de momentos inesquecíveis, capturando a essência da felicidade em cada clique. Seja bem-vindo(a) ao meu mundo de memórias encantadas!",
       "Content-type": "p"
     },
     {
@@ -68,64 +68,52 @@
     {
       "id": 5,
       "title": "Imagens",
-      "Content-type": "IMG-gallery",
-      "src": [
-        "https://i.ibb.co/XXb9wjN/IMG-20240408-WA0022.jpg",
-        "https://i.ibb.co/6BghY6f/IMG-20240408-WA0023.jpg",
-        "https://i.ibb.co/sQBTGjB/IMG-20240408-WA0018.jpg",
-        "https://i.ibb.co/m4zn3T2/IMG-20240408-WA0019.jpg",
-        "https://i.ibb.co/m592cng/IMG-20240408-WA0020.jpg",
-        "https://i.ibb.co/2PSQKFL/IMG-20240408-WA0021.jpg"
-      ]
+      "Content-type": "IMGgallery",
+      "src": ["https://i.ibb.co/gDgDGds/Montagem-de-Fotos-Mem-rias-1.png"]
     }
   ],
   "services": [
     {
       "id": 1,
       "title": "Serviços Oferecidos",
-      "description": "Ofereço uma variedade de serviços de fotografia personalizados. Desde ensaios fotográficos até cobertura de eventos, estou aqui para capturar seus momentos especiais com qualidade e profissionalismo.",
+      "description": "Ofereço uma variedade de serviços de fotografia personalizados. Estou aqui para capturar seus momentos especiais com qualidade e profissionalismo.",
       "Content-type": "intro"
     },
     {
       "id": 2,
-      "title": "Chá de Bebê",
-      "description": "Registre cada momento mágico do seu chá de bebê com fotografias encantadoras e cheias de amor. Preserve para sempre essas memórias especiais com o meu serviço de ensaio fotográfico personalizado.",
-      "icon": " https://i.ibb.co/FhpbHpd/bebe.png",
+      "title": "Ensaio Familia",
+      "description": "Registre o amor, conexão e união que existe em sua família, transformando em algo palpável as imagens que serão tesouros para sempre.",
+
       "Content-type": "service"
     },
     {
       "id": 3,
-      "title": "Festas de Aniversário",
-      "description": "Transforme seu aniversário em memórias inesquecíveis com um ensaio fotográfico personalizado. Capturando cada momento especial, estou aqui para criar imagens que celebram a alegria e a felicidade do seu dia.",
-      "icon": "https://i.ibb.co/1Mgwz16/aniversario.png",
+      "title": "Ensaio Gestante",
+      "description": "Celebre a chegada do seu novo amor com um ensaio fotográfico que captura toda a emoção e expectativa deste momento especial; cada imagem é uma lembrança única deste capítulo emocionante em sua vida!",
       "Content-type": "service"
     },
     {
       "id": 4,
-      "title": "Ensaios Boudoir",
-      "description": "Reviva sua sensualidade e confiança com um ensaio fotográfico boudoir. Deixe-me capturar sua beleza e elegância de forma delicada e empoderadora, criando memórias deslumbrantes para toda a vida.",
-      "icon": "https://i.ibb.co/9tWhHNY/mais18.png",
+      "title": "Ensaio Infantil",
+      "description": "Vamos capturar a inocência, a alegria e a curiosidade das crianças. Cada foto é uma lembrança preciosa de suas personalidades brilhantes e sorrisos contagiantes.",
       "Content-type": "service"
     },
     {
       "id": 5,
-      "title": "Festas de 15 anos",
-      "description": "Transforme seus momentos inesquecíveis em memórias eternas com os ensaios fotográficos personalizados para festas de 15 anos, capturando toda a beleza e alegria desse momento único.",
-      "icon": "https://i.ibb.co/McCpPzj/15anos.png",
+      "title": "Ensaio Pet",
+      "description": "Vamos registrar a personalidade, o carinho e a energia dos nossos adoráveis amigos pet's. Cada foto é uma celebração do amor incondicional e da conexão especial entre humanos e animais de estimação.",
       "Content-type": "service"
     },
     {
       "id": 5,
-      "title": "Casamentos",
-      "description": "Registre o amor eterno em cada clique. Ofereço ensaios fotográficos de casamento repletos de emoção e beleza, capturando os momentos mais especiais deste dia inesquecível com delicadeza e maestria.",
-      "icon": "https://i.ibb.co/qFb0VgY/casamento.png",
+      "title": "Ensaio Pré-Wedding",
+      "description": "Registre o amor eterno em cada clique. Registraremos no ensaio de pré-wedding a emoção deste momento; capturando a beleza deste momento de um dia inesquecível com delicadeza e maestria.",
       "Content-type": "service"
     },
     {
       "id": 6,
-      "title": "Eventos Corporativos",
-      "description": "Realizo ensaios fotográficos e cobertura de eventos corporativos, capturando a essência e o profissionalismo da sua empresa. Conte comigo para registrar momentos memoráveis e fortalecer sua imagem corporativa.",
-      "icon": "https://i.ibb.co/Pg6LRbt/event.png",
+      "title": "Ensaios Boudoir",
+      "description": "Reviva sua sensualidade e confiança com um ensaio fotográfico boudoir. Deixe-me capturar sua beleza e elegância de forma delicada e empoderadora, criando memórias deslumbrantes para toda a vida.",
       "Content-type": "service"
     }
   ],
@@ -138,30 +126,30 @@
     },
     {
       "id": 2,
-      "title": "Henrique Costa",
+      "title": "Ariane Madeira",
       "icon": "https://i.ibb.co/3FLms3n/henrique.jpg",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
+      "description": "Fazer minhas fotos de gestante ao ar livre foi uma experiência que nunca esquecerei. Ter minha família junto tornou tudo ainda mais especial. Cada clique da câmera capturou não apenas a beleza da gravidez, mas também a felicidade e a expectativa que sentimos juntos. A natureza ao nosso redor proporcionou um cenário deslumbrante e uma sensação de paz que ressoa em cada foto.",
       "Content-type": "testimonial"
     },
     {
       "id": 3,
-      "title": "Ricardo Moraes",
+      "title": "Elisa Mateus",
       "icon": "https://avatars.githubusercontent.com/u/136482776?v=4",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
+      "description": "Adorei as fotos que realizamos. A Adriana é uma excelente profissional, muito atenciosa e dedicada. O resultado foi incrível, superou minhas expectativas. Recomendo muito o trabalho dela. Obrigada por tudo, Adriana! Sucesso sempre! #superrecomendo",
       "Content-type": "testimonial"
     },
     {
       "id": 4,
-      "title": "Thais Andrade",
+      "title": "Andreia Silva",
       "icon": "https://avatars.githubusercontent.com/u/134142404?v=4",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
+      "description": "Tenho pets e adorei a ideia de um ensaio fotográfico para eles. A Adriana foi super atenciosa e paciente com meus bichinhos. O resultado foi incrível, as fotos ficaram lindas! Recomendo muito o trabalho dela. Obrigada, Adriana!",
       "Content-type": "testimonial"
     },
     {
       "id": 5,
-      "title": "Wanderson Ribeiro",
+      "title": "Eliane Souza",
       "icon": "https://i.ibb.co/3FLms3n/henrique.jpg",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nisl ultricies tincidunt. Nullam nec purus nec nisl ultricies tincidunt.",
+      "description": "Adriana participou de um momento muito especial para nós; fez o ensaio do nosso casamento e registrou imagens do nosso casamento civil. Ficamos muito satisfeitos com o resultado, as fotos ficaram lindas! Recomendo muito o trabalho dela. Obrigada, Adriana! Grande abraço!",
       "Content-type": "testimonial"
     }
   ],
@@ -169,43 +157,32 @@
     {
       "id": 1,
       "title": "Preços",
-      "description": "Conheça os valores dos serviços prestados por Adriana Oliveira.",
+      "description": "Conheça os valores dos ensaios disponíveis por Adriana Oliveira.",
       "Content-type": "intro"
     },
     {
       "id": 2,
-      "title": "Valor 1",
-      "description": "R$ X,00 por hora de trabalho",
+      "title": "Ensaio Básico",
+      "description": "10 fotos digitais - 1 cenário / 1 figurino -\n 30 minutos de ensaio R$390,00",
       "Content-type": "value"
     },
+
     {
       "id": 3,
-      "title": "Valor 2",
-      "description": "R$ X,00 por hora de trabalho",
+      "title": "Ensaio Essencial",
+      "description": "20 fotos digitais - 2 cenários / 2 figurinos -\n 45 minutos de ensaio R$590,00",
       "Content-type": "value"
     },
     {
       "id": 4,
-      "title": "Valor 3",
-      "description": "R$ X,00 por hora de trabalho",
+      "title": "Ensaio Completo",
+      "description": "30 fotos digitais - 2 cenários / 2 figurinos -\n 1h de ensaio R$990,00",
       "Content-type": "value"
     },
     {
       "id": 5,
-      "title": "Valor 4",
-      "description": "R$ X,00 por hora de trabalho",
-      "Content-type": "value"
-    },
-    {
-      "id": 6,
-      "title": "Valor 5",
-      "description": "R$ X,00 por hora de trabalho",
-      "Content-type": "value"
-    },
-    {
-      "id": 7,
-      "title": "Valor 6",
-      "description": "R$ X,00 por hora de trabalho",
+      "title": "Ensaio Premium",
+      "description": "Com o pacote Premium, você terá direito a todas as fotos do ensaio R$1.490,0",
       "Content-type": "value"
     }
   ],

@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import { useMemo } from "react";
 import Card from "react-bootstrap/Card";
 import Image from "../../../../components/Shared/Image/Image";
 import Section from "./index";
@@ -15,7 +15,7 @@ export default function Testimonials({ data }) {
     intro &&
     info && (
       <Section id="depoimentos">
-        <div className="container pb-20 overflow-y-visible z-10">
+        <div className="italic container pb-20 overflow-y-visible z-10">
           <h2 className="text-4xl font-black text-secondary">{intro.title}</h2>
           <p className="text-lg mx-auto text-center font-medium lg:w-1/2 w-11/12 my-4">
             {intro.description}
@@ -41,10 +41,10 @@ export default function Testimonials({ data }) {
                       <Card.Text className="text-warning text-2xl">
                         ★★★★★
                       </Card.Text>
-                      <Card.Title className="font-bold text-2xl text-secondary">
+                      <Card.Title className="italic font-family font-bold text-2xl text-secondary">
                         {infoObj.title}
                       </Card.Title>
-                      <Card.Text className="text-secondary">
+                      <Card.Text className="font-serif text-secondary">
                         {infoObj.description}
                       </Card.Text>
                     </Card.Body>

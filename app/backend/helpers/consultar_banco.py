@@ -1,5 +1,5 @@
 from config.mongodb_config import colecao
-from models.Cliente import Cliente
+from models.Client.Cliente import Cliente
 
 def consultar_banco():
     try:
