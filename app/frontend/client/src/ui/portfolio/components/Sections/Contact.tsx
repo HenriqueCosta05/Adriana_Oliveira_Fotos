@@ -248,7 +248,7 @@ export default function Contact({ data }) {
                   style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
                 />
               </a>
-              <a href="#">
+              <a href="https://www.instagram.com/dricaoliveira_bonsclicks">
                 <FontAwesomeIcon
                   icon={faSquareInstagram}
                   style={{ color: "#64734d", margin: "15px", fontSize: "4rem" }}
