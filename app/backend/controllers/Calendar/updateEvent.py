@@ -8,7 +8,6 @@ router=APIRouter()
 
 @router.put("/app/atualizar-eventos/{event_id}")
 async def update_event(event_id: str, event: Event):
-    """Update an event in a specific calendar."""
     service = conectaApi()
     event_body = {
         "summary": event.summary,
