@@ -31,12 +31,12 @@ export const DeleteAppointmentForm = () => {
  const handleConfirmDelete = async (id) => {
         try {
             await deleteAppointment(id);
-            setModal({ isOpen: true, type: "success", message: "", id: ""});
+            setModal({ isOpen: true, type: "success", message: "Compromisso excluído com sucesso!", id: ""});
         } catch (error) {
             setModal({
               isOpen: true,
               type: "Error",
-              message: error.message,
+              message: "Algo deu errado. Tente novamente mais tarde",
               id: "",
             });
         }

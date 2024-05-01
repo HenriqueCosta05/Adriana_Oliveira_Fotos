@@ -13,7 +13,7 @@ export default function SuccessModal({
       >
         <Modal.Header>Sucesso</Modal.Header>
         <Modal.Body>
-          <p>Compromisso cadastrado ou atualizado com sucesso.</p>
+          <p>{modal.message}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleCloseModal}>Fechar</Button>
