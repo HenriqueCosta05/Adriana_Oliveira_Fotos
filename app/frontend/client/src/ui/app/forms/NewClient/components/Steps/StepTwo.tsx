@@ -270,7 +270,7 @@ export const StepTwo = ({ prevData, method }: StepTwoProps) => {
         <div className="flex flex-wrap items-baseline justify-between">
           <Button
             onClick={prev}
-            className="w-5/12 bg-success border-none focus:bg-secondary"
+            className="w-5/12 bg-success border-none hover:bg-red-300 active:bg-red-500 focus:bg-red-700"
           >
             Voltar
           </Button>

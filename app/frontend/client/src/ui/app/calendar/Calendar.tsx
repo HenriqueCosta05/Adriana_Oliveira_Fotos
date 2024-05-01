@@ -51,7 +51,7 @@ export default function Agenda() {
         
       <div className="w-11/12 mx-auto my-4">
         <FullCalendar
-          editable
+          editable={true}
           plugins={[googleCalendarPlugin, dayGridPlugin, timeGridPlugin]}
           initialView="dayGridMonth"
           locale={brLocale}

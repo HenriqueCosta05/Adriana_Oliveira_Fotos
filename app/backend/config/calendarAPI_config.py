@@ -7,6 +7,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from config.mongodb_config import client, database
+
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -39,4 +41,3 @@ def conectaApi():
   except HttpError as error:
     print(f"An error occurred: {error}")
     return None  
-  
