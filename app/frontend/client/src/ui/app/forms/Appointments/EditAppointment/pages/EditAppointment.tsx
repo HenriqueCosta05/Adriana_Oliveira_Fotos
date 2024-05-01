@@ -40,8 +40,8 @@ const initialData = {
   },
 };
 
-export const NewAppointmentForm = () => {
-  const { id } = useParams();
+export const EditAppointmentForm = () => {
+  
   const [errorMessage, setErrorMessage] = useState("");
   const [method, setMethod] = useState("POST");
   const [data, setData] = useState(initialData);
@@ -58,47 +58,6 @@ export const NewAppointmentForm = () => {
     window.location.href = "/app/agenda";
   };
 
-    useEffect(() => {
-    if (id) {
-      fetchData(id)
-        .then((response) => {
-          setData(response);
-          setMethod("PUT");
-        })
-        .catch((error) => {
-          setModal({
-            isOpen: true,
-            type: "Error",
-            message: error.message,
-          });
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-        }
-    }, [id]);
-
-    useEffect(() => {
-    if (loading) return;
-    if (data.summary !== "") {
-      sendData(id, data)
-        .then(() => {
-          setModal({
-            isOpen: true,
-            type: "success",
-            message: "Compromisso salvo com sucesso",
-          });
-        })
-        .catch((error) => {
-          setModal({
-            isOpen: true,
-            type: "Error",
-            message: error.message,
-          });
-        });
-        }
-    }, [data, id, loading]);
-    
   return (
     <>
       <Provider value={{ data, setData }}>

@@ -43,3 +43,12 @@ export const sendData = async (id?: string, data) => {
   await handleErrors(response);
   return response.json();
 };
+
+export const deleteData = async (id: string) => {
+  const response = await fetch(`${API}/deletar-evento/${id}`, {
+    method: "DELETE",
+  });
+
+  await handleErrors(response);
+  return response.json();
+}

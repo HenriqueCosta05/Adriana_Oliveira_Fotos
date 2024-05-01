@@ -5,7 +5,9 @@ import "./components/Shared/BootstrapCustomTheme.scss";
 import { UserForm } from "./ui/app/forms/NewClient/pages/UserForm";
 import CRUD from "./ui/app/tables/ClientCRUD/pages/CRUD";
 import Agenda from "./ui/app/calendar/Calendar";
-import { AppointmentForm } from "./ui/app/forms/Appointments/NewApointment/pages/NewApointment";
+import { NewAppointmentForm } from "./ui/app/forms/Appointments/NewApointment/pages/NewApointment";
+import { EditAppointmentForm } from "./ui/app/forms/Appointments/EditAppointment/pages/EditAppointment";
+import { DeleteAppointmentForm } from "./ui/app/forms/Appointments/DeleteAppointment/pages/DeleteAppointment";
 function App() {
   return (
     <BrowserRouter>
@@ -18,7 +20,9 @@ function App() {
         <Route path="/app/editar-cliente/:id" element={<UserForm />} />
 
         <Route path="/app/agenda" element={<Agenda />} />
-        <Route path="/app/novo-compromisso" element={<AppointmentForm />} />
+        <Route path="/app/novo-compromisso" element={<NewAppointmentForm />} />
+        <Route path="/app/editar-compromisso" element={<EditAppointmentForm />} />
+        <Route path="/app/excluir-compromisso" element={<DeleteAppointmentForm />} />
       </Routes>
     </BrowserRouter>
   );

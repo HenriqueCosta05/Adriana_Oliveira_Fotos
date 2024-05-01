@@ -26,34 +26,34 @@ export default function Agenda() {
         </HelperText>
         <div className="flex justify-center my-20">
           <Button
-          className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-secondary"
-          href="/app/novo-compromisso"
-        >
-          <FaPlus className="mr-2 mt-0.5" />
-          Novo compromisso
-        </Button>
-        <Button
-          className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-warning text-black"
-          href="/app/editar-compromisso"
-        >
-          <FaEdit className="mr-2 mt-0.5" />
-          Editar compromisso
-        </Button>
-        <Button
-          className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-error"
-          href="/app/excluir-compromisso"
-        >
-          <FaMinus className="mr-2 mt-0.5" />
-          Excluir compromisso
-        </Button>
-      </div>
+            className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-secondary"
+            href="/app/novo-compromisso"
+          >
+            <FaPlus className="mr-2 mt-0.5" />
+            Novo compromisso
+          </Button>
+          <Button
+            className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-warning text-black"
+            href="/app/editar-compromisso"
+          >
+            <FaEdit className="mr-2 mt-0.5" />
+            Editar compromisso
+          </Button>
+          <Button
+            className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-error"
+            href="/app/excluir-compromisso"
+          >
+            <FaMinus className="mr-2 mt-0.5" />
+            Excluir compromisso
+          </Button>
         </div>
-        
+      </div>
+
       <div className="w-11/12 mx-auto my-4">
         <FullCalendar
           editable={true}
           plugins={[googleCalendarPlugin, dayGridPlugin, timeGridPlugin]}
-          initialView="dayGridMonth"
+          initialView="timeGridWeek"
           locale={brLocale}
           weekends
           headerToolbar={{
