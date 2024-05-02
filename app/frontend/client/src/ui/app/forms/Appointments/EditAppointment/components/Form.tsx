@@ -13,6 +13,7 @@ import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomT
 import { getClientList } from "../../../../../../helpers/getClientList";
 import { submitAppointment } from "../../../../../../helpers/submitAppointment";
 import { getEventList } from "../../../../../../helpers/getEventList";
+import { retrieveEventData } from "../../../../../../helpers/retrieveEventData";
 
 interface FormProps {
   data: AppointmentDataProps;
@@ -27,27 +28,42 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
     register,
     control,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm();
-    const [clientSelected, setClientSelected] = useState("");
-    const [eventList, setEventList] = useState([]);
-    const [eventSelected, setEventSelected] = useState("");
+  const [clientSelected, setClientSelected] = useState("");
+  const [eventList, setEventList] = useState([]);
+  const [eventSelected, setEventSelected] = useState("");
   const [clientList, setClientList] = useState([]);
 
   useEffect(() => {
-      getClientList().then(setClientList);
-      getEventList().then(setEventList);
+    getClientList().then(setClientList);
+    getEventList().then(setEventList);
+
+    if (eventSelected && eventSelected !== "") {
+      retrieveEventData(eventSelected).then((event) => {
+        setValue("title", event?.summary);
+        setValue("description", event?.description);
+        setValue("appointmentDate", event?.appointmentDate);
+        setValue("appointmentTime", event?.appointmentTime);
+        setValue("userAssociated", event?.userAssociated);
+    });
+    }
+    
   }, []);
 
   const handleClientChange = (event) => {
     setClientSelected(event.target.value);
-    };
-    
-const submitForm = () => {
-  const data = getValues();
-  submitAppointment(data, setData);
   };
-  
+
+  const submitForm = () => {
+    const data = getValues();
+    submitAppointment(data, setData);
+  };
+
+
+
+
   return (
     <>
       <form
@@ -73,6 +89,7 @@ const submitForm = () => {
                     {...field}
                     {...register("event", { required: "Campo obrigatório" })}
                     onChange={(e) => {
+                      field.onChange(e);
                       setEventSelected(e.target.value);
                     }}
                     id="event"
@@ -88,7 +105,6 @@ const submitForm = () => {
                         <option key={index} value={option.ID}>
                           {option.summary}
                         </option>
-
                       ))}
                   </Select>
                 )}
@@ -99,7 +115,7 @@ const submitForm = () => {
                   {errors.event.message}
                 </span>
               )}
-              </div>
+            </div>
           </div>
         ) : (
           <>
@@ -112,11 +128,11 @@ const submitForm = () => {
                 />
                 <Controller
                   name="title"
-                  control={control}
+                    control={control}
+                    defaultValue={prevData?.title}
                   render={({ field }) => (
                     <TextInput
                       {...field}
-                      
                       {...register("title", { required: "Campo obrigatório" })}
                       type="text"
                       placeholder="Dê um título ao compromisso..."
@@ -142,13 +158,15 @@ const submitForm = () => {
                 />
                 <Controller
                   name="description"
-                  control={control}
+                    control={control}
+                    defaultValue={prevData?.description}
                   render={({ field }) => (
                     <TextInput
                       {...field}
                       {...register("description", {
                         required: "Campo obrigatório",
                       })}
+                      
                       type="text"
                       placeholder="Forneça uma descrição ao compromisso..."
                       className="w-11/12"
@@ -171,7 +189,8 @@ const submitForm = () => {
                   className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
                   value="Data do compromisso:"
                 />
-                <Controller
+                  <Controller
+                    defaultValue={prevData?.appointmentDate}
                   control={control}
                   name="appointmentDate"
                   render={({ field }) => (
@@ -185,6 +204,7 @@ const submitForm = () => {
                           placeholder="Selecione a data do compromisso..."
                           labelTodayButton="Hoje"
                           labelClearButton="Limpar"
+                          
                           color={errors.appointmentDate ? "failure" : "primary"}
                           onSelectedDateChanged={(date) => field.onChange(date)}
                           className="w-11/12 rounded-lg p-2"
@@ -221,6 +241,7 @@ const submitForm = () => {
                     <>
                       <TextInput
                         type="time"
+                        defaultValue={prevData?.appointmentTime}
                         color={errors.appointmentTime ? "failure" : "primary"}
                         className="w-11/12 rounded-lg p-2 border-none"
                         placeholder="Selecione o horário do compromisso..."
@@ -254,7 +275,8 @@ const submitForm = () => {
                   value="Usuário Associado:"
                 />
                 <Controller
-                  name="userAssociated"
+                    name="userAssociated"
+                    defaultValue={prevData?.userAssociated}
                   control={control}
                   render={({ field }) => (
                     <Select
@@ -265,8 +287,10 @@ const submitForm = () => {
                       onChange={handleClientChange}
                       id="userAssociated"
                       name="userAssociated"
+                      
                       color={errors.userAssociated ? "failure" : "primary"}
                       className="w-11/12 text-center rounded-lg p-2"
+                      value={field.value}
                     >
                       <option disabled selected value="">
                         Selecione...
