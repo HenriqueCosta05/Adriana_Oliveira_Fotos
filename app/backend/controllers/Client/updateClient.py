@@ -1,7 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from exceptions.email_in_use import EmailInUse
-from config.mongodb_config import colecao
-from models.Client.Cliente import Cliente
+from config.mongodb_config import colecaoClient
+from models.client.Cliente import Cliente
 from bson.objectid import ObjectId
 
 router = APIRouter()
@@ -9,14 +8,10 @@ router = APIRouter()
 @router.put('/app/editar-cliente/{id}')
 def atualizar_cliente(id, cliente: Cliente):
     try:
-        cliente_existente = colecao.find_one({"_id": ObjectId(id)})
+        cliente_existente = colecaoClient.find_one({"_id": ObjectId(id)})
         if cliente_existente is None:
             raise HTTPException(status_code=404, detail="Cliente não encontrado")
     
-        cliente_com_mesmo_email = colecao.find_one({"email": cliente.email.lower()})
-        if cliente_com_mesmo_email and str(cliente_com_mesmo_email['_id']) != id:
-            raise EmailInUse(cliente.email.lower())
-                
         update_data = {
             "$set": {
                 "registryType": cliente.registryType,
@@ -37,9 +32,9 @@ def atualizar_cliente(id, cliente: Cliente):
                 "receiveEmail": cliente.receiveEmail,
             }
         }
-        colecao.update_one({"_id": ObjectId(id)}, update_data)
+        colecaoClient.update_one({"_id": ObjectId(id)}, update_data)
     
-        cliente_atualizado = colecao.find_one({"_id": ObjectId(id)})
+        cliente_atualizado = colecaoClient.find_one({"_id": ObjectId(id)})
         cliente_atualizado['_id'] = str(cliente_atualizado['_id'])
         return {"aviso": "Cliente atualizado com sucesso", "cliente": cliente_atualizado}
     

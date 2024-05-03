@@ -24,7 +24,7 @@ export default function NavBar({ data }) {
             arrowIcon={false}
             inline
             label={
-              <Avatar className="mr-2" alt="Configurações do usuário" rounded />
+              <Avatar className="mr-2" alt="Ações" rounded />
             }
           >
             <Dropdown.Header>
@@ -34,8 +34,8 @@ export default function NavBar({ data }) {
               </span>
             </Dropdown.Header>
             <Dropdown.Item href='/app/clientes'>Gerenciamento de Clientes</Dropdown.Item>
-            <Dropdown.Item>Configurações</Dropdown.Item>
-            <Dropdown.Item>Escolher fotos</Dropdown.Item>
+            <Dropdown.Item href='/app/agenda'>Agenda</Dropdown.Item>
+            <Dropdown.Item href='/app/financeiro'>Gerenciamento de Finanças</Dropdown.Item>
             <Dropdown.Divider />
           </Dropdown>
           <Navbar.Toggle className="bg-primary focus:bg-primary active:bg-primary border-none active:border-none" />

@@ -16,15 +16,15 @@ export default function Agenda() {
         <h1 className="text-4xl font-black text-center text-secondary italic">
           Agenda
         </h1>
-        <HelperText className="text-center">
+        <HelperText className="text-center text-[15px] mt-20">
           Para criar um novo compromisso, clique no botão abaixo. É altamente
           recomendável que se utilize esta seção em dispositivos desktop.
         </HelperText>
-        <HelperText className="text-center mt-20">
+        <HelperText className="text-center text-[15px] mt-10">
           Atenção! O Calendário abaixo não é editável, utilize-se dos botões
           abaixo para manipular a visualização.
         </HelperText>
-        <div className="flex justify-center my-20">
+        <div className="flex justify-center items-center mx-auto mt-20 lg:w-9/12">
           <Button
             className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-secondary"
             href="/app/novo-compromisso"
@@ -49,7 +49,7 @@ export default function Agenda() {
         </div>
       </div>
 
-      <div className="w-11/12 mx-auto my-4">
+      <div className="w-9/12 mx-auto my-4">
         <FullCalendar
           editable={true}
           plugins={[googleCalendarPlugin, dayGridPlugin, timeGridPlugin]}

@@ -14,7 +14,7 @@ export default function Profile() {
       <Dropdown.Item href="/app/clientes">Clientes</Dropdown.Item>
       <Dropdown.Item href="#">Galerias</Dropdown.Item>
       <Dropdown.Item href="/app/agenda">Agenda</Dropdown.Item>
-      <Dropdown.Item href="#">Despesas/Receitas</Dropdown.Item>
+      <Dropdown.Item href="/app/financeiro">Financeiro</Dropdown.Item>
     </Dropdown>
   );
 }

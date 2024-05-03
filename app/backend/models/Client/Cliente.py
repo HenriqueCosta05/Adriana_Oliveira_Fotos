@@ -1,6 +1,6 @@
 from typing import Optional
 from datetime import datetime
-from models.Client.Conta import Conta
+from models.client.Conta import Conta
 from pydantic import BaseModel, validator
 
 

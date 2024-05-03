@@ -1,8 +1,8 @@
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.param_functions import Query
-from helpers.consultar_documento import consultar_documento
-from models.Client.Cliente import Cliente
+from helpers.client.consultar_documento import consultar_documento
+from models.client.Cliente import Cliente
 
 router = APIRouter()
 

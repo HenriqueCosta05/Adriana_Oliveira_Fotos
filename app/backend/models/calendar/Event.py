@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from models.calendar.Date import Date
+from models.calendar.Recurrence import Recurrence
 from models.calendar.Attendee import Attendee
 from models.calendar.Reminders import Reminders
 

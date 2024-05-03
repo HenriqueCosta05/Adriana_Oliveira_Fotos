@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from helpers.consultar_banco import consultar_banco
-from models.Client.Cliente import Cliente
+from helpers.client.consultar_banco import consultar_banco
+from models.client.Cliente import Cliente
 
 router = APIRouter()
 
