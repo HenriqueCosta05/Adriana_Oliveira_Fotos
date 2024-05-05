@@ -17,9 +17,10 @@ import UserNavbar from "../../../../components/UserNavbar";
 
 interface StepOneProps {
   prevData?: any;
+  method?: any;
 }
 
-export const StepOne = ({ prevData }: StepOneProps) => {
+export const StepOne = ({ prevData, method}: StepOneProps) => {
   const { data, setData, handleNext } = useContext(NewUserFormContext);
 
   const {
@@ -59,7 +60,7 @@ export const StepOne = ({ prevData }: StepOneProps) => {
       >
         <div className="mb-[20px]">
           <h1 className="text-3xl font-bold text-center mb-9 text-secondary">
-            Cadastro de Cliente{" "}
+            {method === "POST" ? "Cadastro de cliente" : "Editar Cliente"}
           </h1>
           <p className="text-3x1 font-bold text-center mb-9 text-secondary">
             {" "}

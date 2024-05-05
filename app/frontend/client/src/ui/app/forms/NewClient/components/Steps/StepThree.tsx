@@ -19,8 +19,8 @@ export const StepThree = ({ prevData, method }: StepThreeProps) => {
     UserDataProps["stepThree"]
   >({
     defaultValues: {
-      receiveSMS: false,
-      receiveEmail: false,
+      receiveSMS: true,
+      receiveEmail: true,
       ...(data || prevData),
     },
   });
@@ -41,7 +41,7 @@ export const StepThree = ({ prevData, method }: StepThreeProps) => {
         className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-3 m-4"
       >
         <h1 className="text-3xl font-bold text-center mb-4 text-secondary">
-          Cadastro de Cliente{" "}
+          {method === "POST" ? "Cadastro de cliente" : "Editar Cliente"}
         </h1>
         <p className="text-3x1 font-bold text-center mb-9 text-secondary">
           {" "}
@@ -87,6 +87,7 @@ export const StepThree = ({ prevData, method }: StepThreeProps) => {
               Receber avisos por E-mail?
             </Form.Label>
             <Controller
+              defaultValue={true}
               control={control}
               {...register("receiveEmail")}
               render={({ field }) => (

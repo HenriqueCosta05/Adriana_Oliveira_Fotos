@@ -9,6 +9,7 @@ import { NewAppointmentForm } from "./ui/app/forms/Appointments/NewApointment/pa
 import { EditAppointmentForm } from "./ui/app/forms/Appointments/EditAppointment/pages/EditAppointment";
 import { DeleteAppointmentForm } from "./ui/app/forms/Appointments/DeleteAppointment/pages/DeleteAppointment";
 import FinancialDashboard from "./ui/app/dashboards/Financial/FinancialDashboard";
+import RevenueForm from "./ui/app/forms/Financials/pages/RevenueForm";
 function App() {
   return (
     <BrowserRouter>
@@ -26,6 +27,8 @@ function App() {
         <Route path="/app/excluir-compromisso" element={<DeleteAppointmentForm />} />
 
         <Route path="/app/financeiro" element={<FinancialDashboard />} />
+        <Route path="/app/nova-despesa" element={<RevenueForm />} />
+        <Route path="/app/editar-despesa/:id" element={<RevenueForm />} />
       </Routes>
     </BrowserRouter>
   );
