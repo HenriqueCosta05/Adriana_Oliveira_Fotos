@@ -13,7 +13,8 @@ class Register(BaseModel):
     categoryType: Optional[str] = None
     client: str
     paymentMethod: str
-    automaticPayment: bool
+    automaticPayment: Optional[bool] = None
     detailedDescription: str
+    isDebit: bool
 
     

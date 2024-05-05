@@ -126,9 +126,7 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
               )}
             </div>
           </div>
-        )
-          
-        }
+        )}
         <div className="mb-[30px]">
           <div className="flex flex-wrap items-baseline justify-center">
             <Label
@@ -215,8 +213,8 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
                       onSelectedDateChanged={(date) => field.onChange(date)}
                       defaultDate={
                         isValidDate(field.value)
-                          ? new Date(field.value) 
-                          : new Date() 
+                          ? new Date(field.value)
+                          : new Date()
                       }
                       className="w-11/12 rounded-lg p-2"
                     />

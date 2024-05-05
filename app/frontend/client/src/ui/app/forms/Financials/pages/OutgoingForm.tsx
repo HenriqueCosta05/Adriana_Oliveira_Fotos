@@ -1,17 +1,19 @@
-import { useState, useEffect } from 'react'
-import { initialData } from '../../../../../lib/financial/InitialData';
-import { useParams } from 'react-router-dom';
-import { fetchData, sendData } from '../../../../../services/FinancialDataService';
-import { Spinner } from 'flowbite-react';
-import { Provider } from '../../../../../contexts/forms/FormContext';
-import { StepOne } from '../components/StepOne';
-import { StepTwo } from '../components/StepTwo';
-import { StepThree } from '../components/StepThree';
-import ErrorModal from '../../../modals/client/Error';
-import Success from '../../../modals/client/Success';
-import SuccessModal from '../../../modals/financial/Success';
-import UserNavbar from '../../../components/UserNavbar';
-import Footer from '../../../../portfolio/components/Sections/Footer';
+import { useState, useEffect } from "react";
+import { initialData } from "../../../../../lib/financial/InitialOutgoingData";
+import { useParams } from "react-router-dom";
+import {
+  fetchData,
+  sendData,
+} from "../../../../../services/FinancialDataService";
+import { Spinner } from "flowbite-react";
+import { Provider } from "../../../../../contexts/forms/FormContext";
+import { StepOne } from "../components/StepOne";
+import { StepTwo } from "../components/StepTwo";
+import { StepThree } from "../components/StepThree";
+import ErrorModal from "../../../modals/client/Error";
+import SuccessModal from "../../../modals/financial/Success";
+import UserNavbar from "../../../components/UserNavbar";
+import Footer from "../../../../portfolio/components/Sections/Footer";
 
 const RevenueForm = () => {
   const { id } = useParams();
@@ -72,27 +74,27 @@ const RevenueForm = () => {
     }
   };
 
-    //Retrocede etapas do formulário multi-etapas
-    const prev = () => setStep(step - 1);
+  //Retrocede etapas do formulário multi-etapas
+  const prev = () => setStep(step - 1);
 
-    //Verifica se há algum carregamento em andamento
-    if (loading) {
-        return <Spinner color="primary" className='m-auto flex justify-center' />
-    }
+  //Verifica se há algum carregamento em andamento
+  if (loading) {
+    return <Spinner color="primary" className="m-auto flex justify-center" />;
+  }
 
-    const handleCloseModal = () => {
-        setModal({ isOpen: false, type: "", message: "" });
-        if (modal.type === "success") {
-          window.location.href = "/app/financeiro";
-        }
+  const handleCloseModal = () => {
+    setModal({ isOpen: false, type: "", message: "" });
+    if (modal.type === "success") {
+      window.location.href = "/app/financeiro";
     }
-     return (
-       <>
+  };
+  return (
+    <>
       <UserNavbar />
       <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
         {renderStep(step, method, data)}
       </Provider>
-      <Footer/>
+      <Footer />
       {renderModal(modal, setModal, handleCloseModal, errorMessage)}
     </>
   );
@@ -151,4 +153,4 @@ function renderModal(modal, setModal, handleCloseModal, errorMessage) {
   }
 }
 
-export default RevenueForm
+export default RevenueForm;

@@ -20,8 +20,8 @@ class Cliente(BaseModel):
     streetNumber: str
     complement: Optional[str] = None
     neighborhood: str
-    receiveSMS: bool
-    receiveEmail: bool
+    receiveSMS: Optional[bool] = None
+    receiveEmail: Optional[bool] = None
     accountType: Optional[dict] = Conta(user=True, administrador=False).dict()
     
     #Validação de campos específicos

@@ -1,7 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from typing import List
 from helpers.financial.consultar_banco_financial import consultar_banco_financial
-from models.financial.Register import Register
 
 router = APIRouter()
 

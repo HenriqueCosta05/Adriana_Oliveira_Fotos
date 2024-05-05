@@ -26,6 +26,8 @@ export const StepThree = ({ prevData, method }: StepThreeProps) => {
   });
 
   const onSubmit = (formData) => {
+    formData.receiveSMS = formData.receiveSMS || false;
+    formData.receiveEmail = formData.receiveEmail || false;
     setData((prevFormData) => ({
       ...prevFormData,
       ...formData,

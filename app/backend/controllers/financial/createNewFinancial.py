@@ -11,17 +11,18 @@ def cadastrar_banco(novo_registro: Register):
     financeiro = consultar_banco_financial()
     
     novo_registro = {
-                "tipo": novo_registro.registryType,
-                "titulo": novo_registro.title,
-                "valor": novo_registro.value,
-                "dataVencimento": novo_registro.dueDate,
-                "pago": novo_registro.isPaid,
-                "conta": novo_registro.accountType,
-                "categoria": novo_registro.categoryType,
-                "cliente": novo_registro.client,
-                "formaPagamento": novo_registro.paymentMethod,
-                "pagamentoAutomatico": novo_registro.automaticPayment,
-                "descricao": novo_registro.detailedDescription
+                "registryType": novo_registro.registryType,
+                "title": novo_registro.title,
+                "value": novo_registro.value,
+                "dueDate": novo_registro.dueDate,
+                "isPaid": novo_registro.isPaid,
+                "accountType": novo_registro.accountType,
+                "categoryType": novo_registro.categoryType,
+                "client": novo_registro.client,
+                "paymentMethod": novo_registro.paymentMethod,
+                "automaticPayment": novo_registro.automaticPayment,
+                "detailedDescription": novo_registro.detailedDescription,
+                "isDebit": novo_registro.isDebit,
         }
 
 

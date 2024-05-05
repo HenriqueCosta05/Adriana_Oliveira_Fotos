@@ -9,13 +9,14 @@ import { NewAppointmentForm } from "./ui/app/forms/Appointments/NewApointment/pa
 import { EditAppointmentForm } from "./ui/app/forms/Appointments/EditAppointment/pages/EditAppointment";
 import { DeleteAppointmentForm } from "./ui/app/forms/Appointments/DeleteAppointment/pages/DeleteAppointment";
 import FinancialDashboard from "./ui/app/dashboards/Financial/FinancialDashboard";
-import RevenueForm from "./ui/app/forms/Financials/pages/RevenueForm";
+import OutgoingForm from "./ui/app/forms/Financials/pages/OutgoingForm";
+import NotFound from "./ui/404/NotFound";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Portfolio />} />
-        <Route path="*" element={<h1>Página não encontrada</h1>} />
+        <Route path="*" element={<NotFound/>} />
 
         <Route path="/app/clientes" element={<CRUD />} />
         <Route path="/app/novo-cliente" element={<UserForm />} />
@@ -27,8 +28,8 @@ function App() {
         <Route path="/app/excluir-compromisso" element={<DeleteAppointmentForm />} />
 
         <Route path="/app/financeiro" element={<FinancialDashboard />} />
-        <Route path="/app/nova-despesa" element={<RevenueForm />} />
-        <Route path="/app/editar-despesa/:id" element={<RevenueForm />} />
+        <Route path="/app/nova-despesa" element={<OutgoingForm />} />
+        <Route path="/app/editar-despesa/:id" element={<OutgoingForm />} />
       </Routes>
     </BrowserRouter>
   );

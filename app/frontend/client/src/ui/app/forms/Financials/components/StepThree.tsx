@@ -5,17 +5,14 @@ import Button from "react-bootstrap/esm/Button";
 import * as Form from "@radix-ui/react-form";
 import * as Switch from "@radix-ui/react-switch";
 import { RevenueDataProps } from "../../../../../types/RevenueData/RevenueDataProps";
-import { HelperText, Label, TextInput, Textarea } from "flowbite-react";
+import { Label, TextInput, Textarea } from "flowbite-react";
 
 interface StepThree {
   prevData?: any;
   method?: any;
 }
 
-export const StepThree = ({
-  prevData,
-  method,
-}: StepThree) => {
+export const StepThree = ({ prevData, method }: StepThree) => {
   const { data, setData, handleNext, prev } = useContext(FormContext);
 
   const {
@@ -126,7 +123,7 @@ export const StepThree = ({
                   onCheckedChange={(checked) => {
                     setData((prevFormData) => ({
                       ...prevFormData,
-                        automaticPayment: checked,
+                      automaticPayment: checked,
                     }));
                   }}
                 >

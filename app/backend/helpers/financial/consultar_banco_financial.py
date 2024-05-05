@@ -13,7 +13,7 @@ def consultar_banco_financial():
             registro_model = Register(**registro)
             registros.append(registro_model)
             
-        return registro
+        return registros
     except Exception as e:
         print(f"Erro ao consultar o banco: {e}")
         return []
