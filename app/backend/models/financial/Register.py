@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 class Register(BaseModel):
+    id: Optional[str] = None
     registryType: str
     installments: Optional[int] = None
     title: str 

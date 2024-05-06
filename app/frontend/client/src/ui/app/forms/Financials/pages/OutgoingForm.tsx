@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { initialData } from "../../../../../lib/financial/InitialOutgoingData";
-import { useParams } from "react-router-dom";
 import {
   fetchData,
   sendData,
@@ -15,8 +14,7 @@ import SuccessModal from "../../../modals/financial/Success";
 import UserNavbar from "../../../components/UserNavbar";
 import Footer from "../../../../portfolio/components/Sections/Footer";
 
-const RevenueForm = () => {
-  const { id } = useParams();
+const OutgoingForm = ({id}) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [method, setMethod] = useState("POST");
   const [step, setStep] = useState(1);
@@ -88,16 +86,27 @@ const RevenueForm = () => {
       window.location.href = "/app/financeiro";
     }
   };
-  return (
-    <>
-      <UserNavbar />
-      <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
-        {renderStep(step, method, data)}
-      </Provider>
-      <Footer />
-      {renderModal(modal, setModal, handleCloseModal, errorMessage)}
-    </>
-  );
+return (
+  <>
+    {method === "POST" ? (
+      <>
+        <UserNavbar />
+        <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
+          {renderStep(step, method, data)}
+        </Provider>
+        <Footer />
+        {renderModal(modal, setModal, handleCloseModal, errorMessage)}
+      </>
+    ) : (
+      <>
+        <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
+          {renderStep(step, method, data)}
+        </Provider>
+        {renderModal(modal, setModal, handleCloseModal, errorMessage)}
+      </>
+    )}
+  </>
+);
 };
 function renderStep(step, method, data) {
   switch (step) {
@@ -153,4 +162,4 @@ function renderModal(modal, setModal, handleCloseModal, errorMessage) {
   }
 }
 
-export default RevenueForm;
+export default OutgoingForm;

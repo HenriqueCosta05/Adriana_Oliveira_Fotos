@@ -5,7 +5,10 @@ export async function getFinancesList() {
   return result;
 }
 
-export async function getFinancesListByMonth(month: number) {
+export async function getFinancesListByMonth(month: number, year: number) {
   const result = await fetchAllData();
-  return result.filter((item) => new Date(item.dueDate).getMonth() === month);
+  return result.filter((item) => {
+    const itemDate = new Date(item.dueDate);
+    return itemDate.getMonth() === month && itemDate.getFullYear() === year;
+  });
 }

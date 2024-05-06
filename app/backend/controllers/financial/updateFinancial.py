@@ -14,18 +14,19 @@ def atualizar_registro(id, registro: Register):
     
         update_data = {
             "$set": {               
-                "tipo": registro.tipo,
-                "titulo": registro.titulo,
-                "valor": registro.valor,
-                "dataVencimento": registro.dataVencimento,
-                "situacao": registro.situacao,
-                "conta": registro.conta,
-                "categoria": registro.categoria,
-                "cliente": registro.cliente,
-                "formaPagamento": registro.formaPagamento,
-                "automatico": registro.automatico,
-                "descricao": registro.descricao
-                
+                "registryType": registro.registryType,
+                "title": registro.title,
+                "value": registro.value,
+                "dueDate": registro.dueDate,
+                "isPaid": registro.isPaid,
+                "installments": registro.installments,
+                "accountType": registro.accountType,
+                "categoryType": registro.categoryType,
+                "client": registro.client,
+                "paymentMethod": registro.paymentMethod,
+                "automaticPayment": registro.automaticPayment,
+                "detailedDescription": registro.detailedDescription,
+                "isDebit": registro.isDebit,
             }
         }
         colecaoFinacial.update_one({"_id": ObjectId(id)}, update_data)

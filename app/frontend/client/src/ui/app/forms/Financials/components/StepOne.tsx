@@ -40,10 +40,14 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
   //Watch registryType
   const selectedRegistryType = watch('registryType');
 
+  //Classname 
+  const getClassName = (method) => {
+    return method === "POST" ? "xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 my-4" : "w-full mx-auto bg-accent p-4 my-4";
+  }
     return (
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 my-4"
+        className={getClassName(method)}
       >
         <div className="mb-[20px]">
           <h1 className="text-3xl font-bold text-center mb-9 text-secondary">

@@ -29,7 +29,6 @@ function App() {
 
         <Route path="/app/financeiro" element={<FinancialDashboard />} />
         <Route path="/app/nova-despesa" element={<OutgoingForm />} />
-        <Route path="/app/editar-despesa/:id" element={<OutgoingForm />} />
       </Routes>
     </BrowserRouter>
   );

@@ -16,6 +16,7 @@ def cadastrar_banco(novo_registro: Register):
                 "value": novo_registro.value,
                 "dueDate": novo_registro.dueDate,
                 "isPaid": novo_registro.isPaid,
+                "installments": novo_registro.installments,
                 "accountType": novo_registro.accountType,
                 "categoryType": novo_registro.categoryType,
                 "client": novo_registro.client,

@@ -18,6 +18,7 @@ export const StepThree = ({ prevData, method }: StepThree) => {
   const {
     control,
     handleSubmit,
+    register,
     formState: { errors },
   } = useForm<RevenueDataProps["StepThree"]>({
     defaultValues: data || prevData,
@@ -30,12 +31,15 @@ export const StepThree = ({ prevData, method }: StepThree) => {
     }));
     handleNext();
   };
-
-  return (
-    <Form.Root
-      onSubmit={handleSubmit(onSubmit)}
-      className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-3 m-4"
-    >
+//Classname 
+  const getClassName = (method) => {
+    return method === "POST" ? "xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 my-4" : "w-full mx-auto bg-accent p-4 my-4";
+  }
+    return (
+      <Form.Root
+        onSubmit={handleSubmit(onSubmit)}
+        className={getClassName(method)}
+      >
       <h1 className="text-3xl font-bold text-center mb-4 text-secondary">
         {method === "POST" ? "Nova Despesa" : "Editar Despesa"}
       </h1>
@@ -52,11 +56,14 @@ export const StepThree = ({ prevData, method }: StepThree) => {
           <Controller
             name="paymentMethod"
             control={control}
-            rules={{ required: "Tipo de pagamamento é obrigatório" }}
+            rules={{ required: "Forma de pagamamento é obrigatório" }}
             render={({ field }) => (
               <>
                 <TextInput
                   {...field}
+                  {...register("paymentMethod", {
+                    required: "Forma de pagamamento é obrigatório",
+                  })}
                   id="paymentMethod"
                   placeholder="Insira a forma de pagamento..."
                   name="paymentMethod"
