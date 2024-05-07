@@ -17,12 +17,19 @@ export default function About({ data }) {
           <div className="row">
             <h2 className="italic col-lg-6 xs:w-11/12 lg:w-1/2 mx-auto text-4xl font-black text-secondary m-40 p-10">
               {title.payload}
-              <p className="text-lg mx-auto text-center font-medium lg:w-1/2 w-11/12 my-4">
+              <p className="text-lg mx-auto text-center font-medium w-11/12 my-4">
                 {description.payload}
               </p>
+              <Button
+                  variant="secondary"
+                  href={button.href}
+                  className="my-4 md:p-4 lg:mx-auto"
+                >
+                  {button.payload}
+                </Button>
             </h2>
 
-            <div className="col-lg-6 xs:w-11/12 lg:w-1/2 mx-auto">
+            <div className="col-lg-6 xs:w-11/12 lg:w-1/3 mx-auto">
               <Image
                 src={imgGallery}
                 alt="imagem"
@@ -32,13 +39,7 @@ export default function About({ data }) {
 
             <div className="intro flex items-center justify-center flex-wrap">
               <div className="intro__title block mx-auto">
-                <Button
-                  variant="secondary"
-                  href={button.href}
-                  className="my-4 md:p-4 lg:mx-auto"
-                >
-                  {button.payload}
-                </Button>
+                
               </div>
             </div>
           </div>

@@ -6,37 +6,43 @@
       "width": "120px",
       "height": "auto",
       "alt": "Logo da fotógrafa Adriana Oliveira",
-      "src": "/logo.png"
+      "src": "logo.png"
     },
     {
       "id": 2,
       "title": "Sobre mim",
       "Content-type": "navbar-item",
-      "href": "#sobre-mim"
+      "href": "/#sobre-mim"
     },
     {
       "id": 3,
       "title": "Serviços",
       "Content-type": "navbar-item",
-      "href": "#servicos"
+      "href": "/#servicos"
     },
     {
       "id": 4,
       "title": "Depoimentos",
       "Content-type": "navbar-item",
-      "href": "#depoimentos"
+      "href": "/#depoimentos"
     },
     {
       "id": 5,
       "title": "Preços",
       "Content-type": "navbar-item",
-      "href": "#precos"
+      "href": "/#precos"
     },
     {
       "id": 6,
       "title": "Contato",
       "Content-type": "navbar-item",
-      "href": "#contato"
+      "href": "/#contato"
+    },
+    {
+      "id": 7,
+      "title": "Galeria",
+      "Content-type": "navbar-item",
+      "href": "/galeria"
     }
   ],
   "about": [
@@ -69,7 +75,9 @@
       "id": 5,
       "title": "Imagens",
       "Content-type": "IMGgallery",
-      "src": ["https://i.ibb.co/gDgDGds/Montagem-de-Fotos-Mem-rias-1.png"]
+      "src": [
+        "https://i.ibb.co/gDgDGds/Montagem-de-Fotos-Mem-rias-1.png"
+      ]
     }
   ],
   "services": [
@@ -83,7 +91,6 @@
       "id": 2,
       "title": "Ensaio Familia",
       "description": "Registre o amor, conexão e união que existe em sua família, transformando em algo palpável as imagens que serão tesouros para sempre.",
-
       "Content-type": "service"
     },
     {
@@ -154,37 +161,48 @@
     }
   ],
   "pricing": [
-    {
-      "id": 1,
-      "title": "Preços",
-      "description": "Conheça os valores dos ensaios disponíveis por Adriana Oliveira.",
-      "Content-type": "intro"
-    },
-    {
-      "id": 2,
-      "title": "Ensaio Básico",
-      "description": "10 fotos digitais - 1 cenário / 1 figurino -\n 30 minutos de ensaio R$390,00",
-      "Content-type": "value"
-    },
-
-    {
-      "id": 3,
-      "title": "Ensaio Essencial",
-      "description": "20 fotos digitais - 2 cenários / 2 figurinos -\n 45 minutos de ensaio R$590,00",
-      "Content-type": "value"
-    },
-    {
-      "id": 4,
-      "title": "Ensaio Completo",
-      "description": "30 fotos digitais - 2 cenários / 2 figurinos -\n 1h de ensaio R$990,00",
-      "Content-type": "value"
-    },
-    {
-      "id": 5,
-      "title": "Ensaio Premium",
-      "description": "Com o pacote Premium, você terá direito a todas as fotos do ensaio R$1.490,00",
-      "Content-type": "value"
-    }
+    [
+      {
+        "name": "Básico",
+        "price": 350.00,
+        "description": "Capture momentos especiais em imagens memoráveis; neste ensaio você terá disponível:",
+        "benefits": [
+          "10 fotos digitais",
+          "1 cenário",
+          "1 figurino",
+          "30 minutos de ensaio",
+          "Direito a dois participantes"
+        ],
+        "green": "/src/assets/green-dot.png"
+      },
+      {
+        "name": "Essencial",
+        "price": 590.00,
+        "description": "Destaque-se com imagens impressionantes; este pacote inclui:",
+        "benefits": [
+          "20 fotos digitais",
+          "2 cenários",
+          "2 figurinos",
+          "45 minutos de ensaio",
+          "Direito a três participantes"
+        ],
+        "green": "/src/assets/green-dot.png"
+      },
+      {
+        "name": "Premium",
+        "price": 980.00,
+        "description": "O máximo em qualidade e estilo; aproveite os seguintes benefícios:",
+        "benefits": [
+          "30 fotos digitais",
+          "3 cenários",
+          "3 figurinos",
+          "1 hora de ensaio",
+          "Sua Familia inteira pode participar",
+          "Álbum fotográfico personalizado"
+        ],
+        "green": "/src/assets/green-dot.png"
+      }
+    ]
   ],
   "contact": [
     {
@@ -226,7 +244,6 @@
       "placeholder": "(11) 99999-9999",
       "contentType": "contact"
     },
-
     {
       "id": 5,
       "label": "Mensagem",
@@ -241,5 +258,84 @@
       "label": "Enviar",
       "contentType": "button"
     }
+  ],
+
+  "slides": [
+    {
+      "src": "https://i.ibb.co/68SCP6H/IMG-1674.jpg",
+      "title": "Ensaio Gestante",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/p3Nc5D2/Ari-e-Emerson.jpg",
+      "title": "Ensaio Gestante",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/FxPrwtH/IMG-1551.jpg",
+      "title": "Ensaio Gestante",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/5LVKD4c/25062017-MG-7011.jpg",
+      "title": "Ensaio Gestante",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/cTxqjvf/Manu-06.jpg",
+      "title": "Ensaio Infantil",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/YkF9tvK/29122019-IMG-4262.jpg",
+      "title": "Ensaio Infantil",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/wht4Dfd/Manu-13.jpg",
+      "title": "Ensaio Infantil",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/gT8JbFw/20112019-IMG-3524.jpg",
+      "title": "Ensaio Infantil",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/sKt1zYy/MG-8832.jpg",
+      "title": "Ensaio Pet",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/rcS19nW/Bud-4.jpg",
+      "title": "Ensaio Pet",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/LxCn5sC/01062019-IMG-2008.jpg",
+      "title": "Ensaio Pet",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/K6C6zbk/IMG-1559-2.jpg",
+      "title": "Ensaio Pet",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/1LPD5nH/9.jpg",
+      "title": "Ensaio Pré-Wedding",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/3C8yXLH/20.jpg",
+      "title": "Ensaio Pré-Wedding",
+      "description": ""
+    },
+    {
+      "src": "https://i.ibb.co/KqqdycD/40.jpg",
+      "title": "Ensaio Pré-Wedding",
+      "description": ""
+    }
+
   ]
-}
+  }

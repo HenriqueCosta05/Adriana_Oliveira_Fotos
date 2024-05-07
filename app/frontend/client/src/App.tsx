@@ -12,11 +12,14 @@ import FinancialDashboard from "./ui/app/dashboards/Financial/FinancialDashboard
 import OutgoingForm from "./ui/app/forms/Financials/pages/OutgoingForm";
 import NotFound from "./ui/404/NotFound";
 import RevenueForm from "./ui/app/forms/Financials/pages/RevenueForm";
+import Galeria from "./ui/portfolio/components/Gallery/Galeria";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Portfolio />} />
+                <Route path="/galeria" element={<Galeria/>}/>
+
         <Route path="*" element={<NotFound/>} />
 
         <Route path="/app/clientes" element={<CRUD />} />

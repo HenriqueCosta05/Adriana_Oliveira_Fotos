@@ -40,7 +40,9 @@
     "sass": "^1.74.1",
     "tailwind-merge": "^2.2.2",
     "tailwind-variants": "^0.2.1",
-    "tailwindcss-radix": "^3.0.3"
+    "tailwindcss-radix": "^3.0.3",
+    "yet-another-react-lightbox": "^3.17.5"
+
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

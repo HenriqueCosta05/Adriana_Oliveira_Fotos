@@ -1,38 +1,50 @@
-import React, { useMemo } from "react";
+import { useState, useEffect } from "react";
+import { FcInfo } from "react-icons/fc";
+import { motion } from "framer-motion";
+import packagesData from "../../../../../db.json";
 import Section from "./index";
 
-export default function Pricing({ data }) {
-  const intro = useMemo(() => data && data[0], [data]);
-  const pricesData = useMemo(
-    () => data && data.filter((price, index) => index !== 0),
-    [data]
-  );
+const Pricing = () => {
+  const [isYearly, setIsYearly] = useState(false);
+  const [packages, setPackages] = useState([]);
 
-  if (!intro || !pricesData) {
-    return null;
-  }
+  useEffect(() => {
+
+    setPackages(packagesData.pricing[0]);
+  }, []);
 
   return (
-    <Section id="precos" bg="bg-accent">
-      <div className="container">
-        <div className="intro">
-          <h2 className="italic mb-10 text-center font-extrabold text-4xl text-secondary">
-            {intro.title}
-          </h2>
-          <p className="italic text-center mb-11">{intro.description}</p>
+    <>
+      <Section id="pricing" bg="bg-accent">
+        <div className="" id="pricing">
+          <div className="text-center">
+            <h2 className="md:text-5xl text-2xl font-extrabold text-secondary italic mb-2">Conheça os preços dos Ensaios</h2>
+            <p className="text-tertiary md:w-1/3 mx-auto p-4 italic font-medium">Aqui você encontra o melhor pacote que você precisa</p>
+          </div>
+          <div className="bg-accent grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-10 mt-20 md:w-11/12 mx-auto">
+            {packages.map((pkg, index) => (
+              <div key={index} className="bg-white border py-10 md:px-6 px-4 rounded-lg shadow-3xl">
+                <h3 className="text-3xl font-bold text-center text-secondary">{pkg.name}</h3>
+                <p className="text-tertiary text-center my-6 font-medium italic">{pkg.description}</p>
+                <ul className="mt-4 space-y-2 px-4 ">
+                  {pkg.benefits.map((benefit, index) => (
+                    <li key={index} className="flex items-center italic">
+                      <FcInfo className="mr-2 text-xl" color="#64734D"/>
+                      {benefit}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-center text-secondary text-4xl font-bold italic">
+                  {isYearly ? `$${pkg.price}` : `R$${pkg.price}`}
+                  <span className="text-tertiary text-xl"></span>
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-wrap justify-center">
-          {pricesData.map((price, index) => (
-            <div
-              key={index}
-              className="bg-neutral card w-1/6 py-20 mx-3 md:w-5/12 xxs:w-11/12 lg:w-2/12 m-2 p-4 rounded-3xl"
-            >
-              <p className="font-black mb-3">{price.title}</p>
-              <p className="italic">{price.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </Section>
+      </Section>
+    </>
   );
-}
+};
+
+export default Pricing;
