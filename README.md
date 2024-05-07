@@ -94,3 +94,7 @@ try:
 except Exception as e:
     print(e)
 ```
+
+3. Nome da pasta `client`
+
+Por algum motivo, o github não renomeou as pastas de cliente (Client -> client), sendo necessário renomear manualmente a pasta de `models/Client` para `models/client` e todas as outras pastas que contenham `Client` como nome.
