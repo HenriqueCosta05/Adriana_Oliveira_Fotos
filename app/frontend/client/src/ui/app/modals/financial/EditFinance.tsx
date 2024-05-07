@@ -1,10 +1,12 @@
 import { Button, Modal } from "flowbite-react";
 import OutgoingForm from "../../forms/Financials/pages/OutgoingForm";
+import RevenueForm from "../../forms/Financials/pages/RevenueForm";
 
 export default function EditFinance({
   modal,
   setModal,
   handleCloseModal,
+  handleDeleteModal,
   financeType,
   id,
   title,
@@ -23,13 +25,13 @@ export default function EditFinance({
              {financeType === "outgoing" ? (
           <OutgoingForm id={id} />
         ) : (
-          <OutgoingForm id={id} />
+          <RevenueForm id={id} />
         )}
         </Modal.Body>
         <Modal.Footer className="flex justify-between">
           <Button
             className="mr-2 bg-red-500"
-            onClick={() => setModal({ ...modal, isOpen: false })}
+            onClick={() => setModal({ ...modal, type: "confirmDelete", isOpen: true })}
           >
             Excluir finança
           </Button>

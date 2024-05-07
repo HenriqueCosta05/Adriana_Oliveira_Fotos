@@ -7,12 +7,12 @@ import * as Switch from "@radix-ui/react-switch";
 import { RevenueDataProps } from "../../../../../types/RevenueData/RevenueDataProps";
 import { Label, TextInput, Textarea } from "flowbite-react";
 
-interface StepThree {
+interface StepThreeProps {
   prevData?: any;
   method?: any;
 }
 
-export const StepThree = ({ prevData, method }: StepThree) => {
+export const StepThree = ({ prevData, method }: StepThreeProps) => {
   const { data, setData, handleNext, prev } = useContext(FormContext);
 
   const {

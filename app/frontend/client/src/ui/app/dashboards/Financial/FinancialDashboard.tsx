@@ -10,6 +10,8 @@ import Searchbar from "./components/Searchbar/Searchbar";
 import { getFinancesListByMonth } from "../../../../helpers/getFinancesList";
 import { formatFinanceData } from "../../../../helpers/formatFinanceData";
 import EditFinance from "../../modals/financial/EditFinance";
+import { HelperText } from "flowbite-react";
+import ConfirmDeleteModal from "../../modals/financial/ConfirmDelete";
 
 export default function FinancialDashboard() {
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -79,7 +81,11 @@ export default function FinancialDashboard() {
      const handleCloseModal = () => {
        setModal({ ...modal, isOpen: false });
        window.location.href = "/app/financeiro";
-     };
+  };
+  
+  const handleDeleteModal = () => {
+    setModal({ ...modal, type: "confirmDelete", isOpen: true });
+  }
 
 
   return (
@@ -100,6 +106,9 @@ export default function FinancialDashboard() {
       <h1 className="text-center text-4xl font-bold mt-10 text-secondary italic">
         Gerenciamento Financeiro
       </h1>
+      <HelperText className="text-center text-md mt-4">
+        Acompanhe suas receitas e despesas! Caso queira editar os detalhes de determinada finança, clique sobre ela.
+      </HelperText>
       <ButtonGroup />
       <Searchbar handleSearch={handleSearch} />
       <DateRange
@@ -118,12 +127,12 @@ export default function FinancialDashboard() {
         setEditModalOpen={(finance) => setEditModalOpen(finance)}
       />
       <Footer />
-            {renderModal(modal, setModal, handleCloseModal)}
+            {renderModal(modal, setModal, handleCloseModal, handleDeleteModal)}
     </DashboardContext.Provider>
   );
 }
 
-function renderModal(modal, setModal, handleCloseModal) {
+function renderModal(modal, setModal, handleCloseModal, handleDeleteModal) {
   switch (modal.type) {
     case "outgoing":
       return (
@@ -131,12 +140,23 @@ function renderModal(modal, setModal, handleCloseModal) {
           modal={modal}
           setModal={setModal}
           handleCloseModal={handleCloseModal}
+          handleDeleteModal={handleDeleteModal}
           financeType={modal.type}
-              id={modal.id}
-              title={modal.title}
+          id={modal.id}
+          title={modal.title}
               
         />
       );
+    case "confirmDelete":
+      return (
+        <ConfirmDeleteModal
+          modal={modal}
+          setModal={setModal}
+          handleCloseModal={handleCloseModal}
+          handleDelete={handleCloseModal}
+          id={modal.id}
+          />
+      )
     default:
       break;
   }

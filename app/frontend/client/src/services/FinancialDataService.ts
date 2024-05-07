@@ -21,6 +21,14 @@ export const fetchData = async (id: string) => {
   return data;
 };
 
+export const deleteData = async (id: string) => {
+  const response = await fetch(`${API}/excluir-registro/${id}`, {
+    method: "DELETE",
+  });
+  await handleErrors(response);
+  return response.json();
+}
+
 export const fetchAllData = async () => {
   const response = await fetch(`${API}/consultar-registros`);
   await handleErrors(response);

@@ -45,13 +45,10 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
     return method === "POST" ? "xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 my-4" : "w-full mx-auto bg-accent p-4 my-4";
   }
     return (
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={getClassName(method)}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={getClassName(method)}>
         <div className="mb-[20px]">
           <h1 className="text-3xl font-bold text-center mb-9 text-secondary">
-            {method === "POST" ? "Nova Despesa" : "Editar Despesa"}
+            {method === "POST" ? "Nova Finança" : "Editar Finança"}
           </h1>
           <p className="text-3x1 font-bold text-center mb-9 text-secondary">
             {" "}

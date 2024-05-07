@@ -11,6 +11,7 @@ import { DeleteAppointmentForm } from "./ui/app/forms/Appointments/DeleteAppoint
 import FinancialDashboard from "./ui/app/dashboards/Financial/FinancialDashboard";
 import OutgoingForm from "./ui/app/forms/Financials/pages/OutgoingForm";
 import NotFound from "./ui/404/NotFound";
+import RevenueForm from "./ui/app/forms/Financials/pages/RevenueForm";
 function App() {
   return (
     <BrowserRouter>
@@ -29,6 +30,7 @@ function App() {
 
         <Route path="/app/financeiro" element={<FinancialDashboard />} />
         <Route path="/app/nova-despesa" element={<OutgoingForm />} />
+        <Route path="/app/nova-receita" element={<RevenueForm />} />
       </Routes>
     </BrowserRouter>
   );

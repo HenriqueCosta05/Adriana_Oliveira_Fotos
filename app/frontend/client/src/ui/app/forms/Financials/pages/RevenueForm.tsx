@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { initialData } from "../../../../../lib/financial/InitialOutgoingData";
+import { initialData } from "../../../../../lib/financial/InitialRevenueData";
 import {
   fetchData,
   sendData,
@@ -14,7 +14,7 @@ import SuccessModal from "../../../modals/financial/Success";
 import UserNavbar from "../../../components/UserNavbar";
 import Footer from "../../../../portfolio/components/Sections/Footer";
 
-const OutgoingForm = ({id}) => {
+const RevenueForm = ({ id }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [method, setMethod] = useState("POST");
   const [step, setStep] = useState(1);
@@ -56,7 +56,7 @@ const OutgoingForm = ({id}) => {
         setModal({
           isOpen: true,
           type: "success",
-          message: "Despesa cadastrada com sucesso!",
+          message: "Receita cadastrada com sucesso!",
         });
       } catch (error) {
         const message = error.message;
@@ -86,27 +86,27 @@ const OutgoingForm = ({id}) => {
       window.location.href = "/app/financeiro";
     }
   };
-return (
-  <>
-    {method === "POST" ? (
-      <>
-        <UserNavbar />
-        <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
-          {renderStep(step, method, data)}
-        </Provider>
-        <Footer />
-        {renderModal(modal, setModal, handleCloseModal, errorMessage)}
-      </>
-    ) : (
-      <>
-        <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
-          {renderStep(step, method, data)}
-        </Provider>
-        {renderModal(modal, setModal, handleCloseModal, errorMessage)}
-      </>
-    )}
-  </>
-);
+  return (
+    <>
+      {method === "POST" ? (
+        <>
+          <UserNavbar />
+          <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
+            {renderStep(step, method, data)}
+          </Provider>
+          <Footer />
+          {renderModal(modal, setModal, handleCloseModal, errorMessage)}
+        </>
+      ) : (
+        <>
+          <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
+            {renderStep(step, method, data)}
+          </Provider>
+          {renderModal(modal, setModal, handleCloseModal, errorMessage)}
+        </>
+      )}
+    </>
+  );
 };
 function renderStep(step, method, data) {
   switch (step) {
@@ -162,4 +162,4 @@ function renderModal(modal, setModal, handleCloseModal, errorMessage) {
   }
 }
 
-export default OutgoingForm;
+export default RevenueForm;

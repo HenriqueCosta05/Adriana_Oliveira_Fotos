@@ -14,7 +14,8 @@ export interface RevenueDataProps {
   };
   StepThree: {
     paymentMethod: string;
-    automaticPayment: boolean;
     detailedDescription: string;
+    automaticPayment: boolean;
+   
   };
 }
