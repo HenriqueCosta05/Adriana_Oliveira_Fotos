@@ -4,7 +4,7 @@ import {
   fetchData,
   sendData,
 } from "../../../../../services/FinancialDataService";
-import { Spinner } from "flowbite-react";
+import { Breadcrumb, Spinner } from "flowbite-react";
 import { Provider } from "../../../../../contexts/forms/FormContext";
 import { StepOne } from "../components/StepOne";
 import { StepTwo } from "../components/StepTwo";
@@ -91,6 +91,23 @@ return (
     {method === "POST" ? (
       <>
         <UserNavbar />
+        <Breadcrumb className="p-4 mx-auto">
+          <Breadcrumb.Item>
+            <a href="/app" className="text-[16px]">
+              Página inicial
+            </a>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <a href="/app/financeiro" className="text-[16px]">
+              Financeiro
+            </a>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <a href="/app/nova-despesa" className="text-[16px]">
+              Nova Despesa
+            </a>
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
           {renderStep(step, method, data)}
         </Provider>

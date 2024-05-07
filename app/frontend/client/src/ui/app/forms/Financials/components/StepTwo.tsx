@@ -19,8 +19,6 @@ export const StepTwo = ({ prevData, method }: StepTwoProps) => {
     control,
     handleSubmit,
     register,
-    watch,
-    setValue,
     formState: { errors },
   } = useForm<RevenueDataProps["StepTwo"]>({
     defaultValues: data || prevData,
@@ -49,7 +47,7 @@ export const StepTwo = ({ prevData, method }: StepTwoProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={getClassName(method)}>
       <h1 className="text-3xl font-bold text-center mb-8 text-secondary">
-        {method === "POST" ? "Nova Despesa" : "Editar Despesa"}
+        {method === "POST" ? "Nova Finança" : "Editar Finança"}
       </h1>
       <p className="text-3x1 font-bold text-center mb-9 text-secondary">
         {" "}
@@ -66,15 +64,12 @@ export const StepTwo = ({ prevData, method }: StepTwoProps) => {
           <Controller
             name="accountType"
             control={control}
-            rules={{ required: "Tipo de conta é obrigatório" }}
             render={({ field }) => (
               <>
                 <TextInput
                   placeholder="Digite o tipo de conta..."
                   {...field}
-                  {...register("accountType", {
-                    required: "Tipo de conta é obrigatório",
-                  })}
+                  {...register("accountType")}
                   id="accountType"
                   name="accountType"
                   color={errors.accountType ? "failure" : "primary"}

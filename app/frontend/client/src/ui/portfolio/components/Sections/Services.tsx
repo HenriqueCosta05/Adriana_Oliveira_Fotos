@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import Section from "./index";
 import Image from "../../../../components/Shared/Image/Image";
 import Card from "react-bootstrap/Card";
+import { Button } from "flowbite-react";
 
 export default function Services({ data }) {
   const intro = useMemo(() => data && data[0], [data]);
@@ -46,6 +47,11 @@ export default function Services({ data }) {
                     </Card>
                   </div>
                 ))}
+            </div>
+            <div className="flex justify-center mx-auto">
+              <Button className="mt-8 bg-secondary p-8 rounded-xl" href="/galeria">
+                <h2 className="text-[24px] italic">Saiba mais!</h2>
+              </Button>
             </div>
           </div>
         </Section>

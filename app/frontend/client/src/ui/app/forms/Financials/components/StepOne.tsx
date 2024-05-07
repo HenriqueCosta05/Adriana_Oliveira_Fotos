@@ -40,6 +40,11 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
   //Watch registryType
   const selectedRegistryType = watch('registryType');
 
+  //Watch installments
+  if (selectedRegistryType !== "Parcelamento") {
+    watch('installments', { value: 0 });
+  }
+
   //Classname 
   const getClassName = (method) => {
     return method === "POST" ? "xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 my-4" : "w-full mx-auto bg-accent p-4 my-4";
@@ -58,17 +63,17 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
             <Label
               htmlFor="outgoingType"
               className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-              value="Tipo de despesa:"
+              value="Tipo de finança:"
             />
             <Controller
               name="registryType"
               control={control}
-              rules={{ required: "Tipo de despesa é obrigatório" }}
+              rules={{ required: "Tipo de finança é obrigatório" }}
               render={({ field }) => (
                 <Select
                   {...field}
                   {...register("registryType", {
-                    required: "Tipo de despesa é obrigatório",
+                    required: "Tipo de finança é obrigatório",
                   })}
                   id="registryType"
                   name="registryType"
@@ -143,7 +148,7 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
                   {...field}
                   color={errors.title ? "failure" : "primary"}
                   type="text"
-                  placeholder="Digite o título da despesa..."
+                  placeholder="Digite o título da finança..."
                   className="w-11/12 text-center rounded-lg p-2"
                   id="name"
                   {...register("title", { required: "O título é obrigatório" })}
@@ -172,7 +177,7 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
                   type="number"
                   min="0"
                   step="0.01"
-                  placeholder="Digite o valor da despesa, em reais..."
+                  placeholder="Digite o valor da finança, em reais..."
                   {...field}
                   color={errors.value ? "failure" : "primary"}
                   id="value"

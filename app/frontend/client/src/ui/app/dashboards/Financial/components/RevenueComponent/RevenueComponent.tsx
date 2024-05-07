@@ -7,6 +7,9 @@ export default function RevenueComponent({ currentDate, setCurrentDate, financeD
     return isDebit ? "text-red-500" : "text-green-500";
   }
 
+  const isPaidText = (isPaid) => {
+    return isPaid ? "Pago" : "Pendente";
+  }
   return (
     <>
       {financeData ? (
@@ -16,7 +19,7 @@ export default function RevenueComponent({ currentDate, setCurrentDate, financeD
               {finance && finance.dueDate}
             </HelperText>
             <div className="flex justify-between mx-auto lg:w-9/12 xxs:w-11/12 p-4 bg-gray-50 drop-shadow-sm rounded-3">
-              <HelperText> {finance && finance.title}</HelperText>
+              <HelperText> {finance && finance.title} - {isPaidText(finance.isPaid)}</HelperText>
               <HelperText className={getClassName(finance.isDebit)}>R$ {finance && finance.value}</HelperText>
             </div>
           </div>

@@ -20,7 +20,7 @@ export default function ConfirmDeleteModal({
         </Modal.Body>
         <Modal.Footer className="flex justify-between">
           <Button onClick={handleCloseModal}>Cancelar</Button>
-            <Button onClick={()=> {deleteData(id); alert("Despesa excluída com sucesso!"); window.location.reload()}} className="bg-red-600">Confirmar</Button>
+            <Button onClick={()=> {deleteData(id); alert("Finança excluída com sucesso!"); window.location.reload()}} className="bg-red-600">Confirmar</Button>
         </Modal.Footer>
       </Modal>
     </>
