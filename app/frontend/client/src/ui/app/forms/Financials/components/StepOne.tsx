@@ -20,6 +20,7 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
     const {
       control,
       handleSubmit,
+      setValue,
       register,
       formState: { errors },
       watch
@@ -42,7 +43,7 @@ export const StepOne = ({ prevData, method }: StepOneProps) => {
 
   //Watch installments
   if (selectedRegistryType !== "Parcelamento") {
-    watch('installments', { value: 0 });
+    setValue('installments', undefined);
   }
 
   //Classname 

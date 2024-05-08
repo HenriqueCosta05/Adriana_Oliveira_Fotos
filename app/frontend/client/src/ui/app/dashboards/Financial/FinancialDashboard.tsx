@@ -86,6 +86,7 @@ export default function FinancialDashboard() {
   const handleDeleteModal = () => {
     setModal({ ...modal, type: "confirmDelete", isOpen: true });
   }
+  
 
 
   return (
@@ -107,7 +108,8 @@ export default function FinancialDashboard() {
         Gerenciamento Financeiro
       </h1>
       <HelperText className="text-center text-md mt-4">
-        Acompanhe suas receitas e despesas! Caso queira editar os detalhes de determinada finança, clique sobre ela.
+      Bem-vindo(a) ao Gerenciamento Financeiro! Esta seção foi projetada para ajudá-lo(a) a gerenciar suas transações financeiras com facilidade.
+
       </HelperText>
       <ButtonGroup />
       <Searchbar handleSearch={handleSearch} />
