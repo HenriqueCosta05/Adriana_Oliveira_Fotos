@@ -41,7 +41,6 @@ const initialData = {
 };
 
 export const EditAppointmentForm = () => {
-  
   const [errorMessage, setErrorMessage] = useState("");
   const [method, setMethod] = useState("POST");
   const [data, setData] = useState(initialData);

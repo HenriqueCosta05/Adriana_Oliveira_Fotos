@@ -14,7 +14,7 @@ import SuccessModal from "../../../modals/financial/Success";
 import UserNavbar from "../../../components/UserNavbar";
 import Footer from "../../../../portfolio/components/Sections/Footer";
 
-const OutgoingForm = ({id}) => {
+const OutgoingForm = ({ id }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [method, setMethod] = useState("POST");
   const [step, setStep] = useState(1);
@@ -86,44 +86,44 @@ const OutgoingForm = ({id}) => {
       window.location.href = "/app/financeiro";
     }
   };
-return (
-  <>
-    {method === "POST" ? (
-      <>
-        <UserNavbar />
-        <Breadcrumb className="p-4 mx-auto">
-          <Breadcrumb.Item>
-            <a href="/app" className="text-[16px]">
-              Página inicial
-            </a>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <a href="/app/financeiro" className="text-[16px]">
-              Financeiro
-            </a>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <a href="/app/nova-despesa" className="text-[16px]">
-              Nova Despesa
-            </a>
-          </Breadcrumb.Item>
-        </Breadcrumb>
-        <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
-          {renderStep(step, method, data)}
-        </Provider>
-        <Footer />
-        {renderModal(modal, setModal, handleCloseModal, errorMessage)}
-      </>
-    ) : (
-      <>
-        <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
-          {renderStep(step, method, data)}
-        </Provider>
-        {renderModal(modal, setModal, handleCloseModal, errorMessage)}
-      </>
-    )}
-  </>
-);
+  return (
+    <>
+      {method === "POST" ? (
+        <>
+          <UserNavbar />
+          <Breadcrumb className="p-4 mx-auto">
+            <Breadcrumb.Item>
+              <a href="/app" className="text-[16px]">
+                Página inicial
+              </a>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <a href="/app/financeiro" className="text-[16px]">
+                Financeiro
+              </a>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <a href="/app/nova-despesa" className="text-[16px]">
+                Nova Despesa
+              </a>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
+            {renderStep(step, method, data)}
+          </Provider>
+          <Footer />
+          {renderModal(modal, setModal, handleCloseModal, errorMessage)}
+        </>
+      ) : (
+        <>
+          <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
+            {renderStep(step, method, data)}
+          </Provider>
+          {renderModal(modal, setModal, handleCloseModal, errorMessage)}
+        </>
+      )}
+    </>
+  );
 };
 function renderStep(step, method, data) {
   switch (step) {

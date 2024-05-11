@@ -8,11 +8,11 @@ import {
   Button,
 } from "flowbite-react";
 import { Controller, useForm } from "react-hook-form";
-import { getEventList } from "../../../../../../helpers/getEventList";
+import { getEventList } from "../../../../../../helpers/calendar/getEventList";
 
 interface FormProps {
-    onSubmitForm: () => void;
-    }
+  onSubmitForm: () => void;
+}
 
 export default function Form({ onSubmitForm }) {
   const {
@@ -29,9 +29,9 @@ export default function Form({ onSubmitForm }) {
     getEventList().then(setEventList);
   }, []);
 
-    const submitForm = (id) => {
-        id = eventSelected;
-        onSubmitForm(id);
+  const submitForm = (id) => {
+    id = eventSelected;
+    onSubmitForm(id);
   };
 
   return (

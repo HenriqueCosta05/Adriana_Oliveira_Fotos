@@ -4,6 +4,7 @@ import NewUserFormContext from "../../../../../../contexts/forms/FormContext";
 import { Button, TextInput, Label } from "flowbite-react";
 import { UserDataProps } from "../../../../../../types/UserData/UserDataProps";
 import UserNavbar from "../../../../components/UserNavbar";
+import useFetchAddress from "../../../../../../lib/client/useFetchAddress";
 
 interface StepTwoProps {
   prevData?: any;
@@ -25,21 +26,7 @@ export const StepTwo = ({ prevData, method }: StepTwoProps) => {
 
   const zipCode = watch("zip");
 
-  useEffect(() => {
-    const refactoredZipCode =
-      zipCode && zipCode.replace("-", "").replace(" ", "");
-    if (refactoredZipCode && refactoredZipCode.length === 8) {
-      fetch(`https://viacep.com.br/ws/${refactoredZipCode}/json/`)
-        .then((response) => response.json())
-        .then((data) => {
-          setValue("street", data.logradouro);
-          setValue("city", data.localidade);
-          setValue("state", data.uf);
-          setValue("neighborhood", data.bairro);
-        })
-        .catch((error) => console.error(error));
-    }
-  }, [zipCode, setValue]);
+    useFetchAddress(zipCode, setValue);
 
   const onSubmit = (formData) => {
     setData((prevFormData) => ({

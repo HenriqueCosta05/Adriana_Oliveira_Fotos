@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import FormContext from "../../../../../contexts/forms/FormContext";
 import { RevenueDataProps } from "../../../../../types/RevenueData/RevenueDataProps";
 import { Controller, useForm } from "react-hook-form";
-import { Button, HelperText, Label, Select, TextInput} from "flowbite-react";
-import { getClientList } from "../../../../../helpers/getClientList";
+import { Button, HelperText, Label, Select, TextInput } from "flowbite-react";
+import { getClientList } from "../../../../../helpers/clients/getClientList";
 
 interface StepTwoProps {
   prevData?: any;
@@ -177,4 +177,4 @@ export const StepTwo = ({ prevData, method }: StepTwoProps) => {
       </div>
     </form>
   );
-}
+};

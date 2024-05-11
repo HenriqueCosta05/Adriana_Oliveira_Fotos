@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import FormContext from "../../../../../contexts/forms/FormContext";
 import { Controller, useForm } from "react-hook-form";
-import { isValidDate } from "../../../../../helpers/isValidDate";
+import { isValidDate } from "../../../../../helpers/financial/isValidDate";
 import { RevenueDataProps } from "../../../../../types/RevenueData/RevenueDataProps";
 import { registryTypeOptions } from "../../../../../lib/financial/options/registryTypeOptions";
 import { isPaidOptions } from "../../../../../lib/financial/options/isPaidOptions";

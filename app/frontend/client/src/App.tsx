@@ -34,6 +34,7 @@ function App() {
         <Route path="/app/financeiro" element={<FinancialDashboard />} />
         <Route path="/app/nova-despesa" element={<OutgoingForm />} />
         <Route path="/app/nova-receita" element={<RevenueForm />} />
+        
       </Routes>
     </BrowserRouter>
   );

@@ -11,6 +11,7 @@ database = client['CRUDfotos']
 
 # Acessa as coleções
 colecaoClient = database['Clientes']
+colecaoCalendar = database['Calendario']
 colecaoFinacial = database['Financeiro']
 
 # Send a ping to confirm a successful connection

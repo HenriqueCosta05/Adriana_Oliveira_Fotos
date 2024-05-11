@@ -10,10 +10,10 @@ import {
 import { AppointmentDataProps } from "../../../../../../types/AppointmentData/AppointmentDataProps";
 import { Controller, useForm } from "react-hook-form";
 import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
-import { getClientList } from "../../../../../../helpers/getClientList";
-import { submitAppointment } from "../../../../../../helpers/submitAppointment";
-import { getEventList } from "../../../../../../helpers/getEventList";
-import { retrieveEventData } from "../../../../../../helpers/retrieveEventData";
+import { getClientList } from "../../../../../../helpers/clients/getClientList";
+import { submitAppointment } from "../../../../../../helpers/calendar/submitAppointment";
+import { getEventList } from "../../../../../../helpers/calendar/getEventList";
+import { retrieveEventData } from "../../../../../../helpers/calendar/retrieveEventData";
 
 interface FormProps {
   data: AppointmentDataProps;
@@ -36,21 +36,6 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
   const [eventSelected, setEventSelected] = useState("");
   const [clientList, setClientList] = useState([]);
 
-  useEffect(() => {
-    getClientList().then(setClientList);
-    getEventList().then(setEventList);
-
-    if (eventSelected && eventSelected !== "") {
-      retrieveEventData(eventSelected).then((event) => {
-        setValue("title", event?.summary);
-        setValue("description", event?.description);
-        setValue("appointmentDate", event?.appointmentDate);
-        setValue("appointmentTime", event?.appointmentTime);
-        setValue("userAssociated", event?.userAssociated);
-    });
-    }
-    
-  }, []);
 
   const handleClientChange = (event) => {
     setClientSelected(event.target.value);
@@ -60,9 +45,6 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
     const data = getValues();
     submitAppointment(data, setData);
   };
-
-
-
 
   return (
     <>
@@ -128,8 +110,8 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
                 />
                 <Controller
                   name="title"
-                    control={control}
-                    defaultValue={prevData?.title}
+                  control={control}
+                  defaultValue={prevData?.title}
                   render={({ field }) => (
                     <TextInput
                       {...field}
@@ -158,15 +140,14 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
                 />
                 <Controller
                   name="description"
-                    control={control}
-                    defaultValue={prevData?.description}
+                  control={control}
+                  defaultValue={prevData?.description}
                   render={({ field }) => (
                     <TextInput
                       {...field}
                       {...register("description", {
                         required: "Campo obrigatório",
                       })}
-                      
                       type="text"
                       placeholder="Forneça uma descrição ao compromisso..."
                       className="w-11/12"
@@ -189,8 +170,8 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
                   className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
                   value="Data do compromisso:"
                 />
-                  <Controller
-                    defaultValue={prevData?.appointmentDate}
+                <Controller
+                  defaultValue={prevData?.appointmentDate}
                   control={control}
                   name="appointmentDate"
                   render={({ field }) => (
@@ -204,7 +185,6 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
                           placeholder="Selecione a data do compromisso..."
                           labelTodayButton="Hoje"
                           labelClearButton="Limpar"
-                          
                           color={errors.appointmentDate ? "failure" : "primary"}
                           onSelectedDateChanged={(date) => field.onChange(date)}
                           className="w-11/12 rounded-lg p-2"
@@ -275,8 +255,8 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
                   value="Usuário Associado:"
                 />
                 <Controller
-                    name="userAssociated"
-                    defaultValue={prevData?.userAssociated}
+                  name="userAssociated"
+                  defaultValue={prevData?.userAssociated}
                   control={control}
                   render={({ field }) => (
                     <Select
@@ -287,7 +267,6 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
                       onChange={handleClientChange}
                       id="userAssociated"
                       name="userAssociated"
-                      
                       color={errors.userAssociated ? "failure" : "primary"}
                       className="w-11/12 text-center rounded-lg p-2"
                       value={field.value}

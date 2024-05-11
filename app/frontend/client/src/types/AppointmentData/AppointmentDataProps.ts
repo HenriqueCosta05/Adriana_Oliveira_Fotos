@@ -1,7 +1,9 @@
 export interface AppointmentDataProps {
     title: string;
     description: string;
-    appointmentDate: string;
-    appointmentTime: string;
+    dateInitial: Date;
+    hourInitial: number;
+    dateFinal: Date;
+    hourFinal: number;
     userAssociated: string;
 }

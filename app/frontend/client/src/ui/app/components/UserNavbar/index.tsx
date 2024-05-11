@@ -6,15 +6,15 @@ export default function UserNavbar() {
   return (
     <Navbar fluid className="bg-primary">
       <Navbar.Brand>
-          <Image
-            src="/logo.png"
-            className="ml-3"
-            alt="Logo"
-            width="100"
-            height="100"
-          />
-          </Navbar.Brand>
-          <Profile />
+        <Image
+          src="/logo.png"
+          className="ml-3"
+          alt="Logo"
+          width="100"
+          height="100"
+        />
+      </Navbar.Brand>
+      <Profile />
     </Navbar>
-  )
+  );
 }

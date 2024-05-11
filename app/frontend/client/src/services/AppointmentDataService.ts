@@ -15,7 +15,7 @@ const handleErrors = async (response) => {
 };
 
 export const fetchData = async (id: string) => {
-  const response = await fetch(`${API}/consultar-compromisso?id=${id}`);
+  const response = await fetch(`${API}/consultar-evento?id=${id}`);
   await handleErrors(response);
   const data = await response.json();
   return data;
@@ -29,7 +29,7 @@ export const fetchAllData = async () => {
 };
 
 export const sendData = async (id?: string, data) => {
-  const url = id ? `${API}/atualizar-eventos/${id}` : `${API}/criar-evento`;
+  const url = id ? `${API}/atualizar-evento/${id}` : `${API}/criar-evento`;
   const method = id ? "PUT" : "POST";
 
   const response = await fetch(url, {

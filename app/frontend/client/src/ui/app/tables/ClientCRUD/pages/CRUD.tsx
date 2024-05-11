@@ -5,7 +5,6 @@ import { FaPlus } from "react-icons/fa";
 import UserNavbar from "../../../components/UserNavbar";
 import Footer from "../../../../portfolio/components/Sections/Footer";
 
-
 export default function CRUD() {
   const { handleDelete } = useDeleteModal();
   const tableRows = useFillData();
@@ -36,7 +35,7 @@ export default function CRUD() {
           <Table.Body className=" bg-white">{tableRows}</Table.Body>
         </Table>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

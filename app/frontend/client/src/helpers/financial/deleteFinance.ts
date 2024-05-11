@@ -1,4 +1,4 @@
-import { deleteData } from "../services/FinancialDataService";
+import { deleteData } from "../../services/FinancialDataService";
 
 export default async function deleteAppointment(id: string) {
   try {

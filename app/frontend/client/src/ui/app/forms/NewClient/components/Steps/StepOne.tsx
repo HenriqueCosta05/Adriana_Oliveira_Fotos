@@ -20,7 +20,7 @@ interface StepOneProps {
   method?: any;
 }
 
-export const StepOne = ({ prevData, method}: StepOneProps) => {
+export const StepOne = ({ prevData, method }: StepOneProps) => {
   const { data, setData, handleNext } = useContext(NewUserFormContext);
 
   const {

@@ -1,15 +1,12 @@
 from pydantic import BaseModel
-from models.calendar.Date import Date
-from models.calendar.Recurrence import Recurrence
-from models.calendar.Attendee import Attendee
-from models.calendar.Reminders import Reminders
+from datetime import datetime
 
 
 class Event(BaseModel):
-    summary: str
-    location: str
+    title: str
     description: str
-    start: Date
-    end: Date
-    attendees: list[Attendee]
-    reminders: Reminders
+    dateInitial: datetime.date
+    hourInitial: datetime.time
+    dateFinal:  datetime.date
+    hourFinal: datetime.time
+    client: str

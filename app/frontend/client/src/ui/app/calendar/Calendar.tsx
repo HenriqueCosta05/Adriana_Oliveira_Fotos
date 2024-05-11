@@ -1,5 +1,5 @@
 import FullCalendar from "@fullcalendar/react";
-import googleCalendarPlugin from "@fullcalendar/google-calendar";
+import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import brLocale from "@fullcalendar/core/locales/pt-br";
@@ -7,8 +7,29 @@ import UserNavbar from "../components/UserNavbar";
 import Footer from "../../portfolio/components/Sections/Footer";
 import { Button, HelperText } from "flowbite-react";
 import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
+import { useCallback, useEffect, useState } from "react";
+import NewAppointmentModal from "../modals/appointment/NewAppointmentModal";
 
 export default function Agenda() {
+  const [modal, setModal] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+    date: Date,
+  });
+
+  const [selectedDate, setSelectedDate] = useState({});
+
+  const handleCloseModal = () => {
+    setModal({ ...modal, isOpen: false });
+  };
+
+  const handleDateSelect = useCallback((dateSelected) => {
+    setSelectedDate(dateSelected);
+    setModal({ isOpen: true, type: "NewAppointmentModal", message: "", date: selectedDate });
+  }, []);
+
+  
   return (
     <div className="flex flex-col">
       <UserNavbar />
@@ -16,14 +37,6 @@ export default function Agenda() {
         <h1 className="text-4xl font-black text-center text-secondary italic">
           Agenda
         </h1>
-        <HelperText className="text-center text-[15px] mt-20">
-          Para criar um novo compromisso, clique no botão abaixo. É altamente
-          recomendável que se utilize esta seção em dispositivos desktop.
-        </HelperText>
-        <HelperText className="text-center text-[15px] mt-10">
-          Atenção! O Calendário abaixo não é editável, utilize-se dos botões
-          abaixo para manipular a visualização.
-        </HelperText>
         <div className="flex justify-center items-center mx-auto mt-20 lg:w-9/12">
           <Button
             className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-secondary"
@@ -52,22 +65,40 @@ export default function Agenda() {
       <div className="w-9/12 mx-auto my-4">
         <FullCalendar
           editable={true}
-          plugins={[googleCalendarPlugin, dayGridPlugin, timeGridPlugin]}
+          selectable={true}
+          selectMirror={true}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="timeGridWeek"
           locale={brLocale}
           weekends
+          select={handleDateSelect}
           headerToolbar={{
             left: "prev,next today",
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
-          events={{
-            googleCalendarApiKey: "AIzaSyDHCwZA-TluXkJcENBSK_lwTYcNd5kFP9Y",
-            googleCalendarId: "projetointerdisciplinar2.fatec@gmail.com",
-          }}
+          eventContent
         />
       </div>
+      {renderModal(modal, setModal, handleCloseModal, selectedDate)}
       <Footer />
     </div>
   );
+}
+
+const renderModal = (modal, setModal, handleCloseModal, selectedDate) => {
+  switch (modal.type) {
+    case "NewAppointmentModal":
+      return (
+        <NewAppointmentModal
+          modal={modal}
+          setModal={setModal}
+          selectedDate={selectedDate}
+          handleCloseModal={handleCloseModal}
+
+        />
+      );
+    default:
+      return null;
+  }
 }
