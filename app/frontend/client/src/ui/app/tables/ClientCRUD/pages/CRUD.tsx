@@ -1,4 +1,4 @@
-import { Table, Button } from "flowbite-react";
+import { Table, Button, HelperText } from "flowbite-react";
 import { useDeleteModal } from "../helpers/handleDelete";
 import { useFillData } from "../helpers/fillData";
 import { FaPlus } from "react-icons/fa";
@@ -11,11 +11,16 @@ export default function CRUD() {
   return (
     <>
       <UserNavbar />
-      <h1 className="text-3xl font-bold text-center my-8 text-cyan-800">
+      <h1 className="text-3xl font-bold text-center my-8 text-secondary">
         Gerenciamento de Clientes
       </h1>
+      <HelperText className="text-left text-md mt-4 lg:w-3/4 xxs:w-11/12 mx-auto">
+        Bem-vindo(a) ao Gerenciamento de clientes! Esta seção foi projetada para
+        ajudá-lo(a) a gerenciar seus clientes com facilidade, permitindo, dentre outros
+        fatores, o envio de login de acesso, bem como o upload de fotos em galerias.
+      </HelperText>
       <Button
-        className="w-max p-2 mx-auto mt-20 flex overflow-x-auto"
+        className="w-max p-2 mx-auto mt-20 bg-secondary flex overflow-x-auto"
         href="/app/novo-cliente"
       >
         <FaPlus className="mr-2 mt-0.5" />

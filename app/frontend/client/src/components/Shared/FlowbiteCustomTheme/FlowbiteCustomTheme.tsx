@@ -113,4 +113,19 @@ export const customTheme: CustomFlowbiteTheme = {
       },
     },
   },
+  button: {
+    color: {
+      info: "bg-[#64734D] text-white hover:bg-[#64734D]",
+      purple: "bg-[#B1A5CA] text-white hover:bg-[#B1A5CA]",
+      green: "bg-[#64734D] text-white hover:bg-[#64734D]",
+    },
+  },
+
+  dropdown: {
+    floating: {
+      style: {
+        dark: "bg-[#64734D]",
+      },
+    },
+  }
 };

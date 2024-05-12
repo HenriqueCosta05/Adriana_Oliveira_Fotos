@@ -31,12 +31,18 @@ export default function Agenda() {
 
   
   return (
+    <>
+    
     <div className="flex flex-col">
       <UserNavbar />
       <div className="my-8">
         <h1 className="text-4xl font-black text-center text-secondary italic">
           Agenda
-        </h1>
+          </h1>
+          <HelperText className="text-center text-md mt-4">
+        Bem-vindo(a) ao Gerenciamento de compromissos! Esta seção foi projetada para
+        ajudá-lo(a) a gerenciar seus compromissos, relacionando-os aos clientes com facilidade.
+      </HelperText>
         <div className="flex justify-center items-center mx-auto mt-20 lg:w-9/12">
           <Button
             className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-secondary"
@@ -62,7 +68,7 @@ export default function Agenda() {
         </div>
       </div>
 
-      <div className="w-9/12 mx-auto my-4">
+      <div className="w-9/12 mx-auto mb-28">
         <FullCalendar
           editable={true}
           selectable={true}
@@ -81,8 +87,10 @@ export default function Agenda() {
         />
       </div>
       {renderModal(modal, setModal, handleCloseModal, selectedDate)}
-      <Footer />
+      
     </div>
+      <Footer />
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from controllers.client import createNewClient, deleteClient, getAllClients, getClientById, updateClient
+from controllers.Client import createNewClient, deleteClient, getAllClients, getClientById, updateClient
 from middlewares.cors import setup_cors
 
 app = FastAPI()

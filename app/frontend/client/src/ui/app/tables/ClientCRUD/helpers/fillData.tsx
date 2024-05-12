@@ -26,7 +26,7 @@ export const useFillData = () => {
             <Table.Cell className="text-center">{client.email}</Table.Cell>
             <Table.Cell className="text-center">{client.phone}</Table.Cell>
             <Table.Cell className="flex justify-center">
-              <Dropdown label="Ações" theme={customTheme}>
+              <Dropdown label="Ações" color="light" theme={{theme: customTheme }}>
                 <Dropdown.Item
                   href={`/app/editar-cliente/${client.id}`} 
                   icon={FaEdit}

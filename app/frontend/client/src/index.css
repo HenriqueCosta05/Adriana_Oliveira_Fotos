@@ -11,7 +11,14 @@
 
 body {
   background-color: #f2f2f2;
+  position: relative;
 }
+
+html, #root {
+  min-height: 100vh;
+}
+
+
 
 :root {
   --fc-small-font-size: 0.85em;
