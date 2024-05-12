@@ -12,7 +12,7 @@ export default function Profile() {
       </Dropdown.Header>
       <Dropdown.Item href="/">Página Inicial</Dropdown.Item>
       <Dropdown.Item href="/app/clientes">Clientes</Dropdown.Item>
-      <Dropdown.Item href="#">Galerias</Dropdown.Item>
+      <Dropdown.Item href="/app/galerias">Galerias</Dropdown.Item>
       <Dropdown.Item href="/app/agenda">Agenda</Dropdown.Item>
       <Dropdown.Item href="/app/financeiro">Financeiro</Dropdown.Item>
     </Dropdown>

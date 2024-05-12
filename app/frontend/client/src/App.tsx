@@ -12,7 +12,10 @@ import FinancialDashboard from "./ui/app/dashboards/Financial/FinancialDashboard
 import OutgoingForm from "./ui/app/forms/Financials/pages/OutgoingForm";
 import NotFound from "./ui/404/NotFound";
 import RevenueForm from "./ui/app/forms/Financials/pages/RevenueForm";
+import GalleryDashboard from "./ui/app/dashboards/Gallery/GalleryDashboard";
 import Galeria from "./ui/portfolio/components/Gallery/Galeria";
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -35,6 +38,7 @@ function App() {
         <Route path="/app/nova-despesa" element={<OutgoingForm />} />
         <Route path="/app/nova-receita" element={<RevenueForm />} />
         
+        <Route path="/app/galerias" element={<GalleryDashboard />} />
       </Routes>
     </BrowserRouter>
   );
