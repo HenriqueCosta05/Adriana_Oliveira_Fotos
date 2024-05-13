@@ -18,13 +18,11 @@ export default function GalleryDashboard() {
         Bem-vindo(a) ao Gerenciamento de galerias! Esta seção foi projetada para
         ajudá-lo(a) a gerenciar suas galerias com facilidade.
       </HelperText>
-      <Button href="app/nova-galeria" className="mt-4 lg:w-1/6 py-4 mx-auto text-lg bg-secondary">
+      <Button href="/app/nova-galeria" className="mt-4 lg:w-1/6 py-4 mx-auto text-lg bg-secondary">
         <FaPlus className="text-xl mr-2" />
         Nova Galeria
       </Button>
       <Searchbar />
-      <GaleryComponent />
-      <GaleryComponent />
       <GaleryComponent />
       <PaginationComponent />
       <Footer />

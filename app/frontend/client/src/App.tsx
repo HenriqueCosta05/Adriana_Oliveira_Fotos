@@ -14,6 +14,7 @@ import NotFound from "./ui/404/NotFound";
 import RevenueForm from "./ui/app/forms/Financials/pages/RevenueForm";
 import GalleryDashboard from "./ui/app/dashboards/Gallery/GalleryDashboard";
 import Galeria from "./ui/portfolio/components/Gallery/Galeria";
+import GalleryForm from "./ui/app/forms/Galleries/pages/GalleryForm";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/app/nova-receita" element={<RevenueForm />} />
         
         <Route path="/app/galerias" element={<GalleryDashboard />} />
+        <Route path="/app/nova-galeria" element={<GalleryForm />} />
       </Routes>
     </BrowserRouter>
   );

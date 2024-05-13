@@ -1,22 +1,46 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from gridfs import GridFS
+from bson.objectid import ObjectId
+from dotenv import load_dotenv
+import os
 
-#uri = "mongodb+srv://projetointerdisciplinar2fatec:nZ7FxgCTn1V7LjG6@projetointerdisciplinar.tc1hzfl.mongodb.net/?retryWrites=true&w=majority&appName=ProjetoInterdisciplinarIII"
 
-# Create a new client and connect to the server
-client = MongoClient("mongodb://localhost:27017")
+load_dotenv(".env")
 
+atlas_uri = os.getenv('ATLAS_URI')
+local_uri = os.getenv('LOCAL_URI')
 
-database = client['CRUDfotos']
+conected = False
 
-# Acessa as coleções
-colecaoClient = database['Clientes']
-colecaoCalendar = database['Calendario']
-colecaoFinacial = database['Financeiro']
-
-# Send a ping to confirm a successful connection
 try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-except Exception as e:
-    print(e)
+    client = MongoClient(atlas_uri)
+    client.server_info()
+    conected = True
+    print("MongoDB conectado via Atlas")
+except:
+    print("Falha ao conectar via Atlas")
+
+
+if not conected:
+    try:
+        client= MongoClient(local_uri)
+        client.server_info()
+        conected = True
+        print("MongoDB conectado via Local")
+    except:
+        print("Falha ao conectar via Local")
+
+if conected:
+    database = client['CRUDfotos']
+
+    colecaoClient = database['Clientes']
+    colecaoFinacial = database['Financeiro']
+    colecaoCalendar = database['Calendar']
+    colecaoGallery = database['Galeria']
+    colecaoGridFs = GridFS(database, collection="Image")
+
+    print("Coleçoes selecionadas com sucesso!")
+
+
+
