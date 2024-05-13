@@ -15,6 +15,7 @@ import RevenueForm from "./ui/app/forms/Financials/pages/RevenueForm";
 import GalleryDashboard from "./ui/app/dashboards/Gallery/GalleryDashboard";
 import Galeria from "./ui/portfolio/components/Gallery/Galeria";
 import GalleryForm from "./ui/app/forms/Galleries/pages/GalleryForm";
+import GalleryView from "./ui/app/gallery/pages/GalleryView";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         
         <Route path="/app/galerias" element={<GalleryDashboard />} />
         <Route path="/app/nova-galeria" element={<GalleryForm />} />
+        <Route path="app/galerias/2" element={<GalleryView/>}/>
       </Routes>
     </BrowserRouter>
   );
