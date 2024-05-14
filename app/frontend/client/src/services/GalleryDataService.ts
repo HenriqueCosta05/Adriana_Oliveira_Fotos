@@ -14,8 +14,9 @@ const handleErrors = async (response) => {
   return response;
 };
 
+
 export const fetchGallery = async (id: string) => {
-  const response = await fetch(`${API}/galerias?id=${id}`);
+  const response = await fetch(`${API}/galerias/${id}`);
   await handleErrors(response);
   const data = await response.json();
   return data;

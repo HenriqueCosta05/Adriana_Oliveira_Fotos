@@ -1,7 +1,8 @@
 import Dropzone from 'react-dropzone';
 import { FaUpload } from 'react-icons/fa';
 
-const FolderCard = () => {
+const FolderCard = ({folderTitle, photosNumber}) => {
+    
     return (
       <div className="flex flex-col h-64 border-2 border-gray-300 rounded-md m-4">
         <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
@@ -20,10 +21,10 @@ const FolderCard = () => {
         </Dropzone>
         <div className="flex-1 p-4 bg-gray-200">
           <h4 className="text-lg font-bold text-gray-700">
-            Nome da Pasta
+            {folderTitle}
           </h4>
           <p className="mt-2 text-sm text-gray-600">
-            Quantidade de fotos - x
+            Quantidade de fotos - {photosNumber}
           </p>
         </div>
       </div>

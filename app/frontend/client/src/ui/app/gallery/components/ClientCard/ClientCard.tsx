@@ -1,21 +1,21 @@
 import { Button } from 'flowbite-react';
 import React, {useState, useEffect} from 'react';
-import { getClientList } from '../../../../../helpers/clients/getClientList';
+import { retrieveClientInfo } from '../../../../../helpers/gallery/retrieveClientInfo';
 
-const ClientCard = ({ clientId }) => {
+const ClientCard = ({ clientId, photosNumber}) => {
 
     const [clientData, setClientData] = useState({})
 
   useEffect(() => {
-    getClientList(clientId).then((data) => {
+    retrieveClientInfo(clientId).then((data) => {
       setClientData(data);
     });
   }, [clientId]);
     return (
         <div className="flex flex-col h-64 p-4 border-1 m-4 border-gray-300 rounded-md">
             <div className="flex-1">
-                <h4 className="text-lg font-bold text-gray-700">{clientData.fullName}</h4>
-                <p className="mt-2 text-sm text-gray-600">Fotografias selecionadas - {}</p>
+          <h4 className="text-lg font-bold text-gray-700">{clientData.fullName}</h4>
+                <p className="mt-2 text-sm text-gray-600">Fotografias do Pacote - {photosNumber}</p>
             </div>
             <Button className="bg-success text-white rounded-md transition-colors duration-200 ease-in-out">
                 Enviar link de acesso
