@@ -38,6 +38,7 @@ export const StepTwo = ({ prevData, method }: StepTwoProps) => {
       setClientList(clients);
     });
   }, []);
+  
   //Classname
   const getClassName = (method) => {
     return method === "POST"

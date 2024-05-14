@@ -10,6 +10,9 @@ import { Controller, useForm } from "react-hook-form";
 import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
 import { DefaultSizeOptions } from "../../../../../../lib/gallery/options/DefaultSizeOptions";
 import { PackOptions } from "../../../../../../lib/gallery/options/PackOptions";
+import { createGallery } from "../../../../../../services/GalleryDataService";
+import { getClientList } from "../../../../../../helpers/gallery/getClientList";
+import { useEffect, useState } from "react";
 
 export default function NewGalleryForm() {
   const {
@@ -19,10 +22,26 @@ export default function NewGalleryForm() {
     formState: { errors },
   } = useForm();
 
-  
-  const submitForm = (data: any) => {
-    console.log(data);
-  };
+  const [clientList, setClientList] = useState([]);
+
+  async function submitForm(data) {
+    try {
+      await createGallery(data);
+      alert("Galeria criada com sucesso!");
+    } catch (error) {
+      console.error("Erro ao criar galeria...", error);
+      alert("Erro ao criar galeria...");
+    }
+  }
+
+  useEffect(() => {
+    getClientList().then((clientList) => {
+      const clients = Array.from(clientList);
+      setClientList(clients);
+      console.log(clients);
+    });
+  }, []);
+
 
   return (
     <>
@@ -204,6 +223,47 @@ export default function NewGalleryForm() {
                 {errors.defaultSize.message}
               </span>
             )}
+          </div>
+        </div>
+        <div className="mb-[30px]">
+          <div className="flex flex-wrap items-baseline justify-center">
+            <Label
+              htmlFor="clientAssociated"
+              className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
+              value="Cliente associado:"
+            />
+            <Controller
+              name="clientAssociated"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <>
+                    <Select
+                      className="w-11/12"
+                      {...field}
+                      {...register("clientAssociated", {
+                        required: "Obrigatório associar cliente à galeria.",
+                      })}
+                      color={errors.clientAssociated ? "failure" : "primary"}
+                    >
+                      <option disabled selected value="">
+                        Selecione...
+                      </option>
+                      {clientList.map((option, index) => (
+                          <option key={option.id} value={option.id}>
+                            {option.fullName}
+                          </option>
+                        ))}
+                    </Select>
+                    {errors && errors.clientAssociated && (
+                      <span className="text-red-500 font-medium text-[14px]">
+                        {errors.clientAssociated.message}
+                      </span>
+                    )}
+                  </>
+                );
+              }}
+            />
           </div>
         </div>
         <div className="flex justify-center">

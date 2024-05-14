@@ -5,7 +5,7 @@ import bson
 
 router = APIRouter()
 
-@router.delete("/galerias/{galeria_id}/delete")
+@router.delete("/app/galerias/{galeria_id}/delete")
 async def deletar_galeria(galeria_id: str):
     try:
         obj_id = ObjectId(galeria_id)

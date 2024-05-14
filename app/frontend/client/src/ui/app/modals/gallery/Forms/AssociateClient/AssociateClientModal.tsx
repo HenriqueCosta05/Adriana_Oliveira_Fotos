@@ -7,7 +7,7 @@ export default function AssociateClientModal({ modal, setModal, handleCloseModal
       <Modal.Header>
         <h4 className="text-3xl font-bold text-center mb-9 text-success">
           {" "}
-          Associar cliente
+          Anexar contratos e termos de uso
         </h4>
       </Modal.Header>
       <Modal.Body>

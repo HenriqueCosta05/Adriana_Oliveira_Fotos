@@ -48,7 +48,7 @@ function App() {
 
         <Route path="/app/galerias" element={<GalleryDashboard />} />
         <Route path="/app/nova-galeria" element={<GalleryForm />} />
-        <Route path="app/galerias/2" element={<GalleryView />} />
+        <Route path="app/galerias/:id" element={<GalleryView />} />
         <Route path="app/galerias/3" element={<FolderView />} />
       </Routes>
     </BrowserRouter>

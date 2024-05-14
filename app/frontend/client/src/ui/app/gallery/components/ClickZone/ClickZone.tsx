@@ -34,7 +34,7 @@ export default function ClickZone({ isClient }: ClickZoneProps) {
         >
           <FaPeopleArrows className="text-4xl text-gray-400" />
           <p className="mt-2 text-sm text-gray-600">
-            Clique para associar a galeria a um cliente
+            Clique para associar arquivos ao cliente
           </p>
         </section>
       ) : (
