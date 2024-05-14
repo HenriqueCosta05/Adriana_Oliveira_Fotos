@@ -15,17 +15,17 @@ import RevenueForm from "./ui/app/forms/Financials/pages/RevenueForm";
 import GalleryDashboard from "./ui/app/dashboards/Gallery/GalleryDashboard";
 import Galeria from "./ui/portfolio/components/Gallery/Galeria";
 import GalleryForm from "./ui/app/forms/Galleries/pages/GalleryForm";
-import GalleryView from "./ui/app/gallery/pages/GalleryView";
-
+import GalleryView from "./ui/app/gallery/pages/GalleryView/GalleryView";
+import FolderView from "./ui/app/gallery/pages/FolderView/FolderView";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Portfolio />} />
-                <Route path="/galeria" element={<Galeria/>}/>
+        <Route path="/galeria" element={<Galeria />} />
 
-        <Route path="*" element={<NotFound/>} />
+        <Route path="*" element={<NotFound />} />
 
         <Route path="/app/clientes" element={<CRUD />} />
         <Route path="/app/novo-cliente" element={<UserForm />} />
@@ -33,16 +33,23 @@ function App() {
 
         <Route path="/app/agenda" element={<Agenda />} />
         <Route path="/app/novo-compromisso" element={<NewAppointmentForm />} />
-        <Route path="/app/editar-compromisso" element={<EditAppointmentForm />} />
-        <Route path="/app/excluir-compromisso" element={<DeleteAppointmentForm />} />
+        <Route
+          path="/app/editar-compromisso"
+          element={<EditAppointmentForm />}
+        />
+        <Route
+          path="/app/excluir-compromisso"
+          element={<DeleteAppointmentForm />}
+        />
 
         <Route path="/app/financeiro" element={<FinancialDashboard />} />
         <Route path="/app/nova-despesa" element={<OutgoingForm />} />
         <Route path="/app/nova-receita" element={<RevenueForm />} />
-        
+
         <Route path="/app/galerias" element={<GalleryDashboard />} />
         <Route path="/app/nova-galeria" element={<GalleryForm />} />
-        <Route path="app/galerias/2" element={<GalleryView/>}/>
+        <Route path="app/galerias/2" element={<GalleryView />} />
+        <Route path="app/galerias/3" element={<FolderView />} />
       </Routes>
     </BrowserRouter>
   );

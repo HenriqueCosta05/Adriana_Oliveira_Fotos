@@ -1,10 +1,9 @@
 import { HelperText } from "flowbite-react";
-import DropZone from "../components/DropZone/DropZone";
-import FolderCard from "../components/FolderCard/FolderCard";
-import UserNavbar from "../../components/UserNavbar";
-import Footer from "../../../portfolio/components/Sections/Footer";
-import ClickZone from '../components/ClickZone/ClickZone'
-import ClientCard from "../components/ClientCard/ClientCard";
+import FolderCard from "../../components/FolderCard/FolderCard";
+import UserNavbar from "../../../components/UserNavbar";
+import Footer from "../../../../portfolio/components/Sections/Footer";
+import ClickZone from "../../components/ClickZone/ClickZone";
+import ClientCard from "../../components/ClientCard/ClientCard";
 
 export default function GalleryView() {
   return (

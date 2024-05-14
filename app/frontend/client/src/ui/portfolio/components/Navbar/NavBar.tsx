@@ -34,8 +34,10 @@ export default function NavBar({ data }) {
               </span>
             </Dropdown.Header>
             <Dropdown.Item href='/app/clientes'>Gerenciamento de Clientes</Dropdown.Item>
+            <Dropdown.Item href='/app/galerias'>Gerenciamento de Galerias</Dropdown.Item>
             <Dropdown.Item href='/app/financeiro'>Gerenciamento de Finanças</Dropdown.Item>
             <Dropdown.Item href='/app/agenda'>Gerenciamento de Compromissos</Dropdown.Item>
+           
 
             <Dropdown.Divider />
           </Dropdown>
