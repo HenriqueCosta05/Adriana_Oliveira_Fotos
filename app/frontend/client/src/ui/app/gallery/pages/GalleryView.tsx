@@ -4,6 +4,7 @@ import FolderCard from "../components/FolderCard/FolderCard";
 import UserNavbar from "../../components/UserNavbar";
 import Footer from "../../../portfolio/components/Sections/Footer";
 import ClickZone from '../components/ClickZone/ClickZone'
+import ClientCard from "../components/ClientCard/ClientCard";
 
 export default function GalleryView() {
   return (
@@ -21,7 +22,7 @@ export default function GalleryView() {
           adicionar uma nova pasta você poderá adicionar fotos a ela.
         </HelperText>
         <div className="flex flex-wrap justify-start">
-          <DropZone />
+          <ClickZone isClient={false} />
           <FolderCard />
           <FolderCard />
           <FolderCard />
@@ -34,8 +35,11 @@ export default function GalleryView() {
           por cliente.
         </HelperText>
         <div className="flex flex-wrap justify-start">
-            <ClickZone/>
-            </div>
+          <ClickZone isClient />
+          <ClientCard />
+          <ClientCard />
+          <ClientCard />
+        </div>
       </div>
       <Footer />
     </>

@@ -1,4 +1,3 @@
-import React from 'react';
 import Dropzone from 'react-dropzone';
 import { FaUpload } from 'react-icons/fa';
 
@@ -9,7 +8,7 @@ const FolderCard = () => {
           {({ getRootProps, getInputProps }) => (
             <section
               {...getRootProps()}
-              className="flex flex-col items-center justify-center flex-1 p-6 border-t-2 border-dashed border-gray-300 hover:bg-gray-200 transition-colors duration-200 ease-in-out cursor-pointer"
+              className="flex flex-col items-center justify-center flex-1 p-6 border-gray-300 hover:bg-gray-200 transition-colors duration-200 ease-in-out cursor-pointer"
             >
               <input {...getInputProps()} />
               <FaUpload className="text-4xl text-gray-400" />
@@ -20,9 +19,9 @@ const FolderCard = () => {
           )}
         </Dropzone>
         <div className="flex-1 p-4 bg-gray-200">
-          <h2 className="text-lg font-bold text-gray-700">
+          <h4 className="text-lg font-bold text-gray-700">
             Nome da Pasta
-          </h2>
+          </h4>
           <p className="mt-2 text-sm text-gray-600">
             Quantidade de fotos - x
           </p>

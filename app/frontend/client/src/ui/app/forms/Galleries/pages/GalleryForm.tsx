@@ -1,7 +1,7 @@
 import { Breadcrumb } from "flowbite-react";
-import Footer from "../../../../portfolio/components/Sections/Footer"
-import UserNavbar from "../../../components/UserNavbar"
-import NewGalleryForm from "../components/NewGalleryForm"
+import Footer from "../../../../portfolio/components/Sections/Footer";
+import UserNavbar from "../../../components/UserNavbar";
+import NewGalleryForm from "../components/NewGalleryForm/NewGalleryForm";
 
 const GalleryForm = () => {
   return (
@@ -28,6 +28,6 @@ const GalleryForm = () => {
       <Footer />
     </>
   );
-}
+};
 
-export default GalleryForm
+export default GalleryForm;

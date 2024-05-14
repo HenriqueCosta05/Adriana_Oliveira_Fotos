@@ -1,20 +1,29 @@
-import { Button, Datepicker, Flowbite, Label, Select, TextInput } from "flowbite-react";
+import {
+  Button,
+  Datepicker,
+  Flowbite,
+  Label,
+  Select,
+  TextInput,
+} from "flowbite-react";
 import { Controller, useForm } from "react-hook-form";
-import { customTheme } from "../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
-import { DefaultSizeOptions } from "../../../../../lib/gallery/options/DefaultSizeOptions";
-import { PackOptions } from "../../../../../lib/gallery/options/PackOptions";
+import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
+import { DefaultSizeOptions } from "../../../../../../lib/gallery/options/DefaultSizeOptions";
+import { PackOptions } from "../../../../../../lib/gallery/options/PackOptions";
 
 export default function NewGalleryForm() {
-    const {
-        handleSubmit,
-        register,
-        control,
-        formState: { errors },
-    } = useForm();
-    const submitForm = (data: any) => {
-        console.log(data);
-    };
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm();
+
   
+  const submitForm = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <>
       <form
@@ -110,11 +119,12 @@ export default function NewGalleryForm() {
                       <option disabled selected value="">
                         Selecione...
                       </option>
-                      {PackOptions && PackOptions.map((option, index) => (
-                        <option key={option.index} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
+                      {PackOptions &&
+                        PackOptions.map((option, index) => (
+                          <option key={option.index} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
                     </Select>
                     {errors && errors.photosNumber && (
                       <span className="text-red-500 font-medium text-[14px]">
@@ -204,4 +214,4 @@ export default function NewGalleryForm() {
       </form>
     </>
   );
-                        }
+}
