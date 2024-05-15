@@ -14,6 +14,19 @@ const handleErrors = async (response) => {
   return response;
 };
 
+export const createFolder = async (folderData, galleryData, id) => {
+  const response = await fetch(`${API}/galerias/${id}/pastas/nova-pasta`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(folderData),
+  });
+  await handleErrors(response);
+  const data = await response.json();
+  return data;
+
+} 
 
 export const fetchGallery = async (id: string) => {
   const response = await fetch(`${API}/galerias/${id}`);

@@ -4,7 +4,8 @@ import NewFolderForm from '../../../../forms/Galleries/components/NewFolderForm/
 export default function NewFolderModal({
     modal,
     setModal,
-    handleCloseModal,
+  handleCloseModal,
+    galleryId,
     
 }) {
   return (
@@ -15,12 +16,14 @@ export default function NewFolderModal({
           Nova Pasta
         </h4>
       </Modal.Header>
-          <Modal.Body>
-              <NewFolderForm />
-          </Modal.Body>
-          <Modal.Footer>
-              <Button onClick={handleCloseModal} className='bg-success'>Cancelar</Button>
-            </Modal.Footer>
+      <Modal.Body>
+        <NewFolderForm galleryId={galleryId} />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={handleCloseModal} className="bg-success">
+          Cancelar
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 }

@@ -1,20 +1,42 @@
 import { Button, Label, TextInput } from "flowbite-react";
+import { useEffect, useState} from "react";
 import { Controller, useForm } from "react-hook-form";
+import { retrieveGalleryInfo } from "../../../../../../helpers/gallery/retrieveGalleryInfo";
+import { createFolder } from "../../../../../../services/GalleryDataService";
 
-export default function NewFolderForm() {
-const {
-  handleSubmit,
-  register,
-  control,
-  formState: { errors },
-} = useForm();
+export default function NewFolderForm({ galleryId }) {
+const [galleryData, setGalleryData] = useState({});
+  
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm();
 
-    const submitForm = (data: any) => {
-        console.log(data);
+  useEffect(() => {
+    retrieveGalleryInfo(galleryId).then((gallery) => {
+      if (gallery) {
+        setGalleryData(gallery);
+      }
+    });
+  }, [galleryId]);
+
+  const submitForm = (data) => {
+    try {
+      createFolder(data, galleryData, galleryId).then((response) => {
+        if (response) {
+          alert("Pasta criada com sucesso!");
+          window.location.reload();
+        }
+      })
+    } catch (error) {
+      console.error("Erro ao criar pasta: ", error);
     }
+  };
 
   return (
-       <>
+    <>
       <form
         className="xs:w-11/12 mx-auto p-4 my-4 rounded-md"
         onSubmit={handleSubmit(submitForm)}
@@ -48,15 +70,17 @@ const {
                 {errors.title.message}
               </span>
             )}
-                  </div>
-              </div>
-              <div className="flex justify-center">
-                  <Button
-                        type="submit"
-                      className="bg-success text-white rounded-md hover:bg-green-600 transition-colors duration-200 ease-in-out w-11/12"
-                  >Salvar</Button>
-              </div>
-          </form>
-          </>
-  )
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <Button
+            type="submit"
+            className="bg-success text-white rounded-md hover:bg-green-600 transition-colors duration-200 ease-in-out w-11/12"
+          >
+            Salvar
+          </Button>
+        </div>
+      </form>
+    </>
+  );
 }

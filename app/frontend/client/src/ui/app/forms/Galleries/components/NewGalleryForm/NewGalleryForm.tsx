@@ -38,7 +38,7 @@ export default function NewGalleryForm() {
     getClientList().then((clientList) => {
       const clients = Array.from(clientList);
       setClientList(clients);
-      console.log(clients);
+      
     });
   }, []);
 
