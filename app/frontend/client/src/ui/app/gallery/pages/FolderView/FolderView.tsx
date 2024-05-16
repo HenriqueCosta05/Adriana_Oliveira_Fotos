@@ -3,13 +3,32 @@ import { Footer } from 'flowbite-react/components/Footer';
 import DropZone from '../../components/DropZone/DropZone';
 import Image from '../../../../../components/Shared/Image/Image';
 import { useEffect, useState } from 'react';
+import { fetchFolderById, fetchImageById } from '../../../../../services/GalleryDataService';
 import { useParams } from 'react-router-dom';
 
 export default function FolderView() {
   const { id, pastaId } = useParams();
   const [folderFetched, setFolderFetched] = useState({});
-  const [photos, setPhotos] = useState([]);
+  const [pictures, setPictures] = useState(folderFetched.photos || []);
 
+  useEffect(() => {
+    fetchFolderById(id, pastaId).then((response) => {
+      setFolderFetched(response);
+      
+      if (response.photos) {
+        Promise.all(response.photos.map((photo) => fetchImageById(id, photo)))
+          .then((responses) => {
+            setPictures(responses);
+          })
+          .catch((error) => {
+            console.error("Error fetching images:", error);
+          });
+      }
+    });
+  }, [id, pastaId]);
+
+  console.log(pictures)
+  
   return (
     <>
       <UserNavbar />
@@ -21,10 +40,10 @@ export default function FolderView() {
           Lista de imagens adicionadas na {folderFetched && folderFetched.title}
         </p>
         <div className="w-full">
-          <DropZone setPhotos={setPhotos} />
+          <DropZone setPhotos={setPictures} />
         </div>
         <div className="w-full">
-          {photos.map((blobUrl, index) => (
+          {pictures.map((blobUrl, index) => (
             <Image key={index} src={blobUrl} alt={`Foto ${index + 1}`} className={""} />
           ))}
         </div>
