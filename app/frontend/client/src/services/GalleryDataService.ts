@@ -14,9 +14,9 @@ const handleErrors = async (response) => {
   return response;
 };
 
-export const createFolder = async (folderData, galleryData, id) => {
-  const response = await fetch(`${API}/galerias/${id}/pastas/nova-pasta`, {
-    method: "PUT",
+export const createFolder = async (folderData, id) => {
+  const response = await fetch(`${API}/folder/${id}`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
@@ -25,8 +25,22 @@ export const createFolder = async (folderData, galleryData, id) => {
   await handleErrors(response);
   const data = await response.json();
   return data;
-
 } 
+
+export const fetchAllFoldersFromGallery = async (id: string) => {
+  const gallery = await fetchGallery(id);
+  const folders = gallery.folders;
+  return folders;
+}
+
+export const fetchFolderById = async (galleryId, folderId) => {
+  const response = await fetch(
+    `${API}/galerias/${galleryId}/pastas/${folderId}`
+  );
+  await handleErrors(response);
+  const data = await response.json();
+  return data;
+}
 
 export const fetchGallery = async (id: string) => {
   const response = await fetch(`${API}/galerias/${id}`);
@@ -76,19 +90,6 @@ export const deleteGallery = async (id) => {
   return response;
 };
 
-export const uploadImages = async (galleryId, images) => {
-  const formData = new FormData();
-  images.forEach((image) => {
-    formData.append("images", image);
-  });
-
-  const response = await fetch(`${API}/galerias/${galleryId}/upload`, {
-    method: "POST",
-    body: formData,
-  });
-  await handleErrors(response);
-  return response;
-}
 
 export const deleteImage = async (galleryId, imageId) => {
   const response = await fetch(`${API}/galerias/${galleryId}/fotos/${imageId}`, {
@@ -97,9 +98,3 @@ export const deleteImage = async (galleryId, imageId) => {
   await handleErrors(response);
   return response;
 }
-
-export const downloadImage = async (galleryId, imageId) => {
-    const response = await fetch(`${API}/galerias/${galleryId}/fotos/${imageId}/download`);
-    await handleErrors(response);
-    return response;
-    }

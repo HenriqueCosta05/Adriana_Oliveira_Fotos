@@ -1,11 +1,8 @@
 import { Button, Label, TextInput } from "flowbite-react";
-import { useEffect, useState} from "react";
 import { Controller, useForm } from "react-hook-form";
-import { retrieveGalleryInfo } from "../../../../../../helpers/gallery/retrieveGalleryInfo";
 import { createFolder } from "../../../../../../services/GalleryDataService";
 
 export default function NewFolderForm({ galleryId }) {
-const [galleryData, setGalleryData] = useState({});
   
   const {
     handleSubmit,
@@ -14,17 +11,10 @@ const [galleryData, setGalleryData] = useState({});
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    retrieveGalleryInfo(galleryId).then((gallery) => {
-      if (gallery) {
-        setGalleryData(gallery);
-      }
-    });
-  }, [galleryId]);
 
   const submitForm = (data) => {
     try {
-      createFolder(data, galleryData, galleryId).then((response) => {
+      createFolder(data, galleryId).then((response) => {
         if (response) {
           alert("Pasta criada com sucesso!");
           window.location.reload();

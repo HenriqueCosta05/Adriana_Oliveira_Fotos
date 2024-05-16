@@ -1,34 +1,34 @@
-import Dropzone from 'react-dropzone';
-import { FaUpload } from 'react-icons/fa';
+import { Button } from 'flowbite-react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getMaxPhotosForAFolder } from '../../../../../helpers/gallery/getMaxPhotosForAFolder';
+import { useEffect, useState } from 'react';
 
-const FolderCard = ({folderTitle, photosNumber}) => {
-    
-    return (
-      <div className="flex flex-col h-64 border-2 border-gray-300 rounded-md m-4">
-        <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-          {({ getRootProps, getInputProps }) => (
-            <section
-              {...getRootProps()}
-              className="flex flex-col items-center justify-center flex-1 p-6 border-gray-300 hover:bg-gray-200 transition-colors duration-200 ease-in-out cursor-pointer"
-            >
-              <input {...getInputProps()} />
-              <FaUpload className="text-4xl text-gray-400" />
-              <p className="mt-2 text-sm text-gray-600">
-                Arraste e solte arquivos aqui
-              </p>
-            </section>
-          )}
-        </Dropzone>
-        <div className="flex-1 p-4 bg-gray-200">
-          <h4 className="text-lg font-bold text-gray-700">
-            {folderTitle}
-          </h4>
-          <p className="mt-2 text-sm text-gray-600">
-            Quantidade de fotos - {photosNumber}
-          </p>
-        </div>
-      </div>
-    );
+const FolderCard = ({ folderTitle, photosNumber, foldersNumber, folderId }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [maxPhotosNumber, setMaxPhotosNumber] = useState(0)
+
+  useEffect(() => {
+    const photos = getMaxPhotosForAFolder(photosNumber, foldersNumber).then((photos) => {
+      setMaxPhotosNumber(photos)
+    })
+  }, [photosNumber, foldersNumber])
+
+  const handleButtonClick = () => {
+    navigate(`/app/galerias/${id}/pastas/${folderId}`);
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center border-2 text-center border-success rounded-md m-4 p-4">
+      <h4 className="text-lg font-bold text-gray-700 mb-2">{folderTitle}</h4>
+      <p className="text-sm text-gray-600 mb-4">
+        Quantidade de fotos permitidas na pasta: {maxPhotosNumber}
+      </p>
+      <Button className="bg-success text-white rounded-md hover:bg-green-600 transition-colors duration-200 ease-in-out w-11/12" onClick={handleButtonClick}>
+        Acessar Pasta
+      </Button>
+    </div>
+  );
 };
 
 export default FolderCard;

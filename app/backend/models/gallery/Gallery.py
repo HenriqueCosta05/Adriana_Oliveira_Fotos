@@ -1,7 +1,7 @@
 from .Folder import Folder
 from bson import ObjectId
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 
 class Gallery(BaseModel):
@@ -9,7 +9,7 @@ class Gallery(BaseModel):
     title: str
     category: str
     createdAt: Optional[datetime] = Field(default_factory=datetime.now)
-    photos: Optional[Folder] = None
+    folders: Optional[List[Folder]] = []
     photosNumber: int
     defaultSize: str
     clientAssociated: str

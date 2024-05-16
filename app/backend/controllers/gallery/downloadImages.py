@@ -20,8 +20,8 @@ async def download_foto(galeria_id: str, file_id: str):
     if not galeria:
         raise HTTPException(status_code=404, detail="Galeria não encontrada")
 
-    for pasta in galeria["pastas"]:
-        if file_id in pasta["images"]:
+    for pasta in galeria["folders"]:
+        if file_id in pasta["photos"]:
             imagem_bytes = colecaoGridFs.get(ObjectId(file_id)).read()
             return StreamingResponse(io.BytesIO(imagem_bytes), media_type="image/jpeg")
         elif file_id in pasta["documents"]:
