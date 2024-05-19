@@ -43,9 +43,9 @@ export const fetchFolderById = async (galleryId, folderId) => {
 }
 
 export const fetchImageById = async (galleryId, fileId) => {
-  const response = await fetch(`${API}/galerias/${galleryId}/fotos/${fileId}/download`)
+  const response = await fetch(`${API}/galerias/${galleryId}/fotos/${fileId}/download`);
   await handleErrors(response);
-  const data = await response.json();
+  const data = await response.blob();
   return data;
 }
 

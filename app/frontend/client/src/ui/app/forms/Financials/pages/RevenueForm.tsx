@@ -4,7 +4,7 @@ import {
   fetchData,
   sendData,
 } from "../../../../../services/FinancialDataService";
-import { Breadcrumb, Spinner } from "flowbite-react";
+import { Spinner } from "flowbite-react";
 import { Provider } from "../../../../../contexts/forms/FormContext";
 import { StepOne } from "../components/StepOne";
 import { StepTwo } from "../components/StepTwo";
@@ -13,6 +13,7 @@ import ErrorModal from "../../../modals/client/Error";
 import SuccessModal from "../../../modals/financial/Success";
 import UserNavbar from "../../../components/UserNavbar";
 import Footer from "../../../../portfolio/components/Sections/Footer";
+import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
 
 const RevenueForm = ({ id }) => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -91,23 +92,11 @@ const RevenueForm = ({ id }) => {
       {method === "POST" ? (
         <>
           <UserNavbar />
-          <Breadcrumb className="p-4 mx-auto">
-            <Breadcrumb.Item>
-              <a href="/app" className="text-[16px]">
-                Página inicial
-              </a>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <a href="/app/financeiro" className="text-[16px]">
-                Financeiro
-              </a>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <a href="/app/nova-receita" className="text-[16px]">
-                Nova Receita
-              </a>
-            </Breadcrumb.Item>
-          </Breadcrumb>
+          <BreadCrumb
+            home={["Página Inicial", "/app"]}
+            currentSection={["Financeiro", "/app/financeiro"]}
+            currentForm={["Nova Receita", "/app/financeiro/nova-receita"]}
+          />
           <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
             {renderStep(step, method, data)}
           </Provider>

@@ -3,6 +3,7 @@ import { getClientList } from "../../../../../../helpers/gallery/getClientList";
 import { HelperText } from "flowbite-react";
 import { fetchAllGalleries, fetchGallery } from "../../../../../../services/GalleryDataService";
 import { useNavigate } from "react-router-dom";
+import { capitalize } from "../../../../../../utils/capitalize";
 
 export default function GaleryComponent() {
   const [galleries, setGalleries] = useState([]);
@@ -38,9 +39,9 @@ export default function GaleryComponent() {
         }}>
           <div className="flex flex-column">
             <HelperText>{gallery.title}</HelperText>
-            <HelperText>{gallery.photosNumber}</HelperText>
+            <HelperText>Fotos do pacote - {gallery.photosNumber}</HelperText>
           </div>
-          <HelperText>{clientNames[gallery.clientAssociated]}</HelperText>
+          <HelperText>{capitalize(clientNames[gallery.clientAssociated])}</HelperText>
         </div>
       ))}
     </>

@@ -15,7 +15,7 @@ const FolderCard = ({ folderTitle, photosNumber, foldersNumber, folderId }) => {
   }, [photosNumber, foldersNumber])
 
   const handleButtonClick = () => {
-    navigate(`/app/galerias/${id}/pastas/${folderId}`);
+    navigate(`/app/galerias/${id}/pastas/${folderId}`, { state: { maxPhotosNumber } });
   };
 
   return (
