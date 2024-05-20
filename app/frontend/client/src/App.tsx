@@ -1,7 +1,8 @@
 import Portfolio from "./ui/portfolio/pages/Portfolio/Portfolio";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./components/Shared/BootstrapCustomTheme.scss";
+import Login from "./ui/auth/Login/Login";
 import { UserForm } from "./ui/app/forms/NewClient/pages/UserForm";
 import CRUD from "./ui/app/tables/ClientCRUD/pages/CRUD";
 import Agenda from "./ui/app/calendar/Calendar";
@@ -18,39 +19,135 @@ import GalleryForm from "./ui/app/forms/Galleries/pages/GalleryForm";
 import GalleryView from "./ui/app/gallery/pages/GalleryView/GalleryView";
 import FolderView from "./ui/app/gallery/pages/FolderView/FolderView";
 
+import {
+  UserAuthProvider,
+  AdminAuthProvider,
+} from "./contexts/auth/UserAuthenticationContext";
+
+import { useUserAuth, useAdminAuth } from "./hooks/useAuth";
+
+function ProtectedRoute({ element, userType }) {
+  const { isLoggedIn: isUserLoggedIn } = useUserAuth();
+  const { isLoggedIn: isAdminLoggedIn } = useAdminAuth();
+
+  const isLoggedIn = userType === "user" ? isUserLoggedIn : isAdminLoggedIn;
+
+  return isLoggedIn ? element : <Navigate to="/auth/login" replace />;
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Portfolio />} />
-        <Route path="/galeria" element={<Galeria />} />
+      <UserAuthProvider>
+        <AdminAuthProvider>
+          <Routes>
+            <Route path="/" element={<Portfolio />} />
+            <Route path="/galeria" element={<Galeria />} />
 
-        <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
 
-        <Route path="/app/clientes" element={<CRUD />} />
-        <Route path="/app/novo-cliente" element={<UserForm />} />
-        <Route path="/app/editar-cliente/:id" element={<UserForm />} />
+            <Route path="/auth/login" element={<Login />} />
+            <Route
+              path="/app/clientes"
+              element={<ProtectedRoute element={<CRUD />} userType="admin" />}
+            />
+            <Route
+              path="/app/novo-cliente"
+              element={
+                <ProtectedRoute element={<UserForm />} userType="admin" />
+              }
+            />
+            <Route
+              path="/app/editar-cliente/:id"
+              element={
+                <ProtectedRoute element={<UserForm />} userType="admin" />
+              }
+            />
 
-        <Route path="/app/agenda" element={<Agenda />} />
-        <Route path="/app/novo-compromisso" element={<NewAppointmentForm />} />
-        <Route
-          path="/app/editar-compromisso"
-          element={<EditAppointmentForm />}
-        />
-        <Route
-          path="/app/excluir-compromisso"
-          element={<DeleteAppointmentForm />}
-        />
+            <Route
+              path="/app/agenda"
+              element={<ProtectedRoute element={<Agenda />} userType="admin" />}
+            />
+            <Route
+              path="/app/novo-compromisso"
+              element={
+                <ProtectedRoute
+                  element={<NewAppointmentForm />}
+                  userType="admin"
+                />
+              }
+            />
+            <Route
+              path="/app/editar-compromisso"
+              element={
+                <ProtectedRoute
+                  element={<EditAppointmentForm />}
+                  userType="admin"
+                />
+              }
+            />
+            <Route
+              path="/app/excluir-compromisso"
+              element={
+                <ProtectedRoute
+                  element={<DeleteAppointmentForm />}
+                  userType="admin"
+                />
+              }
+            />
 
-        <Route path="/app/financeiro" element={<FinancialDashboard />} />
-        <Route path="/app/nova-despesa" element={<OutgoingForm />} />
-        <Route path="/app/nova-receita" element={<RevenueForm />} />
+            <Route
+              path="/app/financeiro"
+              element={
+                <ProtectedRoute
+                  element={<FinancialDashboard />}
+                  userType="admin"
+                />
+              }
+            />
+            <Route
+              path="/app/nova-despesa"
+              element={
+                <ProtectedRoute element={<OutgoingForm />} userType="admin" />
+              }
+            />
+            <Route
+              path="/app/nova-receita"
+              element={
+                <ProtectedRoute element={<RevenueForm />} userType="admin" />
+              }
+            />
 
-        <Route path="/app/galerias" element={<GalleryDashboard />} />
-        <Route path="/app/nova-galeria" element={<GalleryForm />} />
-        <Route path="app/galerias/:id" element={<GalleryView />} />
-        <Route path="app/galerias/:id/pastas/:pastaId" element={<FolderView />} />
-      </Routes>
+            <Route
+              path="/app/galerias"
+              element={
+                <ProtectedRoute
+                  element={<GalleryDashboard />}
+                  userType="admin"
+                />
+              }
+            />
+            <Route
+              path="/app/nova-galeria"
+              element={
+                <ProtectedRoute element={<GalleryForm />} userType="admin" />
+              }
+            />
+            <Route
+              path="/app/galerias/:id"
+              element={
+                <ProtectedRoute element={<GalleryView />} userType="admin" />
+              }
+            />
+            <Route
+              path="/app/galerias/:id/pastas/:pastaId"
+              element={
+                <ProtectedRoute element={<FolderView />} userType="admin" />
+              }
+            />
+          </Routes>
+        </AdminAuthProvider>
+      </UserAuthProvider>
     </BrowserRouter>
   );
 }

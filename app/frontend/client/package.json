@@ -28,6 +28,7 @@
     "bootstrap": "^5.3.3",
     "date-fns": "^2.27.0",
     "date-fns-tz": "^1.1.6",
+    "dotenv": "^16.4.5",
     "flowbite-react": "^0.9.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
@@ -47,6 +48,7 @@
     "yet-another-react-lightbox": "^3.17.5"
   },
   "devDependencies": {
+    "@types/node": "^20.12.12",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
