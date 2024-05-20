@@ -41,7 +41,7 @@ export default function GaleryComponent() {
             <HelperText>{gallery.title}</HelperText>
             <HelperText>Fotos do pacote - {gallery.photosNumber}</HelperText>
           </div>
-          <HelperText>{capitalize(clientNames[gallery.clientAssociated])}</HelperText>
+          <HelperText>{capitalize(clientNames && clientNames[gallery.clientAssociated])}</HelperText>
         </div>
       ))}
     </>

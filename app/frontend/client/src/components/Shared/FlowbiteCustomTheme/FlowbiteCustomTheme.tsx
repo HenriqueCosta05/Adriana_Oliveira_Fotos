@@ -127,5 +127,13 @@ export const customTheme: CustomFlowbiteTheme = {
         dark: "bg-[#64734D]",
       },
     },
-  }
+  },
+  spinner: {
+    size: {
+      lg: "h-16 w-16",
+    },
+    color: {
+      primary: "fill-[#B1A5CA]",
+    },
+  },
 };

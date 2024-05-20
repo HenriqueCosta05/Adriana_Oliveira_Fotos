@@ -12,6 +12,7 @@ export default function GalleryView() {
   const { id } = useParams()
   const [galleryData, setGalleryData] = useState({})
   const [foldersData, setFoldersData] = useState({})
+  
   useEffect(() => {
     fetchGallery(id).then((data) => {
       setGalleryData(data)

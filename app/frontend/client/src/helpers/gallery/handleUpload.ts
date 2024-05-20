@@ -1,4 +1,4 @@
-export const handleUpload = (acceptedFiles, id, pastaId, setPhotos) => {
+export const handleUpload = async (acceptedFiles, id, pastaId, setPhotos, currentPhotos) => {
   const url = `http://localhost:8003/app/galerias/${id}/pasta/${pastaId}/upload-imagem/`;
   const formData = new FormData();
 
@@ -6,33 +6,32 @@ export const handleUpload = (acceptedFiles, id, pastaId, setPhotos) => {
     formData.append("photos", file);
   });
 
-  // Get the current photos before the upload
-  setPhotos((currentPhotos) => {
-    fetch(url, {
+  try {
+    const response = await fetch(url, {
       method: "PUT",
       body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.photos) {
-          // Filter out the photos that were already in the state
-          const newPhotosData = data.photos.filter((photo) => !currentPhotos.includes(photo));
+    });
 
-          const newPhotosPromises = newPhotosData.map(async (photo) => {
-            const downloadUrl = `http://localhost:8003/app/galerias/${id}/fotos/${photo}/download/`;
-            const response = await fetch(downloadUrl);
-            const blob = await response.blob();
-            return URL.createObjectURL(blob);
-          });
+    const data = await response.json();
 
-          Promise.all(newPhotosPromises)
-            .then((newPhotos) => {
-              return [...currentPhotos, ...newPhotos];
-            });
-        }
+    if (data.photos) {
+      const newPhotosData = data.photos.filter(
+        (photo) => !currentPhotos.includes(photo)
+      );
+
+      const newPhotosPromises = newPhotosData.map(async (photo) => {
+        const downloadUrl = `http://localhost:8003/app/galerias/${id}/fotos/${photo}/download/`;
+        const response = await fetch(downloadUrl);
+        const blob = await response.blob();
+        return URL.createObjectURL(blob);
       });
 
-    return currentPhotos;
-  });
+      const newPhotos = await Promise.all(newPhotosPromises);
+      setPhotos((currentPhotos) => [...currentPhotos, ...newPhotos]);
+    }
+  } catch (error) {
+    console.error("Error uploading images:", error);
+  }
+        alert("Imagens enviadas com sucesso! Recarregando a página...");
+        window.location.reload();
 };

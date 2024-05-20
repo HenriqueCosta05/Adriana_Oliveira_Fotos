@@ -8,11 +8,15 @@ const FolderCard = ({ folderTitle, photosNumber, foldersNumber, folderId }) => {
   const navigate = useNavigate();
   const [maxPhotosNumber, setMaxPhotosNumber] = useState(0)
 
-  useEffect(() => {
-    const photos = getMaxPhotosForAFolder(photosNumber, foldersNumber).then((photos) => {
-      setMaxPhotosNumber(photos)
+ useEffect(() => {
+  getMaxPhotosForAFolder(photosNumber, foldersNumber)
+    .then((photos) => {
+      setMaxPhotosNumber(photos);
     })
-  }, [photosNumber, foldersNumber])
+    .catch((error) => {
+      console.error("Failed to fetch photos:", error);
+    });
+}, [photosNumber, foldersNumber]);
 
   const handleButtonClick = () => {
     navigate(`/app/galerias/${id}/pastas/${folderId}`, { state: { maxPhotosNumber } });

@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, File, UploadFile, HTTPException, Form
 from config.mongodb_config import colecaoGridFs
 from config.mongodb_config import colecaoGallery
@@ -8,7 +9,7 @@ from bson import ObjectId
 router = APIRouter()
 
 @router.put("/app/galerias/{galeria_id}/pasta/{pasta_id}/upload-imagem/")
-async def upload_imagem(galeria_id: str, pasta_id: str, photos: UploadFile = File(...)):
+async def upload_imagem(galeria_id: str, pasta_id: str, photos: List[UploadFile] = File(...)):
     try:
         obj_id = ObjectId(galeria_id)
     except bson.errors.InvalidId:
@@ -20,21 +21,21 @@ async def upload_imagem(galeria_id: str, pasta_id: str, photos: UploadFile = Fil
 
     pasta_existente = next((folder for folder in galeria.get("folders", []) if folder["id"] == pasta_id), None)
     if pasta_existente:
-        if photos:
-            imagem_bytes = await photos.read()
-            file_id_imagem = colecaoGridFs.put(imagem_bytes, filename=photos.filename)
+        for photo in photos:
+            imagem_bytes = await photo.read()
+            file_id_imagem = colecaoGridFs.put(imagem_bytes, filename=photo.filename)
             str_file_id_imagem = str(file_id_imagem)
-
-            pasta_existente['photos'].append(str_file_id_imagem)
-
+    
+            #Verifica se a imagem já existe na pasta
+            if str_file_id_imagem not in pasta_existente['photos']:
+                pasta_existente['photos'].append(str_file_id_imagem)
+    
             colecaoGallery.update_one({"_id": obj_id}, {"$set": {"folders": galeria['folders']}})
-            return {'photos': pasta_existente['photos']}
             
-        else:
-            raise HTTPException(status_code=404, detail="Pasta não encontrada")
+    else:
+        raise HTTPException(status_code=404, detail="Pasta não encontrada")
 
-    return {"info": f"Imagem adicionada à pasta existente '{pasta_id}' na galeria com ID: {galeria_id}"}
-
+    return {'photos': pasta_existente['photos']}
 
 
 @router.put("/app/galerias/{galeria_id}/pasta/{pasta_id}/upload-documento/")
