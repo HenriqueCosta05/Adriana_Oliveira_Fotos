@@ -1,4 +1,33 @@
-# Projeto Interdisciplinar III - Sistema de Gerenciamento de Fotografias
+# Projeto Interdisciplinar III - Sistema de Gerenciamento de Fotografias (Em andamento)
+
+<div align="center">
+  <a href="https://github.com/HenriqueCosta05/Projeto_Interdisciplinar_III_FATEC">
+    <img src="app/frontend/client/public/logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">Sistema de Gerenciamento de Fotografias</h3>
+
+  <p align="center">
+    Um micro-saas para fotógrafos automatizarem suas tarefas!
+    <br />
+    <a href="">Em breve - veja a aplicação em funcionamento!</a>
+    ·
+    <a href="">Reportar Bugs</a>
+  </p>
+</div>
+
+## Sobre o projeto
+O Micro-SaaS Adriana Oliveira Fotografias é uma solução completa e inovadora, projetada especificamente para atender às necessidades dos fotógrafos profissionais. Esta plataforma automatiza diversas tarefas diárias, permitindo que os fotógrafos concentrem-se no seu trabalho artístico enquanto o sistema cuida do restante.
+
+## Construído com
+* ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+* ![Context-API](https://img.shields.io/badge/Context--Api-000000?style=for-the-badge&logo=react)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+
+* ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+* ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+* ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+
 
 ## Para executar o back-end
 ```
@@ -24,7 +53,7 @@ Microsserviço 1 - Clientes
 uvicorn client:app --reload --port 8000
 ```
 
-Microsserviço 2 - Agenda
+Microsserviço 2 - Agenda (Em processo de refatoração)
 ```
 uvicorn calendars:app --reload --port 8001
 ```
@@ -34,7 +63,10 @@ Microsserviço 3 - **Financeiro**
 uvicorn financial:app --reload --port 8002
 ```
 
-
+Microsserviço 4 -Agenda (Em andamento)
+```
+uvicorn gallery:app --reload --port 8003
+```
 
 ## Para executar o front-end
 ```
@@ -49,52 +81,3 @@ npm i
 npm run dev
 ```
 
-
-## Possíveis problemáticas
-
-1. BSON
-
-Caso ocorra um erro relacionado à inicialização do MongoDB com o Pymongo, pode ser que haja algum conflito de versões relacionado ao pacote `bson`.
-
-Para resolver esse problema, basta desinstalar os pacotes `pymongo` e `bson`, e reinstalar o pacote `pymongo`.
-
-```
-pip uninstall pymongo bson
-```
-
-```
-pip install pymongo
-```
-
-
-2. Conexão com o MongoDB
-
-O computador da fatec possui firewall ativado, e caso ocorra algum problema de conexão com o MongoDB atlas, basta editar configurações do arquivo mongodb_config:
-
-```python
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
-
-#uri = "mongodb+srv://projetointerdisciplinar2fatec:nZ7FxgCTn1V7LjG6@projetointerdisciplinar.tc1hzfl.mongodb.net/?retryWrites=true&w=majority&appName=ProjetoInterdisciplinarIII"
-
-# Create a new client and connect to the server
-client = MongoClient("mongodb://localhost:27017")
-
-
-database = client['CRUDfotos']
-
-# Acessa as coleções
-colecaoClient = database['Clientes']
-colecaoFinacial = database['Financeiro']
-
-# Send a ping to confirm a successful connection
-try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-except Exception as e:
-    print(e)
-```
-
-3. Nome da pasta `client`
-
-Por algum motivo, o github não renomeou as pastas de cliente (Client -> client), sendo necessário renomear manualmente a pasta de `models/Client` para `models/client` e todas as outras pastas que contenham `Client` como nome.
