@@ -75,7 +75,7 @@ const createDB = (dbName, storeName) => {
     }
   };
 };
-
+/*
 const fetchToken = async (apiUrl) => {
   const response = await fetch(apiUrl);
   if (!response.ok) {
@@ -84,7 +84,7 @@ const fetchToken = async (apiUrl) => {
   const data = await response.json();
   return data.token; // A confirmar 
 };
-
+*/
 
 
 
@@ -113,19 +113,24 @@ self.addEventListener("install", (event) => {
       console.log("Cache aberto");
       return cache.addAll(ARQUIVOS_CACHE);
     })
-    );
-    
-    //Busca o token via requisição da API
+  );
+
+  //Busca o token via requisição da API
+  /*
     event.waitUntil(
-        fetchToken('urlDaAPI').then((token) => {
-            addData(token, "db", "store");
-        }).catch((error) => {
-            console.error("Erro ao buscar o token: ", error);
-        }
-        )
-    );
+    createDB('db', 'token').then(() => {
+      return fetchToken('https://your-api-url.com');
+    }).then(token => {
+      return addData(token, 'db', 'storeName');
+    }).catch(error => {
+      console.error('Failed to setup:', error);
+    })
+  );
+});
+    */
 });
 
+  
 //Escuta de requisições
 self.addEventListener("fetch", (event) => {
   event.respondWith(

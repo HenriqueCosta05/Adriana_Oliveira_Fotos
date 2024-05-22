@@ -135,5 +135,6 @@ export const customTheme: CustomFlowbiteTheme = {
     color: {
       primary: "fill-[#B1A5CA]",
     },
+    
   },
 };

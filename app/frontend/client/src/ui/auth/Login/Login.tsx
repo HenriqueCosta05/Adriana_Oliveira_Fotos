@@ -1,7 +1,6 @@
 import { Button, Label, TextInput } from 'flowbite-react';
 import { Controller, useForm } from 'react-hook-form';
 import NavBar from '../../portfolio/components/Navbar/NavBar';
-import { useFetch } from '../../../hooks/useFetch';
 
 export default function Login() {
 

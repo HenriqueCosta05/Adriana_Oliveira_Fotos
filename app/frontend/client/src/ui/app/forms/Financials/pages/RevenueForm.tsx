@@ -95,7 +95,7 @@ const RevenueForm = ({ id }) => {
           <BreadCrumb
             home={["Página Inicial", "/app"]}
             currentSection={["Financeiro", "/app/financeiro"]}
-            currentForm={["Nova Receita", "/app/financeiro/nova-receita"]}
+            currentSubsection={["Nova Receita", "/app/financeiro/nova-receita"]}
           />
           <Provider value={{ data, setData, step, setStep, handleNext, prev }}>
             {renderStep(step, method, data)}
