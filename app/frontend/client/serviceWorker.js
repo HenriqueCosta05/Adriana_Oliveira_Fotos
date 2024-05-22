@@ -20,8 +20,8 @@ const getData = async (dbName, storeName) => {
 
 const addData = (token, dbName, storeName) => {
   if (!db) {
-    console.error("Database is not initialized. Call createDB first.");
-    return;
+    console.error("Banco de dados não foi criado... Inicializando");
+    return createDB(dbName, storeName);
   }
 
   let transaction = db.transaction([storeName], "readwrite");
@@ -86,9 +86,6 @@ const fetchToken = async (apiUrl) => {
 };
 */
 
-
-
-
 //Acima, estão funções auxiliares do indexedDB e para resgatar o token da API.
 
 const NOME_CACHE = "cache-v1";
@@ -130,55 +127,45 @@ self.addEventListener("install", (event) => {
     */
 });
 
-  
 //Escuta de requisições
 self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
     (async () => {
-      //Busca o token no IndexedDB
+      // Extrai o token do indexedDB
       const tokenRequest = await getData("db", "store");
       const headers = new Headers(event.request.headers);
 
-      // Append the token to the headers only if it exists
+      // Adiciona o token ao cabeçalho da requisição, caso este exista
       if (tokenRequest && tokenRequest.token) {
         headers.append("Authorization", `Bearer ${tokenRequest.token}`);
       }
 
-      //Busca os recursos do cache
-      const cacheRequest = await caches.match(event.request);
-      if (cacheRequest) {
-        return cacheRequest;
-      }
-
-      //Altera a requisição para incluir o token
+      // Cria a requisição com o cabeçalho modificado
       const modifiedRequest = new Request(event.request, {
         method: event.request.method,
         headers: headers,
         body: event.request.body,
       });
 
-      //Busca os recursos da rede
-      const networkRequest = await fetch(modifiedRequest);
-      const cache = await caches.open(NOME_CACHE);
-
-      //Atualiza os recursos no cache
-      cache.put(event.request, networkRequest.clone());
-      return networkRequest;
-    })(),
-
-    //Lógica auxiliar, para cache de arquivos estáticos
-    caches.match(event.request).then((response) => {
-      if (response) {
+      // Estratégia Network-first para rotas envolvendo API
+      if (event.request.url.includes("/app/")) {
+        const cache = await caches.open(NOME_CACHE);
+        const response = await fetch(modifiedRequest);
+        if (response.status === 200) {
+          cache.put(event.request.url, response.clone());
+        }
         return response;
+      } else {
+        // Estratégia Cache-first para demais rotas
+        const cacheResponse = await caches.match(modifiedRequest);
+        return cacheResponse || fetch(modifiedRequest);
       }
-      return fetch(event.request)
-        .then((response) => {
-          return response;
-        })
-        .catch(() => {
-          return caches.match("offline.html");
-        });
-    })
+    })()
   );
 });
 

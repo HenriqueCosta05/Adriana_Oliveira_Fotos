@@ -39,6 +39,7 @@ if conected:
     colecaoCalendar = database['Calendar']
     colecaoGallery = database['Galeria']
     colecaoGridFs = GridFS(database, collection="Image")
+    colecao_auth = database['jwt-auth']
 
     print("Coleçoes selecionadas com sucesso!")
 
