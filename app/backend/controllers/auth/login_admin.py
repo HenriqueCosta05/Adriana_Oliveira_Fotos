@@ -18,7 +18,7 @@ os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
 
 @router.post("/app/login", response_model=Token)
 def login_for_access_token(form_data: LoginForm):
-    user = authenticate_user(form_data.username, form_data.password)
+    user = authenticate_user(form_data.email, form_data.password)
     if not user:
         raise HTTPException(
             status_code=401,

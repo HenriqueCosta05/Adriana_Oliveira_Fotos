@@ -1,13 +1,65 @@
-import { Button, Label, TextInput } from 'flowbite-react';
-import { Controller, useForm } from 'react-hook-form';
-import NavBar from '../../portfolio/components/Navbar/NavBar';
+import { Button, Label, TextInput } from "flowbite-react";
+import { Controller, useForm } from "react-hook-form";
+import NavBar from "../../portfolio/components/Navbar/NavBar";
+import { login } from "../../../services/LoginDataService";
+import Success from "../../app/modals/auth/Success";
+import Error from "../../app/modals/auth/Error";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const [modal, setModal] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+    handleCloseModal: () => {},
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
 
-    const {register, handleSubmit, formState: {errors}, control} = useForm()
+  const navigate = useNavigate();
 
-  const submitForm = (e) => {
-   console.log(e)
+  const submitForm = async (data) => {
+    try {
+      const response = await login(data);
+      if (response && response.access_token !== "") {
+        setModal({
+          isOpen: true,
+          type: "success",
+          message: "Login efetuado com sucesso!",
+          handleCloseModal: handleCloseModal,
+        });
+      } else {
+        setModal({
+          isOpen: true,
+          type: "error",
+          message: "Email ou senha inválidos. Tente novamente.",
+          handleCloseModal: handleCloseModal,
+        });
+      }
+    } catch (error) {
+      console.error("Erro ao autenticar", error);
+      setModal({
+        isOpen: true,
+        type: "error",
+        message:
+          "Erro ao autenticar. Verifique suas credenciais e tente novamente.",
+        handleCloseModal: handleCloseModal,
+      });
+    }
+  };
+
+  const handleCloseModal = () => {
+    setModal({ ...modal, isOpen: false });
+    if (modal.type === "success") {
+      navigate("/app");
+    } else {
+      return;
+    }
   };
 
   return (
@@ -93,6 +145,30 @@ export default function Login() {
           </div>
         </form>
       </div>
+      {renderModal(modal, setModal, handleCloseModal, modal.message)}
     </>
   );
 }
+
+const renderModal = (modal, setModal, handleCloseModal, message) => {
+  if (modal.type === "success") {
+    return (
+      <Success
+        modal={modal}
+        setModal={setModal}
+        handleCloseModal={handleCloseModal}
+        message={message}
+      />
+    );
+  }
+  if (modal.type === "error") {
+    return (
+      <Error
+        modal={modal}
+        setModal={setModal}
+        handleCloseModal={handleCloseModal}
+        message={message}
+      />
+    );
+  }
+};
