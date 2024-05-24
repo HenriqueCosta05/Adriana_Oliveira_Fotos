@@ -2,7 +2,6 @@ import Portfolio from "./ui/portfolio/pages/Portfolio/Portfolio";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./components/Shared/BootstrapCustomTheme.scss";
-import Login from "./ui/auth/Login/Login";
 import { UserForm } from "./ui/app/forms/NewClient/pages/UserForm";
 import CRUD from "./ui/app/tables/ClientCRUD/pages/CRUD";
 import Agenda from "./ui/app/calendar/Calendar";
@@ -24,13 +23,32 @@ import {
   AdminAuthProvider,
 } from "./contexts/auth/UserAuthenticationContext";
 
-import { useUserAuth, useAdminAuth } from "./hooks/useAuth";
+import Login from "./ui/auth/Login/Login";
+import { useEffect, useState } from "react";
+import { getAuthStateFromIndexedDB } from "./indexedDB";
 
 function ProtectedRoute({ element, userType }) {
-  const { isLoggedIn: isUserLoggedIn } = useUserAuth();
-  const { isLoggedIn: isAdminLoggedIn } = useAdminAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const isLoggedIn = userType === "user" ? isUserLoggedIn : isAdminLoggedIn;
+  useEffect(() => {
+    const fetchAuthState = async () => {
+      try {
+        const authState = await getAuthStateFromIndexedDB();
+        setIsLoggedIn(authState.isLoggedIn);
+      } catch (error) {
+        console.error("Error fetching auth state", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAuthState();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return isLoggedIn ? element : <Navigate to="/auth/login" replace />;
 }

@@ -1,109 +1,49 @@
-let db;
-
-const getData = async (dbName, storeName) => {
-  if (!db) {
-    return;
-  }
-
-  let transaction = db.transaction([storeName], "readonly");
-  let objectStore = transaction.objectStore(storeName);
-  let request = objectStore.get(1);
-
-  request.onsuccess = () => {
-    console.log("Token recuperado com sucesso: ", request.result);
-  };
-
-  request.onerror = (event) => {
-    console.log("Ocorreu um erro: ", event);
-  };
+const CURRENT_CACHES = {
+  prefetch: "prefetch-cache-v1", //Cache que armazena os arquivos que são baixados no momento da instalação
+  runtime: "runtime-cache-v1", //Cache que armazena os arquivos que são requisitados
 };
 
-const addData = (token, dbName, storeName) => {
-  if (!db) {
-    console.error("Banco de dados não foi criado... Inicializando");
-    return createDB(dbName, storeName);
-  }
+let isLoggedIn = false; //Estado de autenticação do react
+let token = null;
 
-  let transaction = db.transaction([storeName], "readwrite");
-  let objectStore = transaction.objectStore(storeName);
-  let request = objectStore.add({ accessToken: token });
-
-  request.onsuccess = () => {
-    console.log("Token armazenado com sucesso");
-  };
-
-  transaction.oncomplete = (event) => {
-    console.log("Transação concluída: ", event);
-  };
-
-  transaction.onerror = (event) => {
-    console.log("Ocorreu um erro: ", event);
-  };
-};
-
-const createDB = (dbName, storeName) => {
-  const indexedDB =
-    self.indexedDB ||
-    self.mozIndexedDB ||
-    self.webkitIndexedDB ||
-    self.msIndexedDB ||
-    self.shimIndexedDB;
-
-  if (!indexedDB) {
-    console.log("Imposível utilizar a API do IndexedDB.");
-    return;
-  }
-
-  const request = indexedDB.open(dbName, 1);
-
-  request.onerror = (event) => {
-    console.error("Ocorreu um erro com a API do IndexedDB");
-    console.error(event);
-  };
-
-  request.onsuccess = (event) => {
-    db = request.result;
-    console.log("Banco de dados criado com sucesso");
-  };
-
-  request.onupgradeneeded = (event) => {
-    db = event.target.result;
-    console.log("Banco de dados criado com sucesso");
-
-    if (!db.objectStoreNames.contains(storeName)) {
-      db.createObjectStore(storeName, { autoIncrement: true });
-    }
-  };
-};
-/*
-const fetchToken = async (apiUrl) => {
-  const response = await fetch(apiUrl);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  const data = await response.json();
-  return data.token; // A confirmar 
-};
-*/
-
-//Acima, estão funções auxiliares do indexedDB e para resgatar o token da API.
-
-const NOME_CACHE = "cache-v1";
-//Páginas estáticas que serão armazenadas em cache
 const ARQUIVOS_CACHE = ["index.html", "offline.html"];
+const NOME_CACHE = "static-cache-v1";
 
-//Verifica se o site está rodando em localhost (função auxiliar a ser implementada)
-const isLocalhost = Boolean(
-  self.location.hostname === "localhost" ||
-    //Para endereços IPv6, o localhost é igual a ::1
-    self.location.hostname === "[::1]" ||
-    //Para endereços IPv4, o localhost pode ser entre 127.0.0.1 e 127.255.255.255
-    self.location.hostname.match(
-      /^127(?:\.(?:25[0-5]2[0-4][0-9]|[01]?[0-9][-9]?)){3}$/
-    )
-);
+//Função que deleta o node modules do cache
+async function deleteNodeModulesFromCache() {
+  const cache = await caches.open(CURRENT_CACHES.runtime);
+  const requests = await cache.keys();
+  await Promise.all(
+    requests.map((request) => {
+      if (request.url.includes("node_modules")) {
+        return cache.delete(request);
+      }
+    })
+  );
+}
+//Verifica se o usuário está logado e busca o token no indexedDB
+self.addEventListener("message", async (event) => {
+  if (event.data.type === "IS_LOGGED_IN") {
+    isLoggedIn = event.data.payload;
 
-//Instalação dos service workers
+    if (isLoggedIn) {
+      const request = indexedDB.open("auth", 1);
+      request.onsuccess = function (event) {
+        const db = event.target.result;
+        const transaction = db.transaction(["tokens"], "readonly");
+        const objectStore = transaction.objectStore("tokens");
+        const request = objectStore.get("adminToken");
+        request.onsuccess = function (event) {
+          token = event.target.result;
+        };
+      };
+    } else {
+      token = null;
+    }
+  }
+});
+
+//Instala o service worker
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(NOME_CACHE).then((cache) => {
@@ -111,77 +51,58 @@ self.addEventListener("install", (event) => {
       return cache.addAll(ARQUIVOS_CACHE);
     })
   );
-
-  //Busca o token via requisição da API
-  /*
-    event.waitUntil(
-    createDB('db', 'token').then(() => {
-      return fetchToken('https://your-api-url.com');
-    }).then(token => {
-      return addData(token, 'db', 'storeName');
-    }).catch(error => {
-      console.error('Failed to setup:', error);
-    })
-  );
-});
-    */
 });
 
-//Escuta de requisições
+//Fetch do service worker, com injeção de token no header
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") {
-    event.respondWith(fetch(event.request));
-    return;
-  }
-
   event.respondWith(
     (async () => {
-      // Extrai o token do indexedDB
-      const tokenRequest = await getData("db", "store");
-      const headers = new Headers(event.request.headers);
+      try {
+        let fetchRequest = event.request;
 
-      // Adiciona o token ao cabeçalho da requisição, caso este exista
-      if (tokenRequest && tokenRequest.token) {
-        headers.append("Authorization", `Bearer ${tokenRequest.token}`);
-      }
+        if (isLoggedIn && token) {
+          const headers = new Headers(event.request.headers);
+          headers.append("Authorization", `Bearer ${token}`);
 
-      // Cria a requisição com o cabeçalho modificado
-      const modifiedRequest = new Request(event.request, {
-        method: event.request.method,
-        headers: headers,
-        body: event.request.body,
-      });
-
-      // Estratégia Network-first para rotas envolvendo API
-      if (event.request.url.includes("/app/")) {
-        const cache = await caches.open(NOME_CACHE);
-        const response = await fetch(modifiedRequest);
-        if (response.status === 200) {
-          cache.put(event.request.url, response.clone());
+          fetchRequest = new Request(event.request, {
+            method: event.request.method,
+            headers: headers,
+            body: event.request.body,
+          });
         }
-        return response;
-      } else {
-        // Estratégia Cache-first para demais rotas
-        const cacheResponse = await caches.match(modifiedRequest);
-        return cacheResponse || fetch(modifiedRequest);
+
+        const fetchResponse = await fetch(fetchRequest);
+        const cache = await caches.open(CURRENT_CACHES.runtime);
+        cache.put(event.request, fetchResponse.clone());
+        return fetchResponse;
+      } catch (error) {
+        try {
+          const cachedResponse = await caches.match(event.request);
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+        } catch (error) {
+          const cacheResponse = await caches.match("offline.html");
+          return cacheResponse;
+        }
       }
     })()
   );
 });
 
-//Ativação dos service workers
+//Ativação do service worker
 self.addEventListener("activate", (event) => {
-  const cacheWhitelist = [];
-  cacheWhitelist.push(NOME_CACHE);
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
+    (async () => {
+      const cacheNames = await caches.keys();
+      await Promise.all(
         cacheNames.map((cacheName) => {
-          if (!cacheWhitelist.includes(cacheName)) {
+          if (!Object.values(CURRENT_CACHES).includes(cacheName)) {
             return caches.delete(cacheName);
           }
         })
-      )
-    )
+      );
+      await deleteNodeModulesFromCache();
+    })()
   );
 });

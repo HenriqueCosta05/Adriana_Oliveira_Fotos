@@ -1,10 +1,11 @@
-import { Avatar, Dropdown, Navbar } from 'flowbite-react';
+import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Image from "../../../../components/Shared/Image/Image";
-import { useFetch } from '../../../../hooks/useFetch';
-import { useUserAuth, useAdminAuth } from '../../../../hooks/useAuth';
+import { useFetch } from "../../../../hooks/useFetch";
+import { useUserAuth, useAdminAuth } from "../../../../hooks/useAuth";
+import { logout } from "../../../../services/LoginDataService";
 
 export default function NavBar() {
-  const data = useFetch("../../../../../db.json");  
+  const data = useFetch("../../../../../db.json");
   const navData = data && data.navbar;
   const logo = navData && navData[0];
   const links = navData && Array.from(navData).map((item) => item.href);
@@ -26,7 +27,17 @@ export default function NavBar() {
 
   const isLoggedIn = isUserLoggedIn || isAdminLoggedIn;
   const setIsLoggedIn = isUserLoggedIn ? setUserIsLoggedIn : setAdminIsLoggedIn;
-  
+
+  async function handleLogout() {
+    console.log(authAdmin);
+    if (authAdmin) {
+      await logout(authAdmin, setAuthAdmin);
+    } else {
+      await logout(authUser, setAuthUser);
+    }
+    setIsLoggedIn(false);
+  }
+
   return (
     <>
       <Navbar fluid className="bg-primary">
@@ -44,50 +55,75 @@ export default function NavBar() {
             <Dropdown
               arrowIcon={false}
               inline
-              label={<Avatar className="mr-2" alt="Configurações do usuário" rounded />}
+              label={
+                <Avatar
+                  className="mr-2"
+                  alt="Configurações do usuário"
+                  rounded
+                />
+              }
             >
               <Dropdown.Header>
                 <span className="block text-sm">Adriana Oliveira</span>
                 <span className="block truncate text-sm font-medium"></span>
               </Dropdown.Header>
-              <Dropdown.Item href='/app/clientes'>Gerenciamento de Clientes</Dropdown.Item>
-              <Dropdown.Item href='/app/galerias'>Gerenciamento de Galerias</Dropdown.Item>
-              <Dropdown.Item href='/app/financeiro'>Gerenciamento de Finanças</Dropdown.Item>
-              <Dropdown.Item href='/app/agenda'>Gerenciamento de Compromissos</Dropdown.Item>
+              <Dropdown.Item href="/app/clientes">
+                Gerenciamento de Clientes
+              </Dropdown.Item>
+              <Dropdown.Item href="/app/galerias">
+                Gerenciamento de Galerias
+              </Dropdown.Item>
+              <Dropdown.Item href="/app/financeiro">
+                Gerenciamento de Finanças
+              </Dropdown.Item>
+              <Dropdown.Item href="/app/agenda">
+                Gerenciamento de Compromissos
+              </Dropdown.Item>
               <Dropdown.Divider />
               {isLoggedIn && (
-                <Dropdown.Item onClick={() => setIsLoggedIn(false)}>
-                  Sair
-                </Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout}>Sair</Dropdown.Item>
               )}
             </Dropdown>
           ) : isUserLoggedIn ? (
             <Dropdown
               arrowIcon={false}
               inline
-              label={<Avatar className="mr-2" alt="Configurações do usuário" rounded />}
+              label={
+                <Avatar
+                  className="mr-2"
+                  alt="Configurações do usuário"
+                  rounded
+                />
+              }
             >
               <Dropdown.Header>
                 <span className="block text-sm">Nome do cliente</span>
-                <span className="block truncate text-sm font-medium">cliente@example.com</span>
+                <span className="block truncate text-sm font-medium">
+                  cliente@example.com
+                </span>
               </Dropdown.Header>
-              <Dropdown.Item href='/app/escolher-fotos'>Escolher Fotos</Dropdown.Item>
-              <Dropdown.Item href='/app/visualizar-contratos'>Visualizar Contratos</Dropdown.Item>
-              <Dropdown.Item href='/app/ajuda'>Ajuda</Dropdown.Item>
+              <Dropdown.Item href="/app/escolher-fotos">
+                Escolher Fotos
+              </Dropdown.Item>
+              <Dropdown.Item href="/app/visualizar-contratos">
+                Visualizar Contratos
+              </Dropdown.Item>
+              <Dropdown.Item href="/app/ajuda">Ajuda</Dropdown.Item>
               <Dropdown.Divider />
             </Dropdown>
-          ): null }
+          ) : null}
           <Navbar.Toggle className="bg-primary focus:bg-primary active:bg-primary border-none active:border-none" />
         </div>
         <Navbar.Collapse>
-          {links && links.map((link, index) => (
-            <Navbar.Link
-              href={link}
-              className="font-medium text-[15px] text-center text-white flex align-top"
-            >
-              {texts[index]}
-            </Navbar.Link>
-          ))}
+          {links &&
+            links.map((link, index) => (
+              <Navbar.Link
+                href={link}
+                className="font-medium text-[15px] text-center text-white flex align-top"
+              >
+                {texts[index]}
+              </Navbar.Link>
+            ))}
         </Navbar.Collapse>
       </Navbar>
     </>

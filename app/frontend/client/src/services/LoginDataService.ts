@@ -1,3 +1,5 @@
+import { removeTokenFromIndexedDB } from "../indexedDB";
+
 const API = "http://localhost:8004/app";
 
 const handleErrors = async (response) => {
@@ -25,4 +27,10 @@ export const login = async (data) => {
   await handleErrors(response);
   const token = await response.json();
   return token;
+};
+
+//Provisório, será posteriormente substituído pelo backend
+export const logout = async (currentUser, setCurrentUser) => {
+  await removeTokenFromIndexedDB();
+  setCurrentUser(null);
 };
