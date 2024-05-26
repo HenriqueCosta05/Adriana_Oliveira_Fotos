@@ -63,6 +63,18 @@ export const fetchAllGalleries = async () => {
   return data;
 };
 
+export const deletePhotoFromGallery = async (galleryId, photoId) => {
+  const response = await fetch(`${API}/galerias/${galleryId}/fotos/${photoId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  await handleErrors(response);
+  const data = await response.json();
+  return data;
+  }
+
 export const createGallery = async (galleryData) => {
   const response = await fetch(`${API}/galerias`, {
     method: "POST",

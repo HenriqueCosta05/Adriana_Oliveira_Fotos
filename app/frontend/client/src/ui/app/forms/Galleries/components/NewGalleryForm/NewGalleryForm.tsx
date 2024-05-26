@@ -10,48 +10,140 @@ import { Controller, useForm } from "react-hook-form";
 import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
 import { DefaultSizeOptions } from "../../../../../../lib/gallery/options/DefaultSizeOptions";
 import { PackOptions } from "../../../../../../lib/gallery/options/PackOptions";
-import { createGallery } from "../../../../../../services/GalleryDataService";
+import {
+  createGallery,
+  fetchGallery,
+  updateGallery,
+} from "../../../../../../services/GalleryDataService";
 import { getClientList } from "../../../../../../helpers/gallery/getClientList";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { initialData } from "../../../../../../lib/gallery/initialGalleryData";
+import { capitalize } from "../../../../../../utils/capitalize";
+import SuccessModal from "../../../../modals/gallery/Infos/Success/Success";
+import { useNavigate } from "react-router-dom";
+import ErrorModal from "../../../../modals/gallery/Infos/Error/Error";
 
-export default function NewGalleryForm() {
+export default function NewGalleryForm({ id }) {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
+    setValue,
   } = useForm();
 
-  const [clientList, setClientList] = useState([]);
+  const [state, setState] = useState({
+    clientList: [],
+    galleryFetched: {},
+    data: initialData,
+    modal: {
+      isOpen: false,
+      type: "",
+      handleCloseModal: () => {},
+      message: "",
+    },
+  });
 
-  async function submitForm(data) {
+  async function submitForm(formData) {
+    event.preventDefault();
     try {
-      await createGallery(data);
-      alert("Galeria criada com sucesso!");
+      if (id) {
+        await updateGallery(id, formData);
+        setModal({
+          isOpen: true,
+          type: "Success",
+          message: "Galeria atualizada com sucesso!",
+          handleCloseModal: () => {
+            setModal({
+              isOpen: false,
+              type: "",
+              message: "",
+              handleCloseModal: () => {},
+            });
+            navigate("/app/galerias");
+          },
+        });
+      } else {
+        await createGallery(formData);
+        setModal({
+          isOpen: true,
+          type: "Success",
+          message: "Galeria criada com sucesso!",
+          handleCloseModal: () => {
+            setModal({
+              isOpen: false,
+              type: "",
+              message: "",
+              handleCloseModal: () => {},
+            });
+            navigate("/app/galerias");
+          },
+        });
+      }
     } catch (error) {
       console.error("Erro ao criar galeria...", error);
-      alert("Erro ao criar galeria...");
+      setModal({
+        isOpen: true,
+        type: "Error",
+        message: "Erro ao criar ou atualizar galeria!",
+        handleCloseModal: () => {
+          setModal({
+            isOpen: false,
+            type: "",
+            message: "",
+            handleCloseModal: () => {},
+          });
+        },
+      });
     }
   }
 
   useEffect(() => {
-    getClientList().then((clientList) => {
-      const clients = Array.from(clientList);
-      setClientList(clients);
-      
+    if (id) {
+      fetchGallery(id)
+        .then((data) => {
+          setValue("title", data.title);
+          setValue("createdAt", new Date(data.createdAt));
+          setValue("photosNumber", data.photosNumber);
+          setValue("category", data.category);
+          setValue("defaultSize", data.defaultSize);
+          setValue("clientAssociated", data.clientAssociated);
+          setState((prevState) => ({ ...prevState, galleryFetched: data }));
+        })
+        .catch((error) => {
+          console.error("Ocorreu um erro: ", error);
+        });
+    }
+  }, [id, setValue]);
+
+  useMemo(() => {
+    getClientList().then((data) => {
+      setState((prevState) => ({
+        ...prevState,
+        clientList: data,
+      }));
     });
   }, []);
 
-
+  const setModal = (newModalState) => {
+    setState((prevState) => ({
+      ...prevState,
+      modal: {
+        ...prevState.modal,
+        ...newModalState,
+      },
+    }));
+  };
   return (
     <>
       <form
         className="xs:w-11/12 lg:w-1/2 mx-auto bg-accent p-4 my-4 rounded-md"
         onSubmit={handleSubmit(submitForm)}
       >
-        <h1 className="text-3xl font-bold text-center mb-9 text-secondary">
-          Nova Galeria
-        </h1>
+        <h4 className="text-3xl font-bold text-center mb-9 text-secondary">
+          {id ? "Editar Galeria" : "Nova Galeria"}
+        </h4>
         <div className="mb-[30px]">
           <div className="flex flex-wrap items-baseline justify-center">
             <Label
@@ -62,6 +154,7 @@ export default function NewGalleryForm() {
             <Controller
               name="title"
               control={control}
+              defaultValue=""
               render={({ field }) => (
                 <TextInput
                   {...field}
@@ -97,7 +190,6 @@ export default function NewGalleryForm() {
                 <>
                   <Flowbite theme={{ theme: customTheme }}>
                     <Datepicker
-                      maxDate={new Date()}
                       language="pt-BR"
                       id="createdAt"
                       name="createdAt"
@@ -165,6 +257,10 @@ export default function NewGalleryForm() {
             />
             <Controller
               name="category"
+              defaultValue={
+                (state.galleryFetched && state.galleryFetched.category) ||
+                state.data.category
+              }
               control={control}
               render={({ field }) => (
                 <TextInput
@@ -249,11 +345,12 @@ export default function NewGalleryForm() {
                       <option disabled selected value="">
                         Selecione...
                       </option>
-                      {clientList.map((option, index) => (
-                          <option key={option.id} value={option.id}>
-                            {option.fullName}
-                          </option>
-                        ))}
+                      {state.clientList.map((option, index) => (
+                        <option key={option.id} value={option.id}>
+                          {(option.fullName && capitalize(option.fullName)) ||
+                            option.fullName}
+                        </option>
+                      ))}
                     </Select>
                     {errors && errors.clientAssociated && (
                       <span className="text-red-500 font-medium text-[14px]">
@@ -272,6 +369,28 @@ export default function NewGalleryForm() {
           </Button>
         </div>
       </form>
+      {renderModal({ modal: state.modal, setModal: setModal })}
     </>
   );
 }
+
+const renderModal = ({ modal, setModal }) => {
+  switch (modal.type) {
+    case "Success":
+      return (
+        <SuccessModal
+          modal={modal}
+          setModal={setModal}
+          handleCloseModal={modal.handleCloseModal}
+        />
+      );
+    case "Error":
+      return (
+        <ErrorModal
+          modal={modal}
+          setModal={setModal}
+          handleCloseModal={modal.handleCloseModal}
+        />
+      );
+  }
+};

@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import { FaFolder, FaPeopleArrows } from 'react-icons/fa'
-import NewFolderModal from '../../../modals/gallery/Forms/NewFolder/NewFolderModal';
-import AssociateClientModal from '../../../modals/gallery/Forms/AssociateClient/AssociateClientModal';
-import { useParams } from 'react-router-dom';
+import { useState } from "react";
+import { FaFolder, FaPeopleArrows } from "react-icons/fa";
+import NewFolderModal from "../../../modals/gallery/Forms/NewFolder/NewFolderModal";
+import { useParams } from "react-router-dom";
 
 interface ClickZoneProps {
-  isClient: boolean
+  isClient: boolean;
 }
 
 export default function ClickZone({ isClient }: ClickZoneProps) {
@@ -13,15 +12,15 @@ export default function ClickZone({ isClient }: ClickZoneProps) {
 
   const [modal, setModal] = useState({
     isOpen: false,
-    type: ''
-  })
+    type: "",
+  });
 
   const handleCloseModal = () => {
     setModal({
       isOpen: false,
-      type: ''
-    })
-  }
+      type: "",
+    });
+  };
 
   return (
     <>
@@ -44,14 +43,26 @@ export default function ClickZone({ isClient }: ClickZoneProps) {
     </>
   );
   function renderModal(modal, setModal, handleCloseModal) {
-  switch (modal.type) {
-    case 'NewFolderForm':
-      return <NewFolderModal handleCloseModal={handleCloseModal} modal={modal} setModal={setModal} galleryId={id} />
-    case 'AssociateClientForm':
-      return <AssociateClientModal handleCloseModal={handleCloseModal} modal={modal} setModal={setModal} />
-    default:
-      return null
+    switch (modal.type) {
+      case "NewFolderForm":
+        return (
+          <NewFolderModal
+            handleCloseModal={handleCloseModal}
+            modal={modal}
+            setModal={setModal}
+            galleryId={id}
+          />
+        );
+      case "AssociateClientForm":
+        return (
+          <AssociateClientModal
+            handleCloseModal={handleCloseModal}
+            modal={modal}
+            setModal={setModal}
+          />
+        );
+      default:
+        return null;
+    }
   }
 }
-}
-

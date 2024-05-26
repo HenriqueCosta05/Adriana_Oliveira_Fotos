@@ -22,8 +22,8 @@ async def deletar_imagem(galeria_id: str, foto_id: str):
         raise HTTPException(status_code=404, detail="Galeria não encontrada")
 
     foto_encontrada = False
-    for pasta in galeria_existente["pastas"]:
-        if ("images" in pasta and str(obj_foto_id) in pasta["images"]) or ("documents" in pasta and str(obj_foto_id) in pasta["documents"]):
+    for pasta in galeria_existente["folders"]:
+        if ("photos" in pasta and str(obj_foto_id) in pasta["photos"]) or ("documents" in pasta and str(obj_foto_id) in pasta["documents"]):
             foto_encontrada = True
             break
     
@@ -36,7 +36,7 @@ async def deletar_imagem(galeria_id: str, foto_id: str):
         # Remover o ID da foto da lista de fotos na galeria
         result = colecaoGallery.update_one(
             {"_id": obj_galeria_id},
-            {"$pull": {"pastas.$[].images": str(obj_foto_id), "pastas.$[].documents": str(obj_foto_id)}}
+            {"$pull": {"folders.$[].photos": str(obj_foto_id), "folders.$[].documents": str(obj_foto_id)}}
         )
 
         if result.modified_count == 1:

@@ -152,6 +152,12 @@ function App() {
               }
             />
             <Route
+              path="/app/editar-galeria/:id"
+              element={
+                <ProtectedRoute element={<GalleryForm />} userType="admin" />
+              }
+            />
+            <Route
               path="/app/galerias/:id"
               element={
                 <ProtectedRoute element={<GalleryView />} userType="admin" />

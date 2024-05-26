@@ -1,28 +1,31 @@
-import { Breadcrumb, HelperText } from "flowbite-react";
+import { Breadcrumb, Dropdown, HelperText } from "flowbite-react";
 import FolderCard from "../../components/FolderCard/FolderCard";
 import UserNavbar from "../../../components/UserNavbar";
 import Footer from "../../../../portfolio/components/Sections/Footer";
 import ClickZone from "../../components/ClickZone/ClickZone";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchAllFoldersFromGallery, fetchGallery } from "../../../../../services/GalleryDataService";
+import {
+  fetchAllFoldersFromGallery,
+  fetchGallery,
+} from "../../../../../services/GalleryDataService";
 import ClientCard from "../../components/ClientCard/ClientCard";
+import { FaEllipsisV, FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 export default function GalleryView() {
-  const { id } = useParams()
-  const [galleryData, setGalleryData] = useState({})
-  const [foldersData, setFoldersData] = useState({})
-  
+  const { id } = useParams();
+  const [galleryData, setGalleryData] = useState({});
+  const [foldersData, setFoldersData] = useState({});
+
   useEffect(() => {
     fetchGallery(id).then((data) => {
-      setGalleryData(data)
-    })
+      setGalleryData(data);
+    });
     fetchAllFoldersFromGallery(id).then((data) => {
-      setFoldersData(data)
-    }
-    )
-  }, [id])
- 
+      setFoldersData(data);
+    });
+  }, [id]);
 
   return (
     <>
@@ -33,9 +36,24 @@ export default function GalleryView() {
         <Breadcrumb.Item>{galleryData.title}</Breadcrumb.Item>
       </Breadcrumb>
       <div className="xs:w-11/12 lg:w-5/6 mx-auto bg-[#f9f9f9] p-4 my-4 rounded-md">
-        <h1 className="text-3xl font-bold text-center mb-9 text-secondary">
+        <div className="flex lg:justify-end xxs:justify-center xxs:my-4 lg:my-0">
+          <Dropdown
+            className="absolute top-0 right-0"
+            label={<FaEllipsisV />}
+            color="light"
+          >
+            <Dropdown.Item href={`/app/editar-galeria/${id}`} icon={FaEdit}>
+              Editar Galeria
+            </Dropdown.Item>
+            <Dropdown.Item href={`/app/excluir-galeria/${id}`} icon={MdDelete}>
+              Excluir Galeria
+            </Dropdown.Item>
+          </Dropdown>
+        </div>
+
+        <h4 className="text-3xl font-bold text-center mb-9 text-secondary">
           {galleryData.title}
-        </h1>
+        </h4>
         <h4 className="font-bold text-2xl mt-2 text-secondary mb-4">
           Pastas desta galeria
         </h4>
@@ -45,16 +63,15 @@ export default function GalleryView() {
         </HelperText>
         <div className="flex flex-wrap justify-start">
           <ClickZone isClient={false} />
-          {foldersData && Array.from(foldersData).map((folder) => (
-            <FolderCard
-              foldersNumber={foldersData.length}
-            folderTitle={folder && folder.title}
-            photosNumber={galleryData.photosNumber}
-              folderId={folder && folder.id}
-            />
-          ))
-          }
-          
+          {foldersData &&
+            Array.from(foldersData).map((folder) => (
+              <FolderCard
+                foldersNumber={foldersData.length}
+                folderTitle={folder && folder.title}
+                photosNumber={galleryData.photosNumber}
+                folderId={folder && folder.id}
+              />
+            ))}
         </div>
         <h4 className="font-bold text-2xl mt-6 text-secondary mb-4">
           Cliente Associado
