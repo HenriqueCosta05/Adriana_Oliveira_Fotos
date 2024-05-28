@@ -18,6 +18,7 @@ import GalleryForm from "./ui/app/forms/Galleries/pages/GalleryForm";
 import GalleryView from "./ui/app/gallery/pages/GalleryView/GalleryView";
 import FolderView from "./ui/app/gallery/pages/FolderView/FolderView";
 
+
 import {
   UserAuthProvider,
   AdminAuthProvider,
@@ -26,6 +27,7 @@ import {
 import Login from "./ui/auth/Login/Login";
 import { useEffect, useState } from "react";
 import { getAuthStateFromIndexedDB } from "./indexedDB";
+import AdminDashboard from "./ui/app/dashboards/Main/AdminDashboard/AdminDashboard";
 
 function ProtectedRoute({ element, userType }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,6 +67,8 @@ function App() {
             <Route path="*" element={<NotFound />} />
 
             <Route path="/auth/login" element={<Login />} />
+
+            <Route path="/app" element={<ProtectedRoute element={<AdminDashboard/>} userType="admin"/>} />
             <Route
               path="/app/clientes"
               element={<ProtectedRoute element={<CRUD />} userType="admin" />}

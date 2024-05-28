@@ -6,6 +6,7 @@ from helpers.auth.verify_password import HashPassword
 from models.auth.Token import Token
 from dotenv import load_dotenv
 from helpers.auth.create_access_token import  ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
+from config.mongodb_config import colecao_auth 
 from helpers.auth.authenticate_user import authenticate_user
 import os
 
@@ -30,3 +31,14 @@ def login_for_access_token(form_data: LoginForm):
         data={"sub": user["email"]}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
+'''
+def add_test_user():
+    email = "henrique@example.com"
+    password = "Senha123!"
+    hashed_password = HashPassword(password)
+    colecao_auth.insert_one({"email": email, "password": hashed_password})
+
+# Chame esta função para adicionar o usuário de teste
+add_test_user()
+'''
