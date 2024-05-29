@@ -1,4 +1,10 @@
-export default function PdfCard({ pdf, title, onSelect, isSelected }) {
+export default function PdfCard({
+  pdf,
+  title,
+  onSelect,
+  isSelected,
+  userRole,
+}) {
   return (
     <div
       className={`relative flex flex-col items-center justify-center p-4 m-2 bg-white rounded shadow-lg ${
@@ -13,12 +19,14 @@ export default function PdfCard({ pdf, title, onSelect, isSelected }) {
         style={{ border: "none" }}
         title={title}
       />
-      <input
-        type="checkbox"
-        checked={isSelected}
-        onChange={onSelect}
-        className="absolute w-6 h-6 top-2 right-2 rounded-full"
-      />
+      {userRole === "admin" ? (
+        <input
+          type="checkbox"
+          checked={isSelected}
+          onChange={onSelect}
+          className="absolute w-6 h-6 top-2 right-2 rounded-full"
+        />
+      ) : null}
     </div>
   );
 }

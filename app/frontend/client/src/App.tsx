@@ -18,7 +18,6 @@ import GalleryForm from "./ui/app/forms/Galleries/pages/GalleryForm";
 import GalleryView from "./ui/app/gallery/pages/GalleryView/GalleryView";
 import FolderView from "./ui/app/gallery/pages/FolderView/FolderView";
 
-
 import {
   UserAuthProvider,
   AdminAuthProvider,
@@ -68,7 +67,12 @@ function App() {
 
             <Route path="/auth/login" element={<Login />} />
 
-            <Route path="/app" element={<ProtectedRoute element={<AdminDashboard/>} userType="admin"/>} />
+            <Route
+              path="/app"
+              element={
+                <ProtectedRoute element={<AdminDashboard />} userType="admin" />
+              }
+            />
             <Route
               path="/app/clientes"
               element={<ProtectedRoute element={<CRUD />} userType="admin" />}
@@ -164,13 +168,37 @@ function App() {
             <Route
               path="/app/galerias/:id"
               element={
-                <ProtectedRoute element={<GalleryView />} userType="admin" />
+                <ProtectedRoute
+                  element={<GalleryView userRole="admin" />}
+                  userType="admin"
+                />
               }
             />
             <Route
               path="/app/galerias/:id/pastas/:pastaId"
               element={
-                <ProtectedRoute element={<FolderView />} userType="admin" />
+                <ProtectedRoute
+                  element={<FolderView userRole="admin" />}
+                  userType="admin"
+                />
+              }
+            />
+            <Route
+              path="/app/galerias/:id/pastas/:pastaId/cliente"
+              element={
+                <ProtectedRoute
+                  element={<FolderView userRole="client" />}
+                  userType="client"
+                />
+              }
+            />
+            <Route
+              path="/app/galerias/:id/cliente"
+              element={
+                <ProtectedRoute
+                  element={<GalleryView userRole="client" />}
+                  userType="client"
+                />
               }
             />
           </Routes>

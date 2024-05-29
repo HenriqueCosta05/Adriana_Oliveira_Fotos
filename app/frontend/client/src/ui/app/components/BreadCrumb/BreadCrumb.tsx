@@ -21,8 +21,11 @@ export default function BreadCrumb({
     <Breadcrumb className="p-4 mx-auto">
       {isMobile ? (
         <Breadcrumb.Item>
-          <a href={currentSubsection[1]} className="text-[16px]">
-            {currentSubsection[0]}
+          <a
+            href={currentSubsection && currentSubsection[1]}
+            className="text-[16px]"
+          >
+            {currentSubsection && currentSubsection[0]}
           </a>
         </Breadcrumb.Item>
       ) : (
@@ -38,14 +41,20 @@ export default function BreadCrumb({
             </a>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            <a href={currentSubsection[1]} className="text-[16px]">
-              {currentSubsection[0]}
+            <a
+              href={currentSubsection && currentSubsection[1]}
+              className="text-[16px]"
+            >
+              {currentSubsection && currentSubsection[0]}
             </a>
           </Breadcrumb.Item>
           {currentSubsection2 && (
             <Breadcrumb.Item>
-              <a href={currentSubsection2[1]} className="text-[16px]">
-                {currentSubsection2[0]}
+              <a
+                href={currentSubsection2 && currentSubsection2[1]}
+                className="text-[16px]"
+              >
+                {currentSubsection2 && currentSubsection2[0]}
               </a>
             </Breadcrumb.Item>
           )}

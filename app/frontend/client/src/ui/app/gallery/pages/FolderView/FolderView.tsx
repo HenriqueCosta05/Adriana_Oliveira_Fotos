@@ -20,8 +20,9 @@ import SuccessModal from "../../../modals/gallery/Infos/Success/Success";
 import ErrorModal from "../../../modals/gallery/Infos/Error/Error";
 import ConfirmDeleteModal from "../../../modals/gallery/Warnings/ConfirmDelete/ConfirmDelete";
 import PdfCard from "../../components/PdfCard/PdfCard";
+import { getMaxPhotosForAFolder } from "../../../../../helpers/gallery/getMaxPhotosForAFolder";
 
-export default function FolderView() {
+export default function FolderView({ userRole }) {
   const { id, pastaId } = useParams();
   const [state, setState] = useState({
     galleryFetched: {},
@@ -29,6 +30,7 @@ export default function FolderView() {
     pictures: [],
     documents: [],
     selectedImages: [],
+    unselectedImages: [],
     selectedDocuments: [],
     loading: true,
     modal: {
@@ -49,20 +51,56 @@ export default function FolderView() {
       folderFetched: folderResponse,
       pictures,
       documents,
+      unselectedImages: folderResponse.photos,
       loading: false,
     }));
   }, [id, pastaId]);
 
-  const handleImageSelectCallback = (index) => {
-    setState((prevState) => {
-      const selectedImageId = state.folderFetched.photos[index];
-      const newSelectedImages = prevState.selectedImages.includes(
-        selectedImageId
-      )
-        ? prevState.selectedImages.filter((id) => id !== selectedImageId)
-        : [...prevState.selectedImages, selectedImageId];
-      return { ...prevState, selectedImages: newSelectedImages };
-    });
+  const handleImageSelectCallback = async (index) => {
+    const selectedImageId = state.folderFetched.photos[index];
+
+    let newSelectedImages, newUnselectedImages;
+    if (state.selectedImages.includes(selectedImageId)) {
+      newSelectedImages = state.selectedImages.filter(
+        (id) => id !== selectedImageId
+      );
+      newUnselectedImages = [...state.unselectedImages, selectedImageId];
+    } else {
+      newSelectedImages = [...state.selectedImages, selectedImageId];
+      newUnselectedImages = state.unselectedImages.filter(
+        (id) => id !== selectedImageId
+      );
+    }
+
+    // Lógica de limitação de seleção de fotos para clientes
+    if (userRole === "client") {
+      const maxPhotos = await getMaxPhotosForAFolder(
+        state.galleryFetched.photosNumber,
+        state.galleryFetched.folders.length
+      );
+      if (newSelectedImages.length > maxPhotos) {
+        setModal({
+          isOpen: true,
+          type: "Error",
+          message: `Você atingiu o limite de seleção. Você pode escolher apenas ${maxPhotos} fotos por pasta.`,
+          handleCloseModal: () => {
+            setModal({ ...state.modal, isOpen: false });
+          },
+        });
+        newSelectedImages.pop();
+        newUnselectedImages.push(selectedImageId);
+      }
+    }
+    console.log("selectedImageId:", selectedImageId);
+    console.log("state.selectedImages:", state.selectedImages);
+    console.log("newSelectedImages:", newSelectedImages);
+    console.log("newUnselectedImages:", newUnselectedImages);
+
+    setState((prevState) => ({
+      ...prevState,
+      selectedImages: newSelectedImages,
+      unselectedImages: newUnselectedImages,
+    }));
   };
 
   const handleDocumentSelectCallback = (index) => {
@@ -82,8 +120,13 @@ export default function FolderView() {
   }, [id, state.selectedDocuments]);
 
   const handleImageDeleteCallback = useCallback(async () => {
-    await handleImageDelete(id, state.selectedImages);
-  }, [id, state.selectedImages]);
+    if (userRole === "admin") {
+      await handleImageDelete(id, state.selectedImages);
+    }
+    if (userRole === "client") {
+      await handleImageDelete(id, state.unselectedImages);
+    }
+  }, [id, userRole, state.selectedImages, state.unselectedImages]);
 
   const setPictures = (newPictures) => {
     setState((prevState) => ({ ...prevState, pictures: newPictures }));
@@ -116,15 +159,34 @@ export default function FolderView() {
   return (
     <>
       <UserNavbar />
-      <BreadCrumb
-        home={["Página Inicial", "/app"]}
-        currentSection={["Galerias", "/app/galerias/"]}
-        currentSubsection={[state.galleryFetched.title, "/app/galerias/" + id]}
-        currentSubsection2={[
-          state.folderFetched.title,
-          "/app/galerias/" + id + "/pastas/" + pastaId,
-        ]}
-      />
+      {userRole === "admin" ? (
+        <BreadCrumb
+          home={["Página Inicial", "/app"]}
+          currentSection={["Galerias", "/app/galerias/"]}
+          currentSubsection={[
+            state.galleryFetched.title,
+            "/app/galerias/" + id,
+          ]}
+          currentSubsection2={[
+            state.folderFetched.title,
+            "/app/galerias/" + id + "/pastas/" + pastaId,
+          ]}
+        />
+      ) : (
+        <BreadCrumb
+          home={["Página Inicial", "/app"]}
+          currentSection={["Galerias", ""]}
+          currentSubsection={[
+            state.galleryFetched.title,
+            "/app/galerias/" + id + "/cliente",
+          ]}
+          currentSubsection2={[
+            state.folderFetched.title,
+            "/app/galerias/" + id + "/pastas/" + pastaId + "/cliente",
+          ]}
+        />
+      )}
+
       <div className="xs:w-11/12 lg:w-5/6 mx-auto bg-[#f9f9f9] p-4 my-4 rounded-md">
         <h4 className="text-3xl font-bold text-center mb-9 text-secondary">
           {state.folderFetched && state.folderFetched.title}
@@ -134,84 +196,122 @@ export default function FolderView() {
         </h4>
 
         <div className="w-full">
-          <DropZone
-            setPhotos={setPictures}
-            acceptedFileTypes={acceptedImageTypes}
-            introText="Arraste e solte arquivos aqui, ou clique para selecionar imagens."
-            supportedFiles="Formatos suportados: .jpeg, .jpg, .png"
-            handleDrop={() => {
-              setModal({
-                isOpen: true,
-                type: "Success",
-                message:
-                  "Imagens enviadas com sucesso! Recarregue a página para visualização.",
-                handleCloseModal: () => {
-                  setModal({ ...state.modal, isOpen: false });
-                  window.location.reload();
-                },
-              });
-            }}
-            handleDropRejected={() => {
-              setModal({
-                isOpen: true,
-                type: "Error",
-                message:
-                  "Arquivo não suportado. Tente novamente com os formatos de arquivos suportados.",
-                handleCloseModal: () => {
-                  setModal({ ...state.modal, isOpen: false });
-                  window.location.reload();
-                },
-              });
-            }}
-            setModal={setModal}
-            setDocuments={state.documents}
-          />
+          {userRole === "admin" && (
+            <DropZone
+              setPhotos={setPictures}
+              acceptedFileTypes={acceptedImageTypes}
+              introText="Arraste e solte arquivos aqui, ou clique para selecionar imagens."
+              supportedFiles="Formatos suportados: .jpeg, .jpg, .png"
+              handleDrop={() => {
+                setModal({
+                  isOpen: true,
+                  type: "Success",
+                  message:
+                    "Imagens enviadas com sucesso! Recarregue a página para visualização.",
+                  handleCloseModal: () => {
+                    setModal({ ...state.modal, isOpen: false });
+                    window.location.reload();
+                  },
+                });
+              }}
+              handleDropRejected={() => {
+                setModal({
+                  isOpen: true,
+                  type: "Error",
+                  message:
+                    "Arquivo não suportado. Tente novamente com os formatos de arquivos suportados.",
+                  handleCloseModal: () => {
+                    setModal({ ...state.modal, isOpen: false });
+                    window.location.reload();
+                  },
+                });
+              }}
+              setModal={setModal}
+              setDocuments={state.documents}
+            />
+          )}
         </div>
         <p className="mt-2 mb-4">
-          Ao selecionar as fotos, você poderá excluí-las em lote, e, ao
-          finalizar o upload na pasta, deverá enviar o link de acesso para o
-          cliente; caso o cliente não selecione as fotos em até sete dias úteis,
-          a galeria será automaticamente excluída.{" "}
+          {userRole === "admin"
+            ? "Ao selecionar as fotos, você poderá excluí-las em lote, e, ao finalizar o upload na pasta, deverá enviar o link de acesso para o cliente; caso o cliente não selecione as fotos em até sete dias úteis, a galeria será automaticamente excluída."
+            : "Selecione as fotos que mais deseja. Ao finalizar a seleção, as fotos não selecionadas serão automaticamente excluídas e a fotógrafa prosseguirá com o tratamento das fotos selecionadas!"}{" "}
         </p>
-        {state.selectedImages.length > 0 && (
-          <Button
-            className="bg-red-400 lg:w-1/3 xxs:w-11/12 my-12 mx-auto hover:bg-red-600"
-            onClick={() => {
-              setModal({
-                isOpen: true,
-                type: "ConfirmDelete",
-                message:
-                  "Tem certeza que deseja excluir as fotos selecionadas?",
-                handleCloseModal: () => {
-                  setModal({ ...state.modal, isOpen: false });
-                },
-                handleConfirmAction: () => {
-                  handleImageDeleteCallback();
-                  setModal({
-                    ...state.modal,
-                    isOpen: true,
-                    type: "Success",
-                    message:
-                      "Imagens excluídas com sucesso! Recarregue a página.",
-                    handleCloseModal: () => {
-                      setModal({ ...state.modal, isOpen: false });
-                      window.location.reload();
-                    },
-                  });
-                },
-              });
-            }}
-          >
-            Excluir fotos selecionadas
-          </Button>
-        )}
+        {state.selectedImages.length > 0 &&
+          (userRole === "admin" ? (
+            <Button
+              className="bg-red-400 lg:w-1/3 xxs:w-11/12 my-12 mx-auto hover:bg-red-600"
+              onClick={() => {
+                setModal({
+                  isOpen: true,
+                  type: "ConfirmDelete",
+                  message:
+                    "Tem certeza que deseja excluir as fotos selecionadas?",
+                  handleCloseModal: () => {
+                    setModal({ ...state.modal, isOpen: false });
+                  },
+                  handleConfirmAction: () => {
+                    handleImageDeleteCallback();
+                    setModal({
+                      ...state.modal,
+                      isOpen: true,
+                      type: "Success",
+                      message:
+                        "Imagens excluídas com sucesso! Recarregue a página.",
+                      handleCloseModal: () => {
+                        setModal({ ...state.modal, isOpen: false });
+                        window.location.reload();
+                      },
+                    });
+                  },
+                });
+              }}
+            >
+              Excluir fotos selecionadas
+            </Button>
+          ) : (
+            <Button
+              className="bg-green-400 lg:w-1/3 xxs:w-11/12 my-12 mx-auto hover:bg-green-600"
+              onClick={() => {
+                setModal({
+                  isOpen: true,
+                  type: "ConfirmDelete",
+                  message:
+                    "Deseja proceder com as fotos selecionadas? Não será possível desfazer essa ação!",
+                  handleCloseModal: () => {
+                    setModal({ ...state.modal, isOpen: false });
+                  },
+                  handleConfirmAction: () => {
+                    handleImageDeleteCallback();
+                    setModal({
+                      ...state.modal,
+                      isOpen: true,
+                      type: "Success",
+                      message:
+                        "Imagens selecionadas com sucesso! Em até 7 dias úteis, você receberá um e-mail de confirmação para baixar as fotos selecionadas.",
+                      handleCloseModal: () => {
+                        setModal({ ...state.modal, isOpen: false });
+                        window.location.reload();
+                      },
+                    });
+                  },
+                });
+              }}
+            >
+              Proceder com as fotos selecionadas
+            </Button>
+          ))}
         <div className="lg:w-full grid lg:grid-cols-3 gap-8 md:grid-cols-2 xxs:grid-cols-1">
           {!state.loading && state.pictures.length === 0 && (
             <div className="flex justify-center w-full"></div>
           )}
           {!state.loading && state.pictures.length === 0 && (
             <div className="flex justify-center w-full">
-              <p className="text-center">Nenhuma imagem adicionada.</p>
+              <p className="text-center">
+                {userRole === "admin"
+                  ? "Nenhuma imagem adicionada"
+                  : "Nenhuma imagem selecionada"}
+                .
+              </p>
             </div>
           )}
           {blobUrls.map((blobUrl, index) => (
@@ -232,37 +332,39 @@ export default function FolderView() {
           <h4 className="text-2xl font-bold text-center mt-20 text-secondary">
             Documentos
           </h4>
-          <DropZone
-            acceptedFileTypes={acceptedDocumentTypes}
-            introText="Arraste e solte arquivos aqui, ou clique para selecionar documentos."
-            supportedFiles="Formatos suportados: .pdf"
-            currentDocuments={state.documents}
-            setDocuments={state.documents}
-            handleDrop={() => {
-              setModal({
-                isOpen: true,
-                type: "Success",
-                message:
-                  "Documentos enviados com sucesso! Recarregue a página para visualização.",
-                handleCloseModal: () => {
-                  setModal({ ...state.modal, isOpen: false });
-                  window.location.reload();
-                },
-              });
-            }}
-            handleDropRejected={() => {
-              setModal({
-                isOpen: true,
-                type: "Error",
-                message:
-                  "Arquivo não suportado. Tente novamente com os formatos de arquivos suportados.",
-                handleCloseModal: () => {
-                  setModal({ ...state.modal, isOpen: false });
-                  window.location.reload();
-                },
-              });
-            }}
-          />
+          {userRole === "admin" && (
+            <DropZone
+              acceptedFileTypes={acceptedDocumentTypes}
+              introText="Arraste e solte arquivos aqui, ou clique para selecionar documentos."
+              supportedFiles="Formatos suportados: .pdf"
+              currentDocuments={state.documents}
+              setDocuments={state.documents}
+              handleDrop={() => {
+                setModal({
+                  isOpen: true,
+                  type: "Success",
+                  message:
+                    "Documentos enviados com sucesso! Recarregue a página para visualização.",
+                  handleCloseModal: () => {
+                    setModal({ ...state.modal, isOpen: false });
+                    window.location.reload();
+                  },
+                });
+              }}
+              handleDropRejected={() => {
+                setModal({
+                  isOpen: true,
+                  type: "Error",
+                  message:
+                    "Arquivo não suportado. Tente novamente com os formatos de arquivos suportados.",
+                  handleCloseModal: () => {
+                    setModal({ ...state.modal, isOpen: false });
+                    window.location.reload();
+                  },
+                });
+              }}
+            />
+          )}
         </div>
         <p className="mt-2 mb-4">
           Ao selecionar os documentos, você poderá excluí-los em lote, caso
@@ -309,6 +411,7 @@ export default function FolderView() {
           {documentUrls &&
             documentUrls.map((document, index) => (
               <PdfCard
+                userRole={userRole}
                 key={index}
                 pdf={document}
                 title={`Documento ${index + 1}`}

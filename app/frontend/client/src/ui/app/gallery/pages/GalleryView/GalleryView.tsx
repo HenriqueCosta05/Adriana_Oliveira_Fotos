@@ -14,8 +14,9 @@ import ClientCard from "../../components/ClientCard/ClientCard";
 import { FaEllipsisV, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import ConfirmDeleteModal from "../../../modals/gallery/Warnings/ConfirmDelete/ConfirmDelete";
+import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
 
-export default function GalleryView() {
+export default function GalleryView({ userRole }) {
   const { id } = useParams();
   const [galleryData, setGalleryData] = useState({});
   const [foldersData, setFoldersData] = useState({});
@@ -41,44 +42,58 @@ export default function GalleryView() {
   return (
     <>
       <UserNavbar />
-      <Breadcrumb className="mx-auto my-4 lg:w-5/6 xxs:w-11/12">
-        <Breadcrumb.Item href="/">Página Inicial</Breadcrumb.Item>
-        <Breadcrumb.Item href="/app/galerias">Galerias</Breadcrumb.Item>
-        <Breadcrumb.Item>{galleryData.title}</Breadcrumb.Item>
-      </Breadcrumb>
       <div className="xs:w-11/12 lg:w-5/6 mx-auto bg-[#f9f9f9] p-4 my-4 rounded-md">
-        <div className="flex lg:justify-end xxs:justify-center xxs:my-4 lg:my-0">
-          <Dropdown
-            className="absolute top-0 right-0"
-            label={<FaEllipsisV />}
-            color="light"
-          >
-            <Dropdown.Item href={`/app/editar-galeria/${id}`} icon={FaEdit}>
-              Editar Galeria
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() =>
-                setModal({
-                  isOpen: true,
-                  type: "ConfirmDelete",
-                  message: "Tem certeza que deseja excluir esta galeria?",
-                  handleClose: () => setModal({ ...modal, isOpen: false }),
-                  handleConfirmAction: () => {
-                    deleteGallery(id).then((data) => {
-                      setGalleryData(data);
-                    });
-                    setModal({ ...modal, isOpen: false });
-                    navigate("/app/galerias");
-                  },
-                })
-              }
-              icon={MdDelete}
+        {userRole === "admin" && (
+          <div className="flex lg:justify-end xxs:justify-center xxs:my-4 lg:my-0">
+            <Dropdown
+              className="absolute top-0 right-0"
+              label={<FaEllipsisV />}
+              color="light"
             >
-              Excluir Galeria
-            </Dropdown.Item>
-          </Dropdown>
-        </div>
-
+              <Dropdown.Item href={`/app/editar-galeria/${id}`} icon={FaEdit}>
+                Editar Galeria
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() =>
+                  setModal({
+                    isOpen: true,
+                    type: "ConfirmDelete",
+                    message: "Tem certeza que deseja excluir esta galeria?",
+                    handleClose: () => setModal({ ...modal, isOpen: false }),
+                    handleConfirmAction: () => {
+                      deleteGallery(id).then((data) => {
+                        setGalleryData(data);
+                      });
+                      setModal({ ...modal, isOpen: false });
+                      navigate("/app/galerias");
+                    },
+                  })
+                }
+                icon={MdDelete}
+              >
+                Excluir Galeria
+              </Dropdown.Item>
+            </Dropdown>
+          </div>
+        )}
+        {userRole === "admin" ? (
+          <BreadCrumb
+            home={["Página Inicial", "/app"]}
+            currentSection={["Galerias", "/app/galerias"]}
+            currentSubsection={[
+              galleryData && galleryData.title,
+              `/app/galerias/${id}`,
+            ]}
+          />
+        ) : (
+          <BreadCrumb
+            home={["Página Inicial", "/app"]}
+            currentSection={[
+              galleryData && galleryData.title,
+              `/app/galerias/${id}/cliente`,
+            ]}
+          />
+        )}
         <h4 className="text-3xl font-bold text-center mb-9 text-secondary">
           {galleryData.title}
         </h4>
@@ -86,11 +101,13 @@ export default function GalleryView() {
           Pastas desta galeria
         </h4>
         <HelperText className="mb-4 text-md">
-          Adicione pastas para categorizar e organizar as fotos da galeria. Ao
-          adicionar uma nova pasta você poderá adicionar fotos a ela.
+          {userRole === "admin"
+            ? "Adicione pastas para categorizar e organizar as fotos da galeria. Ao adicionar uma nova pasta você poderá adicionar fotos a ela."
+            : "Acesse as pastas para seleção das fotos contidas em cada uma."}
         </HelperText>
         <div className="flex flex-wrap justify-start">
-          <ClickZone isClient={false} />
+          {userRole === "admin" && <ClickZone isClient={false} />}
+
           {foldersData &&
             Array.from(foldersData).map((folder) => (
               <FolderCard
@@ -98,23 +115,28 @@ export default function GalleryView() {
                 folderTitle={folder && folder.title}
                 photosNumber={galleryData.photosNumber}
                 folderId={folder && folder.id}
+                userRole={userRole}
               />
             ))}
         </div>
-        <h4 className="font-bold text-2xl mt-6 text-secondary mb-4">
-          Cliente Associado
-        </h4>
-        <HelperText className="mb-4 text-md">
-          Gerencie o estado atual do cliente associado a esta galeria.
-        </HelperText>
-        <div className="flex flex-wrap justify-start">
-          {galleryData.clientAssociated && (
-            <ClientCard
-              clientId={galleryData.clientAssociated}
-              photosNumber={galleryData.photosNumber}
-            />
-          )}
-        </div>
+        {userRole === "admin" && (
+          <>
+            <h4 className="font-bold text-2xl mt-6 text-secondary mb-4">
+              Cliente Associado
+            </h4>
+            <HelperText className="mb-4 text-md">
+              Gerencie o estado atual do cliente associado a esta galeria.
+            </HelperText>
+            <div className="flex flex-wrap justify-start">
+              {galleryData.clientAssociated && (
+                <ClientCard
+                  clientId={galleryData.clientAssociated}
+                  photosNumber={galleryData.photosNumber}
+                />
+              )}
+            </div>
+          </>
+        )}
       </div>
       <Footer />
       {renderModal(
