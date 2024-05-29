@@ -3,20 +3,29 @@ import FolderCard from "../../components/FolderCard/FolderCard";
 import UserNavbar from "../../../components/UserNavbar";
 import Footer from "../../../../portfolio/components/Sections/Footer";
 import ClickZone from "../../components/ClickZone/ClickZone";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
+  deleteGallery,
   fetchAllFoldersFromGallery,
   fetchGallery,
 } from "../../../../../services/GalleryDataService";
 import ClientCard from "../../components/ClientCard/ClientCard";
 import { FaEllipsisV, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import ConfirmDeleteModal from "../../../modals/gallery/Warnings/ConfirmDelete/ConfirmDelete";
 
 export default function GalleryView() {
   const { id } = useParams();
   const [galleryData, setGalleryData] = useState({});
   const [foldersData, setFoldersData] = useState({});
+  const [modal, setModal] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+    handleClose: () => {},
+    handleConfirmAction: () => {},
+  });
 
   useEffect(() => {
     fetchGallery(id).then((data) => {
@@ -26,6 +35,8 @@ export default function GalleryView() {
       setFoldersData(data);
     });
   }, [id]);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -45,7 +56,24 @@ export default function GalleryView() {
             <Dropdown.Item href={`/app/editar-galeria/${id}`} icon={FaEdit}>
               Editar Galeria
             </Dropdown.Item>
-            <Dropdown.Item href={`/app/excluir-galeria/${id}`} icon={MdDelete}>
+            <Dropdown.Item
+              onClick={() =>
+                setModal({
+                  isOpen: true,
+                  type: "ConfirmDelete",
+                  message: "Tem certeza que deseja excluir esta galeria?",
+                  handleClose: () => setModal({ ...modal, isOpen: false }),
+                  handleConfirmAction: () => {
+                    deleteGallery(id).then((data) => {
+                      setGalleryData(data);
+                    });
+                    setModal({ ...modal, isOpen: false });
+                    navigate("/app/galerias");
+                  },
+                })
+              }
+              icon={MdDelete}
+            >
               Excluir Galeria
             </Dropdown.Item>
           </Dropdown>
@@ -89,6 +117,33 @@ export default function GalleryView() {
         </div>
       </div>
       <Footer />
+      {renderModal(
+        modal,
+        setModal,
+        modal.handleClose,
+        modal.handleConfirmAction
+      )}
     </>
   );
 }
+
+const renderModal = (
+  modal,
+  setModal,
+  handleCloseModal,
+  handleConfirmAction
+) => {
+  switch (modal.type) {
+    case "ConfirmDelete":
+      return (
+        <ConfirmDeleteModal
+          modal={modal}
+          setModal={setModal}
+          handleCloseModal={handleCloseModal}
+          handleConfirmAction={handleConfirmAction}
+        />
+      );
+    default:
+      return null;
+  }
+};

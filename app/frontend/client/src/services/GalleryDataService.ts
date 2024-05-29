@@ -25,13 +25,13 @@ export const createFolder = async (folderData, id) => {
   await handleErrors(response);
   const data = await response.json();
   return data;
-} 
+};
 
 export const fetchAllFoldersFromGallery = async (id: string) => {
   const gallery = await fetchGallery(id);
   const folders = gallery.folders;
   return folders;
-}
+};
 
 export const fetchFolderById = async (galleryId, folderId) => {
   const response = await fetch(
@@ -40,14 +40,25 @@ export const fetchFolderById = async (galleryId, folderId) => {
   await handleErrors(response);
   const data = await response.json();
   return data;
-}
+};
 
 export const fetchImageById = async (galleryId, fileId) => {
-  const response = await fetch(`${API}/galerias/${galleryId}/fotos/${fileId}/download`);
+  const response = await fetch(
+    `${API}/galerias/${galleryId}/fotos/${fileId}/download`
+  );
   await handleErrors(response);
   const data = await response.blob();
   return data;
-}
+};
+
+export const fetchDocumentById = async (galleryId, fileId) => {
+  const response = await fetch(
+    `${API}/galerias/${galleryId}/documentos/${fileId}/download`
+  );
+  await handleErrors(response);
+  const data = await response.blob();
+  return data;
+};
 
 export const fetchGallery = async (id: string) => {
   const response = await fetch(`${API}/galerias/${id}`);
@@ -64,16 +75,34 @@ export const fetchAllGalleries = async () => {
 };
 
 export const deletePhotoFromGallery = async (galleryId, photoId) => {
-  const response = await fetch(`${API}/galerias/${galleryId}/fotos/${photoId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
+  const response = await fetch(
+    `${API}/galerias/${galleryId}/fotos/${photoId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   await handleErrors(response);
   const data = await response.json();
   return data;
-  }
+};
+
+export const deleteDocumentFromGallery = async (galleryId, documentId) => {
+  const response = await fetch(
+    `${API}/galerias/${galleryId}/documentos/${documentId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  await handleErrors(response);
+  const data = await response.json();
+  return data;
+};
 
 export const createGallery = async (galleryData) => {
   const response = await fetch(`${API}/galerias`, {
@@ -109,11 +138,13 @@ export const deleteGallery = async (id) => {
   return response;
 };
 
-
 export const deleteImage = async (galleryId, imageId) => {
-  const response = await fetch(`${API}/galerias/${galleryId}/fotos/${imageId}`, {
-    method: "DELETE",
-  });
+  const response = await fetch(
+    `${API}/galerias/${galleryId}/fotos/${imageId}`,
+    {
+      method: "DELETE",
+    }
+  );
   await handleErrors(response);
   return response;
-}
+};

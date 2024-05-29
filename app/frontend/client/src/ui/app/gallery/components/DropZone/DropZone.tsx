@@ -1,16 +1,22 @@
 import { useDropzone } from "react-dropzone";
 import { FaUpload } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { handleUpload } from "../../../../../helpers/gallery/handleUpload";
+import {
+  handleUploadDocuments,
+  handleUploadPhotos,
+} from "../../../../../helpers/gallery/handleUpload";
 
 export default function DropZone({
   setPhotos,
+  setDocuments,
+  currentDocuments,
   acceptedFileTypes,
   introText,
   supportedFiles,
   currentPhotos,
   handleDrop,
   handleDropRejected,
+  setModal,
 }) {
   const { id, pastaId } = useParams();
 
@@ -19,7 +25,27 @@ export default function DropZone({
     multiple: true,
 
     onDrop: (acceptedFiles) => {
-      handleUpload(acceptedFiles, id, pastaId, setPhotos, currentPhotos);
+      acceptedFiles.forEach((file) => {
+        if (file.type === "application/pdf") {
+          handleUploadDocuments(
+            [file],
+            id,
+            pastaId,
+            setDocuments,
+            currentDocuments,
+            setModal
+          );
+        } else if (file.type.includes("image")) {
+          handleUploadPhotos(
+            [file],
+            id,
+            pastaId,
+            setPhotos,
+            currentPhotos,
+            setModal
+          );
+        }
+      });
       handleDrop && handleDrop();
     },
     onDropRejected: () => {

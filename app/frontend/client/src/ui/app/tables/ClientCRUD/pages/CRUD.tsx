@@ -16,11 +16,11 @@ export default function CRUD() {
       </h1>
       <HelperText className="text-left text-md mt-4 lg:w-3/4 xxs:w-11/12 mx-auto">
         Bem-vindo(a) ao Gerenciamento de clientes! Esta seção foi projetada para
-        ajudá-lo(a) a gerenciar seus clientes com facilidade, permitindo, dentre outros
-        fatores, o envio de login de acesso, bem como o upload de fotos em galerias.
+        ajudá-lo(a) a gerenciar seus clientes com facilidade, permitindo que
+        você adicione, edite e exclua clientes conforme necessário.
       </HelperText>
       <Button
-        className="w-max p-2 mx-auto mt-20 bg-secondary flex overflow-x-auto"
+        className="mt-4 lg:w-1/6 py-4 mx-auto text-lg bg-secondary"
         href="/app/novo-cliente"
       >
         <FaPlus className="mr-2 mt-0.5" />

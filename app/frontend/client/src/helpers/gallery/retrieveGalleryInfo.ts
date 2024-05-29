@@ -1,6 +1,8 @@
 import { getGalleryList } from "./getGalleryList";
 import {
+  deleteDocumentFromGallery,
   deletePhotoFromGallery,
+  fetchDocumentById,
   fetchFolderById,
   fetchGallery,
   fetchImageById,
@@ -39,7 +41,16 @@ export const fetchGalleryData = async (id, pastaId) => {
     pictures = await Promise.all(fetchImagePromises);
   }
 
-  return { galleryResponse, folderResponse, pictures };
+  let documents = [];
+  if (folderResponse.documents) {
+    documents = folderResponse.documents;
+    const fetchDocumentPromises = folderResponse.documents.map((document) => {
+      return fetchDocumentById(id, document);
+    });
+    documents = await Promise.all(fetchDocumentPromises);
+  }
+
+  return { galleryResponse, folderResponse, pictures, documents };
 };
 
 export const handleImageSelect = (prevSelectedImages, index) => {
@@ -59,6 +70,15 @@ export const handleImageDelete = async (galleryId, images) => {
   const response = Promise.all(
     images.map((image) => {
       return deletePhotoFromGallery(galleryId, image);
+    })
+  );
+  return response;
+};
+
+export const handleDocumentDelete = async (galleryId, documents) => {
+  const response = Promise.all(
+    documents.map((document) => {
+      return deleteDocumentFromGallery(galleryId, document);
     })
   );
   return response;

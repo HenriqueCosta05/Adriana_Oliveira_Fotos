@@ -8,8 +8,8 @@ import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
 import Loading from "../../../../loading/Loading";
 import {
   fetchGalleryData,
+  handleDocumentDelete,
   handleImageDelete,
-  handleImageSelect,
 } from "../../../../../helpers/gallery/retrieveGalleryInfo";
 import {
   acceptedImageTypes,
@@ -19,6 +19,7 @@ import { Button } from "flowbite-react";
 import SuccessModal from "../../../modals/gallery/Infos/Success/Success";
 import ErrorModal from "../../../modals/gallery/Infos/Error/Error";
 import ConfirmDeleteModal from "../../../modals/gallery/Warnings/ConfirmDelete/ConfirmDelete";
+import PdfCard from "../../components/PdfCard/PdfCard";
 
 export default function FolderView() {
   const { id, pastaId } = useParams();
@@ -26,24 +27,28 @@ export default function FolderView() {
     galleryFetched: {},
     folderFetched: {},
     pictures: [],
+    documents: [],
     selectedImages: [],
+    selectedDocuments: [],
     loading: true,
     modal: {
       isOpen: false,
       message: "",
+      type: "",
       handleCloseModal: () => {},
       handleConfirmAction: () => {},
     },
   });
 
   const fetchGalleryDataCallback = useCallback(async () => {
-    const { galleryResponse, folderResponse, pictures } =
+    const { galleryResponse, folderResponse, pictures, documents } =
       await fetchGalleryData(id, pastaId);
     setState((prevState) => ({
       ...prevState,
       galleryFetched: galleryResponse,
       folderFetched: folderResponse,
       pictures,
+      documents,
       loading: false,
     }));
   }, [id, pastaId]);
@@ -51,43 +56,43 @@ export default function FolderView() {
   const handleImageSelectCallback = (index) => {
     setState((prevState) => {
       const selectedImageId = state.folderFetched.photos[index];
-
-      let newSelectedImages;
-      if (prevState.selectedImages.includes(selectedImageId)) {
-        // If the image is already selected, remove it from the selection
-        newSelectedImages = prevState.selectedImages.filter(
-          (id) => id !== selectedImageId
-        );
-      } else {
-        // If the image is not selected, add it to the selection
-        newSelectedImages = [...prevState.selectedImages, selectedImageId];
-      }
-
-      return {
-        ...prevState,
-        selectedImages: newSelectedImages,
-      };
+      const newSelectedImages = prevState.selectedImages.includes(
+        selectedImageId
+      )
+        ? prevState.selectedImages.filter((id) => id !== selectedImageId)
+        : [...prevState.selectedImages, selectedImageId];
+      return { ...prevState, selectedImages: newSelectedImages };
     });
   };
+
+  const handleDocumentSelectCallback = (index) => {
+    setState((prevState) => {
+      const selectedDocumentId = state.folderFetched.documents[index];
+      const newSelectedDocuments = prevState.selectedDocuments.includes(
+        selectedDocumentId
+      )
+        ? prevState.selectedDocuments.filter((id) => id !== selectedDocumentId)
+        : [...prevState.selectedDocuments, selectedDocumentId];
+      return { ...prevState, selectedDocuments: newSelectedDocuments };
+    });
+  };
+
+  const handleDocumentDeleteCallback = useCallback(async () => {
+    await handleDocumentDelete(id, state.selectedDocuments);
+  }, [id, state.selectedDocuments]);
 
   const handleImageDeleteCallback = useCallback(async () => {
     await handleImageDelete(id, state.selectedImages);
   }, [id, state.selectedImages]);
 
   const setPictures = (newPictures) => {
-    setState((prevState) => ({
-      ...prevState,
-      pictures: newPictures,
-    }));
+    setState((prevState) => ({ ...prevState, pictures: newPictures }));
   };
 
   const setModal = (newModalState) => {
     setState((prevState) => ({
       ...prevState,
-      modal: {
-        ...prevState.modal,
-        ...newModalState,
-      },
+      modal: { ...prevState.modal, ...newModalState },
     }));
   };
 
@@ -98,6 +103,10 @@ export default function FolderView() {
   const blobUrls = useMemo(
     () => state.pictures.map((blob) => URL.createObjectURL(blob)),
     [state.pictures]
+  );
+  const documentUrls = useMemo(
+    () => state.documents.map((blob) => URL.createObjectURL(blob)),
+    [state.documents]
   );
 
   if (state.loading) {
@@ -154,6 +163,8 @@ export default function FolderView() {
                 },
               });
             }}
+            setModal={setModal}
+            setDocuments={state.documents}
           />
         </div>
         <p className="mt-2 mb-4">
@@ -162,7 +173,7 @@ export default function FolderView() {
           cliente; caso o cliente não selecione as fotos em até sete dias úteis,
           a galeria será automaticamente excluída.{" "}
         </p>
-        {Object.keys(state.selectedImages).length > 0 && (
+        {state.selectedImages.length > 0 && (
           <Button
             className="bg-red-400 lg:w-1/3 xxs:w-11/12 my-12 mx-auto hover:bg-red-600"
             onClick={() => {
@@ -183,7 +194,7 @@ export default function FolderView() {
                     message:
                       "Imagens excluídas com sucesso! Recarregue a página.",
                     handleCloseModal: () => {
-                      isOpen: false;
+                      setModal({ ...state.modal, isOpen: false });
                       window.location.reload();
                     },
                   });
@@ -225,12 +236,86 @@ export default function FolderView() {
             acceptedFileTypes={acceptedDocumentTypes}
             introText="Arraste e solte arquivos aqui, ou clique para selecionar documentos."
             supportedFiles="Formatos suportados: .pdf"
+            currentDocuments={state.documents}
+            setDocuments={state.documents}
+            handleDrop={() => {
+              setModal({
+                isOpen: true,
+                type: "Success",
+                message:
+                  "Documentos enviados com sucesso! Recarregue a página para visualização.",
+                handleCloseModal: () => {
+                  setModal({ ...state.modal, isOpen: false });
+                  window.location.reload();
+                },
+              });
+            }}
+            handleDropRejected={() => {
+              setModal({
+                isOpen: true,
+                type: "Error",
+                message:
+                  "Arquivo não suportado. Tente novamente com os formatos de arquivos suportados.",
+                handleCloseModal: () => {
+                  setModal({ ...state.modal, isOpen: false });
+                  window.location.reload();
+                },
+              });
+            }}
           />
         </div>
         <p className="mt-2 mb-4">
-          Lista de documentos adicionados na pasta{" "}
-          {state.folderFetched && state.folderFetched.title}:
+          Ao selecionar os documentos, você poderá excluí-los em lote, caso
+          necessário.{" "}
         </p>
+        {state.selectedDocuments.length > 0 && (
+          <Button
+            className="bg-red-400 lg:w-1/3 xxs:w-11/12 my-12 mx-auto hover:bg-red-600"
+            onClick={() => {
+              setModal({
+                isOpen: true,
+                type: "ConfirmDelete",
+                message:
+                  "Tem certeza que deseja excluir os documentos selecionados?",
+                handleCloseModal: () => {
+                  setModal({ ...state.modal, isOpen: false });
+                },
+                handleConfirmAction: () => {
+                  handleDocumentDeleteCallback();
+                  setModal({
+                    ...state.modal,
+                    isOpen: true,
+                    type: "Success",
+                    message:
+                      "Documentos excluídos com sucesso! Recarregue a página.",
+                    handleCloseModal: () => {
+                      setModal({ ...state.modal, isOpen: false });
+                      window.location.reload();
+                    },
+                  });
+                },
+              });
+            }}
+          >
+            Excluir documentos selecionados
+          </Button>
+        )}
+        {state.documents.length === 0 && (
+          <div className="flex justify-center w-full">
+            <p className="text-center">Nenhum documento adicionado.</p>
+          </div>
+        )}
+        <div className="w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {documentUrls &&
+            documentUrls.map((document, index) => (
+              <PdfCard
+                key={index}
+                pdf={document}
+                title={`Documento ${index + 1}`}
+                onSelect={() => handleDocumentSelectCallback(index)}
+              />
+            ))}
+        </div>
       </div>
       <Footer />
       <RenderModal modal={state.modal} setModal={setModal} />
