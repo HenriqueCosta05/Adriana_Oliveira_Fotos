@@ -1,6 +1,6 @@
 import { removeTokenFromIndexedDB } from "../indexedDB";
 
-const API = "http://localhost:8004/app";
+const API = "http://localhost:8000/app";
 
 const handleErrors = async (response) => {
   if (!response.ok) {

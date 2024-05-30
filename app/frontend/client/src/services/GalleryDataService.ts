@@ -1,4 +1,4 @@
-const API = "http://localhost:8003/app";
+const API = "http://localhost:8000/app";
 
 const handleErrors = async (response) => {
   if (!response.ok) {
@@ -9,7 +9,7 @@ const handleErrors = async (response) => {
     } catch (e) {
       console.error("Erro ao converter mensagem de erro", e);
     }
-    throw Error(errorMessage);
+    throw new Error(errorMessage);
   }
   return response;
 };
@@ -145,6 +145,14 @@ export const deleteImage = async (galleryId, imageId) => {
       method: "DELETE",
     }
   );
+  await handleErrors(response);
+  return response;
+};
+
+export const deleteFolder = async (galleryId, folderId) => {
+  const response = await fetch(`${API}/folder/${galleryId}/${folderId}`, {
+    method: "DELETE",
+  });
   await handleErrors(response);
   return response;
 };

@@ -2,7 +2,7 @@ import UserNavbar from "../../../components/UserNavbar";
 import DropZone from "../../components/DropZone/DropZone";
 import Image from "../../../../../components/Shared/Image/Image";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../../../portfolio/components/Sections/Footer";
 import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
 import Loading from "../../../../loading/Loading";
@@ -15,14 +15,19 @@ import {
   acceptedImageTypes,
   acceptedDocumentTypes,
 } from "../../../../../lib/gallery/filetypes/filtetypes";
-import { Button } from "flowbite-react";
+import { Button, Dropdown } from "flowbite-react";
 import SuccessModal from "../../../modals/gallery/Infos/Success/Success";
 import ErrorModal from "../../../modals/gallery/Infos/Error/Error";
 import ConfirmDeleteModal from "../../../modals/gallery/Warnings/ConfirmDelete/ConfirmDelete";
 import PdfCard from "../../components/PdfCard/PdfCard";
 import { getMaxPhotosForAFolder } from "../../../../../helpers/gallery/getMaxPhotosForAFolder";
+import { FaEllipsisV } from "react-icons/fa";
+import { deleteFolder } from "../../../../../services/GalleryDataService";
+import { MdDelete } from "react-icons/md";
 
 export default function FolderView({ userRole }) {
+  const navigate = useNavigate();
+
   const { id, pastaId } = useParams();
   const [state, setState] = useState({
     galleryFetched: {},
@@ -91,10 +96,6 @@ export default function FolderView({ userRole }) {
         newUnselectedImages.push(selectedImageId);
       }
     }
-    console.log("selectedImageId:", selectedImageId);
-    console.log("state.selectedImages:", state.selectedImages);
-    console.log("newSelectedImages:", newSelectedImages);
-    console.log("newUnselectedImages:", newUnselectedImages);
 
     setState((prevState) => ({
       ...prevState,
@@ -188,6 +189,35 @@ export default function FolderView({ userRole }) {
       )}
 
       <div className="xs:w-11/12 lg:w-5/6 mx-auto bg-[#f9f9f9] p-4 my-4 rounded-md">
+        {userRole === "admin" && (
+          <Dropdown
+            className="absolute top-0 right-0"
+            label={<FaEllipsisV />}
+            color="light"
+          >
+            <Dropdown.Item
+              onClick={() =>
+                setModal({
+                  isOpen: true,
+                  type: "ConfirmDelete",
+                  message:
+                    "Tem certeza que deseja excluir esta pasta? Todas as fotos e documentos associados a ela serão excluídos.",
+                  handleClose: () =>
+                    setModal({ ...state.modal, isOpen: false }),
+                  handleConfirmAction: () => {
+                    deleteFolder(id, pastaId).then((data) => {
+                      setModal({ ...state.modal, isOpen: false });
+                      navigate("/app/galerias/" + id);
+                    });
+                  },
+                })
+              }
+              icon={MdDelete}
+            >
+              Excluir Galeria
+            </Dropdown.Item>
+          </Dropdown>
+        )}
         <h4 className="text-3xl font-bold text-center mb-9 text-secondary">
           {state.folderFetched && state.folderFetched.title}
         </h4>

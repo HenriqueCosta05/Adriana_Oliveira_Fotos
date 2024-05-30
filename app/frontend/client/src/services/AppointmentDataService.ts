@@ -1,4 +1,4 @@
-const API = "http://localhost:8001/app";
+const API = "http://localhost:8000/app";
 
 const handleErrors = async (response) => {
   if (!response.ok) {
@@ -51,4 +51,4 @@ export const deleteData = async (id: string) => {
 
   await handleErrors(response);
   return response.json();
-}
+};

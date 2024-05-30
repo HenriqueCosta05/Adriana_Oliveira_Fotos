@@ -50,36 +50,8 @@ nome_do_ambiente_virtual/Scripts/activate
 pip install -r requirements.txt
 ```
 
-### Microsserviços - Executá-los em portas separadas!
-
-Microsserviço 1 - Clientes
-
 ```
-uvicorn client:app --reload --port 8000
-```
-
-Microsserviço 2 - Agenda (Em processo de refatoração)
-
-```
-uvicorn calendars:app --reload --port 8001
-```
-
-Microsserviço 3 - **Financeiro**
-
-```
-uvicorn financial:app --reload --port 8002
-```
-
-Microsserviço 4 - Galeria (Em andamento)
-
-```
-uvicorn gallery:app --reload --port 8003
-```
-
-Microsserviço 5 - Autenticação do Administrador (Em andamento)
-
-```
-  uvicorn auth_admin:app --reload --port 8004
+uvicorn main:app --reload --port 8000
 ```
 
 ## Para executar o front-end

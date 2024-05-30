@@ -6,7 +6,7 @@ export const handleUploadPhotos = async (
   currentPhotos,
   setModal
 ) => {
-  const url = `http://localhost:8003/app/galerias/${id}/pasta/${pastaId}/upload-imagem/`;
+  const url = `http://localhost:8000/app/galerias/${id}/pasta/${pastaId}/upload-imagem/`;
   const formData = new FormData();
 
   acceptedFiles.forEach((file) => {
@@ -26,7 +26,7 @@ export const handleUploadPhotos = async (
     );
 
     const newPhotosPromises = newPhotosData.map(async (photo) => {
-      const downloadUrl = `http://localhost:8003/app/galerias/${id}/fotos/${photo}/download/`;
+      const downloadUrl = `http://localhost:8000/app/galerias/${id}/fotos/${photo}/download/`;
       const response = await fetch(downloadUrl);
       const blob = await response.blob();
       return URL.createObjectURL(blob);
@@ -52,7 +52,7 @@ export const handleUploadDocuments = async (
   currentDocuments,
   setModal
 ) => {
-  const url = `http://localhost:8003/app/galerias/${galleryId}/pasta/${folderId}/upload-documento/`;
+  const url = `http://localhost:8000/app/galerias/${galleryId}/pasta/${folderId}/upload-documento/`;
   const formData = new FormData();
 
   acceptedFiles.forEach((file) => {
@@ -72,7 +72,7 @@ export const handleUploadDocuments = async (
     );
 
     const newDocumentsPromises = newDocumentsData.map(async (photo) => {
-      const downloadUrl = `http://localhost:8003/app/galerias/${galleryId}/documentos/${photo}/download/`;
+      const downloadUrl = `http://localhost:8000/app/galerias/${galleryId}/documentos/${photo}/download/`;
       const response = await fetch(downloadUrl);
       const blob = await response.blob();
       return URL.createObjectURL(blob);

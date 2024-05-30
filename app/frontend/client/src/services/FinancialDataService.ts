@@ -1,4 +1,4 @@
-const API = "http://localhost:8002/app";
+const API = "http://localhost:8000/app";
 
 const handleErrors = async (response) => {
   if (!response.ok) {
@@ -27,7 +27,7 @@ export const deleteData = async (id: string) => {
   });
   await handleErrors(response);
   return response.json();
-}
+};
 
 export const fetchAllData = async () => {
   const response = await fetch(`${API}/consultar-registros`);

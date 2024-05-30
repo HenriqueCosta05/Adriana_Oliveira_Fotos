@@ -82,11 +82,11 @@ export default function NewGalleryForm({ id }) {
         });
       }
     } catch (error) {
-      console.error("Erro ao criar galeria...", error);
+      console.error("Erro ao criar galeria...");
       setModal({
         isOpen: true,
         type: "Error",
-        message: "Erro ao criar ou atualizar galeria!",
+        message: "Erro ao criar ou atualizar galeria! " + error.message,
         handleCloseModal: () => {
           setModal({
             isOpen: false,

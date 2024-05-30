@@ -1,12 +1,13 @@
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import time
+from datetime import date
 
 
 class Event(BaseModel):
     title: str
     description: str
-    dateInitial: datetime.date
-    hourInitial: datetime.time
-    dateFinal:  datetime.date
-    hourFinal: datetime.time
+    dateInitial: date
+    hourInitial: time
+    dateFinal:  date
+    hourFinal: time
     client: str
