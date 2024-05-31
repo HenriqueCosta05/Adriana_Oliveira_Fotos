@@ -10,39 +10,85 @@ import {
 import { AppointmentDataProps } from "../../../../../../types/AppointmentData/AppointmentDataProps";
 import { Controller, useForm } from "react-hook-form";
 import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
-import { getClientList } from "../../../../../../helpers/clients/getClientList";
+import {
+  fetchAllData,
+  sendData,
+} from "../../../../../../services/UserDataService";
 
 interface FormProps {
   data: AppointmentDataProps;
   setData: () => void;
-    prevData?: AppointmentDataProps;
-    sendData: () => void;
+  prevData?: AppointmentDataProps;
+  sendData: () => void;
 }
 
-export default function Form({ data, setData, prevData, sendData}: FormProps) {
-
-    
+export default function Form({ data, setData, prevData, sendData }: FormProps) {
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
   } = useForm();
-    const [clientSelected, setClientSelected] = useState("");
+  const [clientSelected, setClientSelected] = useState("");
 
-    const submitForm = (formData) => {
-      const newAppointment = {
-        title: formData.title,
-        description: formData.description,
-        dateInitial: formData.dateInitial,
-        hourInitial: formData.hourInitial,
-        dateFinal: formData.dateFinal,
-        hourFinal: formData.hourFinal,
-        userAssociated: clientSelected,
-      };
-      setData(newAppointment);
+  const submitForm = (formData) => {
+    // Create a Date object from formData.appointmentDate
+    const startDateTime = new Date(formData.appointmentDate);
+
+    // Extract the hours and minutes from formData.appointmentTime
+    const [hours, minutes] = formData.appointmentTime.split(":").map(Number);
+
+    // Set the hours and minutes of startDateTime
+    startDateTime.setHours(hours, minutes);
+
+    // Create a Date object for the end time (1 hour after the start time)
+    const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
+
+    const newAppointment = {
+      summary: formData.title,
+      location: "São Paulo - SP, Brasil",
+      description: formData.description,
+      start: {
+        dateTime: startDateTime.toISOString(),
+        timeZone: "America/Sao_Paulo",
+      },
+      end: {
+        dateTime: endDateTime.toISOString(),
+        timeZone: "America/Sao_Paulo",
+      },
+      attendees: [
+        {
+          email: formData.userAssociated,
+          optional: false,
+        },
+      ],
+      reminders: {
+        useDefault: false,
+        overrides: [
+          {
+            method: "email",
+            minutes: 24 * 60,
+          },
+        ],
+      },
     };
+    setData(newAppointment);
+  };
 
+  async function getClientList() {
+    try {
+      const response = await fetchAllData();
+      return response.map((client) => {
+        return {
+          fullName: client.name + " " + client.surname,
+          registryType: client.registryType,
+          email: client.email,
+        };
+      });
+    } catch (error) {
+      console.error("Erro ao buscar clientes", error);
+    }
+  }
 
   const [clientList, setClientList] = useState([]);
 
@@ -57,7 +103,7 @@ export default function Form({ data, setData, prevData, sendData}: FormProps) {
   return (
     <>
       <form
-        className="form bg-accent xxs:w-11/12 mx-auto my-4 py-8 rounded-md"
+        className="form bg-accent w-3/4 mx-auto my-4 py-8 rounded-md"
         onSubmit={handleSubmit(submitForm)}
       >
         <h1 className="text-3xl font-bold text-center mb-9 text-secondary">
@@ -126,25 +172,25 @@ export default function Form({ data, setData, prevData, sendData}: FormProps) {
         <div className="mb-[30px]">
           <div className="flex flex-wrap items-baseline justify-center">
             <Label
-              htmlFor="dateInitial"
+              htmlFor="appointmentDate"
               className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-              value="Data de início:"
+              value="Data do compromisso:"
             />
             <Controller
               control={control}
-              name="dateInitial"
+              name="appointmentDate"
               render={({ field }) => (
                 <>
                   <Flowbite theme={{ theme: customTheme }}>
                     <Datepicker
                       minDate={new Date()}
                       language="pt-BR"
-                      id="dateInitial"
-                      name="dateInitial"
-                      placeholder="Selecione a data de início do compromisso..."
+                      id="appointmentDate"
+                      name="appointmentDate"
+                      placeholder="Selecione a data do compromisso..."
                       labelTodayButton="Hoje"
                       labelClearButton="Limpar"
-                      color={errors.dateInitial ? "failure" : "primary"}
+                      color={errors.appointmentDate ? "failure" : "primary"}
                       onSelectedDateChanged={(date) => field.onChange(date)}
                       className="w-11/12 rounded-lg p-2"
                     />
@@ -152,16 +198,16 @@ export default function Form({ data, setData, prevData, sendData}: FormProps) {
                   <input
                     type="hidden"
                     {...field}
-                    {...register("dateInitial", {
+                    {...register("appointmentDate", {
                       required: "Campo obrigatório",
                     })}
                   />
                 </>
               )}
             />
-            {errors && errors.dateInitial && (
+            {errors && errors.appointmentDate && (
               <span className="text-red-500 font-medium text-[14px]">
-                {errors.dateInitial.message}
+                {errors.appointmentDate.message}
               </span>
             )}
           </div>
@@ -169,101 +215,20 @@ export default function Form({ data, setData, prevData, sendData}: FormProps) {
         <div className="mb-[30px]">
           <div className="flex flex-wrap items-baseline justify-center">
             <Label
-              htmlFor="hourInitial"
+              htmlFor="appointmentTime"
               className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-              value="Horário de início:"
+              value="Horário do compromisso:"
             />
             <Controller
               control={control}
-              name="hourInitial"
+              name="appointmentTime"
               render={({ field }) => (
                 <>
                   <TextInput
                     type="time"
-                    color={errors.hourInitial ? "failure" : "primary"}
+                    color={errors.appointmentTime ? "failure" : "primary"}
                     className="w-11/12 rounded-lg p-2 border-none"
-                    placeholder="Selecione o horário de início do compromisso..."
-                    {...field}
-                    defaultValue={prevData ? prevData.hourInitial : ""}
-                  />
-                  <input
-                    type="hidden"
-                    id="time"
-                    {...field}
-                    {...register("hourInitial", {
-                      required: "Campo obrigatório",
-                    })}
-                  />
-                </>
-              )}
-            />
-            {errors && errors.hourInitial && (
-              <span className="text-red-500 font-medium text-[14px]">
-                {errors.hourInitial.message}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="mb-[30px]">
-          <div className="flex flex-wrap items-baseline justify-center">
-            <Label
-              htmlFor="dateFinal"
-              className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-              value="Data de término:"
-            />
-            <Controller
-              control={control}
-              name="dateFinal"
-              render={({ field }) => (
-                <>
-                  <Flowbite theme={{ theme: customTheme }}>
-                    <Datepicker
-                      minDate={new Date()}
-                      language="pt-BR"
-                      id="dateFinal"
-                      name="dateFinal"
-                      placeholder="Selecione a data de término do compromisso..."
-                      labelTodayButton="Hoje"
-                      labelClearButton="Limpar"
-                      color={errors.dateFinal ? "failure" : "primary"}
-                      onSelectedDateChanged={(date) => field.onChange(date)}
-                      className="w-11/12 rounded-lg p-2"
-                    />
-                  </Flowbite>
-                  <input
-                    type="hidden"
-                    {...field}
-                    {...register("dateFinal", {
-                      required: "Campo obrigatório",
-                    })}
-                  />
-                </>
-              )}
-            />
-            {errors && errors.dateFinal && (
-              <span className="text-red-500 font-medium text-[14px]">
-                {errors.dateFinal.message}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="mb-[30px]">
-          <div className="flex flex-wrap items-baseline justify-center">
-            <Label
-              htmlFor="hourFinal"
-              className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-              value="Horário de término:"
-            />
-            <Controller
-              control={control}
-              name="hourFinal"
-              render={({ field }) => (
-                <>
-                  <TextInput
-                    type="time"
-                    color={errors.hourFinal ? "failure" : "primary"}
-                    className="w-11/12 rounded-lg p-2 border-none"
-                    placeholder="Selecione o horário de término do compromisso..."
+                    placeholder="Selecione o horário do compromisso..."
                     value={field.value}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
@@ -272,16 +237,16 @@ export default function Form({ data, setData, prevData, sendData}: FormProps) {
                     type="hidden"
                     id="time"
                     {...field}
-                    {...register("hourFinal", {
+                    {...register("appointmentTime", {
                       required: "Campo obrigatório",
                     })}
                   />
                 </>
               )}
             />
-            {errors && errors.hourFinal && (
+            {errors && errors.appointmentTime && (
               <span className="text-red-500 font-medium text-[14px]">
-                {errors.hourFinal.message}
+                {errors.appointmentTime.message}
               </span>
             )}
           </div>

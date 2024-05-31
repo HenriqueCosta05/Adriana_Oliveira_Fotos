@@ -27,3 +27,4 @@ dist-ssr
 /backend/backend
 __pycache__/
 /backend/token.json
+/backend/credentials.json

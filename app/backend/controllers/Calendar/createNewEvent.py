@@ -1,26 +1,32 @@
 from fastapi import APIRouter
+from config.calendarAPI_config import conectaApi
 from models.calendar.Event import Event
-from config.mongodb_config import colecaoCalendar
 
 router=APIRouter()
 
 
 @router.post("/app/criar-evento")
 async def create_event(event: Event):
-    
-    evento_novo = {
-        "title": event.title,
-        "description": event.description,        
-        "dateInitial": event.dateInitial,
-        "hourInitial": event.hourInitial,
-        "dateFinal": event.dateFinal,
-        "hourFinal": event.hourFinal,
-        "client": event.client
-     }
+    service = conectaApi()
+    event_body = {
+        "summary": event.summary,
+        "location": event.location,
+        "description": event.description,
+        "start": {
+            "dateTime": event.start.dateTime,
+            "timeZone": event.start.timeZone,
+        },
+        "end": {
+            "dateTime": event.end.dateTime,
+            "timeZone": event.end.timeZone,
+        },
+        "attendees":  [{"email": attendee.email} for attendee in event.attendees],
+        "reminders": {
+            "useDefault": event.reminders.useDefault,
+            "overrides": [{"method": override.method, "minutes": override.minutes} for override in event.reminders.overrides]
+        } 
+    }
 
-
-
-    result = colecaoCalendar.insert_one(evento_novo)
-    
-    evento_novo['_id'] = str(result.inserted_id)
-    return {"aviso": "Evento cadastrado com sucesso", "Evento": evento_novo}
+    created_event = service.events().insert(calendarId='primary', body=event_body).execute()
+    response = created_event.get('htmlLink')
+    return {'event_link': response}

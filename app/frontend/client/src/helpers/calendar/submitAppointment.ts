@@ -1,4 +1,3 @@
-
 export const submitAppointment = (formData, setData: () => void) => {
   // Create a Date object from formData.appointmentDate
   const startDateTime = new Date(formData.appointmentDate);

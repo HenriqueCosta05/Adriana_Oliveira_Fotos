@@ -68,7 +68,8 @@ export default function Form({ onSubmitForm }) {
                   <option disabled selected value="">
                     Selecione... (Título - Descrição)
                   </option>
-                  {eventList &&
+                  {Array.isArray(eventList) &&
+                    eventList.length > 0 &&
                     eventList.map((option, index) => (
                       <option key={index} value={option.ID}>
                         {option.summary + " - " + option.description}

@@ -1,5 +1,5 @@
 import FullCalendar from "@fullcalendar/react";
-import interactionPlugin from "@fullcalendar/interaction";
+import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import brLocale from "@fullcalendar/core/locales/pt-br";
@@ -7,43 +7,22 @@ import UserNavbar from "../components/UserNavbar";
 import Footer from "../../portfolio/components/Sections/Footer";
 import { Button, HelperText } from "flowbite-react";
 import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
-import { useCallback, useEffect, useState } from "react";
-import NewAppointmentModal from "../modals/appointment/NewAppointmentModal";
 
 export default function Agenda() {
-  const [modal, setModal] = useState({
-    isOpen: false,
-    type: "",
-    message: "",
-    date: Date,
-  });
-
-  const [selectedDate, setSelectedDate] = useState({});
-
-  const handleCloseModal = () => {
-    setModal({ ...modal, isOpen: false });
-  };
-
-  const handleDateSelect = useCallback((dateSelected) => {
-    setSelectedDate(dateSelected);
-    setModal({ isOpen: true, type: "NewAppointmentModal", message: "", date: selectedDate });
-  }, []);
-
-  
   return (
-    <>
-    
     <div className="flex flex-col">
       <UserNavbar />
       <div className="my-8">
         <h1 className="text-4xl font-black text-center text-secondary italic">
           Agenda
-          </h1>
-          <HelperText className="text-center text-md mt-4">
-        Bem-vindo(a) ao Gerenciamento de compromissos! Esta seção foi projetada para
-        ajudá-lo(a) a gerenciar seus compromissos, relacionando-os aos clientes com facilidade.
-      </HelperText>
-        <div className="flex justify-center items-center mx-auto mt-20 lg:w-9/12">
+        </h1>
+        <HelperText className="text-center text-md mt-4 w-3/4 mx-auto">
+          Bem-vindo(a) ao Gerenciamento de compromissos! Esta seção foi
+          projetada para ajudá-lo(a) a gerenciar seus compromissos,
+          relacionando-os aos clientes com facilidade. Utilize-se dos botões
+          para gerenciar os eventos!
+        </HelperText>
+        <div className="flex justify-center items-center mx-auto mt-20 lg:w-9/12 xxs:w-11/12 xxs:flex-wrap">
           <Button
             className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-secondary"
             href="/app/novo-compromisso"
@@ -68,45 +47,25 @@ export default function Agenda() {
         </div>
       </div>
 
-      <div className="w-9/12 mx-auto mb-28">
+      <div className="w-9/12 mx-auto my-4">
         <FullCalendar
           editable={true}
-          selectable={true}
-          selectMirror={true}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          plugins={[googleCalendarPlugin, dayGridPlugin, timeGridPlugin]}
           initialView="timeGridWeek"
           locale={brLocale}
           weekends
-          select={handleDateSelect}
           headerToolbar={{
             left: "prev,next today",
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
-          eventContent
+          events={{
+            googleCalendarApiKey: import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY,
+            googleCalendarId: import.meta.env.VITE_GOOGLE_CALENDAR_ID,
+          }}
         />
       </div>
-      {renderModal(modal, setModal, handleCloseModal, selectedDate)}
-      
-    </div>
       <Footer />
-    </>
+    </div>
   );
-}
-
-const renderModal = (modal, setModal, handleCloseModal, selectedDate) => {
-  switch (modal.type) {
-    case "NewAppointmentModal":
-      return (
-        <NewAppointmentModal
-          modal={modal}
-          setModal={setModal}
-          selectedDate={selectedDate}
-          handleCloseModal={handleCloseModal}
-
-        />
-      );
-    default:
-      return null;
-  }
 }

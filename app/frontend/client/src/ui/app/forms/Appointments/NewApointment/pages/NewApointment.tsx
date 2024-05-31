@@ -5,13 +5,43 @@ import {
   fetchData,
   sendData,
 } from "../../../../../../services/AppointmentDataService";
-import { initialData } from "../../../../../../lib/calendar/initialData";
 import Success from "../../../../modals/appointment/Success";
 import ErrorModal from "../../../../modals/appointment/Error";
 import Form from "../components/Form";
+import UserNavbar from "../../../../components/UserNavbar";
+import Footer from "../../../../../portfolio/components/Sections/Footer";
+import BreadCrumb from "../../../../components/BreadCrumb/BreadCrumb";
 
+const initialData = {
+  summary: "",
+  location: "São Paulo - SP, Brasil",
+  description: "",
+  start: {
+    dateTime: "",
+    timeZone: "America/Sao_Paulo",
+  },
+  end: {
+    dateTime: "",
+    timeZone: "America/Sao_Paulo",
+  },
+  attendees: [
+    {
+      email: "",
+      optional: false,
+    },
+  ],
+  reminders: {
+    useDefault: false,
+    overrides: [
+      {
+        method: "email",
+        minutes: 24 * 60,
+      },
+    ],
+  },
+};
 
-export const NewAppointmentForm = ({dateSelected}) => {
+export const NewAppointmentForm = () => {
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
   const [method, setMethod] = useState("POST");
@@ -29,31 +59,29 @@ export const NewAppointmentForm = ({dateSelected}) => {
     window.location.href = "/app/agenda";
   };
 
-  const formatDate = (date) => {
-    const formattedDate = new Date(date).toLocaleDateString("pt-BR");
-    return formattedDate;
-  }
+  useEffect(() => {
+    if (id) {
+      fetchData(id)
+        .then((response) => {
+          setData(response);
+          setMethod("PUT");
+        })
+        .catch((error) => {
+          setModal({
+            isOpen: true,
+            type: "Error",
+            message: error.message,
+          });
+        })
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, [id]);
 
-  const formatTime = (time) => {
-    const formattedTime = new Date(time).toLocaleTimeString("pt-BR");
-    return formattedTime;
-  }
-
- useEffect(() => {
-  setData({
-    ...data,
-    dateInitial: formatDate(dateSelected.start),
-    hourInitial: formatTime(dateSelected.start),
-    dateFinal: formatDate(dateSelected.end),
-    hourFinal: formatTime(dateSelected.end),
-  });
-   
-}, [dateSelected]);
-
-
-  
   useEffect(() => {
     if (loading) return;
+    if (data.summary !== "") {
       sendData(id, data)
         .then(() => {
           setModal({
@@ -69,12 +97,20 @@ export const NewAppointmentForm = ({dateSelected}) => {
             message: error.message,
           });
         });
+    }
   }, [data, id, loading]);
 
   return (
     <>
       <Provider value={{ data, setData }}>
+        <UserNavbar />
+        <BreadCrumb
+          home={["Página Inicial", "/app"]}
+          currentSection={["Agenda", "/app/agenda"]}
+          currentSubsection={["Novo Compromisso", `/app/novo-compromisso`]}
+        />
         <Form data={data} setData={setData} prevData={data} />
+        <Footer />
       </Provider>
       {renderModal(modal, setModal, handleCloseModal, errorMessage)}
     </>
