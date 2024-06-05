@@ -1,5 +1,3 @@
-import { removeTokenFromIndexedDB } from "../indexedDB";
-
 const API = "http://localhost:8000/app";
 
 const handleErrors = async (response) => {
@@ -22,15 +20,34 @@ export const login = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(data),
   });
   await handleErrors(response);
-  const token = await response.json();
-  return token;
+  return response;
 };
 
-//Provisório, será posteriormente substituído pelo backend
-export const logout = async (currentUser, setCurrentUser) => {
-  await removeTokenFromIndexedDB();
-  setCurrentUser(null);
+export const getToken = async () => {
+  const response = await fetch(`${API}/verify-token`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  await handleErrors(response);
+  const data = await response.json();
+  return data;
+};
+
+export const logout = async () => {
+  const response = await fetch(`${API}/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  await handleErrors(response);
+  return response;
 };

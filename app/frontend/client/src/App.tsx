@@ -1,5 +1,11 @@
 import Portfolio from "./ui/portfolio/pages/Portfolio/Portfolio";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+} from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./components/Shared/BootstrapCustomTheme.scss";
 import { UserForm } from "./ui/app/forms/NewClient/pages/UserForm";
@@ -18,47 +24,36 @@ import GalleryForm from "./ui/app/forms/Galleries/pages/GalleryForm";
 import GalleryView from "./ui/app/gallery/pages/GalleryView/GalleryView";
 import FolderView from "./ui/app/gallery/pages/FolderView/FolderView";
 
-import {
-  UserAuthProvider,
-  AdminAuthProvider,
-} from "./contexts/auth/UserAuthenticationContext";
-
 import Login from "./ui/auth/Login/Login";
-import { useEffect, useState } from "react";
-import { getAuthStateFromIndexedDB } from "./indexedDB";
+import { useContext } from "react";
 import AdminDashboard from "./ui/app/dashboards/Main/AdminDashboard/AdminDashboard";
+import { UserTypeProvider } from "./contexts/auth/UserRoleContext";
+import { useUserType } from "./contexts/auth/UserRoleContext";
+import { AuthContext, AuthProvider } from "./contexts/auth/AuthContext";
+import withAuthCheck from "./components/Auth/AuthWrapper";
+import RedirectPage from "./ui/email/RedirectPage";
 
-function ProtectedRoute({ element, userType }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+const ProtectedRoute = withAuthCheck(
+  //Precisa mudar a lógica dos contextos
+  ({ element, userType: allowedUserType }) => {
+    const { userType, setUserType } = useUserType();
+    const { isLoggedIn } = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchAuthState = async () => {
-      try {
-        const authState = await getAuthStateFromIndexedDB();
-        setIsLoggedIn(authState.isLoggedIn);
-      } catch (error) {
-        console.error("Error fetching auth state", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchAuthState();
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
+    console.log(isLoggedIn, userType);
+    return isLoggedIn && userType === allowedUserType ? (
+      React.cloneElement(element, { userType })
+    ) : (
+      <Navigate to="/auth/login" replace />
+    );
   }
-
-  return isLoggedIn ? element : <Navigate to="/auth/login" replace />;
-}
+);
 
 function App() {
+  const { email } = useParams();
   return (
     <BrowserRouter>
-      <UserAuthProvider>
-        <AdminAuthProvider>
+      <UserTypeProvider>
+        <AuthProvider>
           <Routes>
             <Route path="/" element={<Portfolio />} />
             <Route path="/galeria" element={<Galeria />} />
@@ -66,7 +61,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
 
             <Route path="/auth/login" element={<Login />} />
-
+            <Route path="/auth/login-user/:email" element={<RedirectPage />} />
             <Route
               path="/app"
               element={
@@ -202,8 +197,8 @@ function App() {
               }
             />
           </Routes>
-        </AdminAuthProvider>
-      </UserAuthProvider>
+        </AuthProvider>
+      </UserTypeProvider>
     </BrowserRouter>
   );
 }

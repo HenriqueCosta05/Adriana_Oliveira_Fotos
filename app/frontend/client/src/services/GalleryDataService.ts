@@ -1,3 +1,5 @@
+import { fetchData } from "./UserDataService";
+
 const API = "http://localhost:8000/app";
 
 const handleErrors = async (response) => {
@@ -71,7 +73,26 @@ export const fetchAllGalleries = async () => {
   const response = await fetch(`${API}/galerias`);
   await handleErrors(response);
   const data = await response.json();
-  return data;
+  console.log(data);
+
+  const filteredGalleries = await Promise.all(
+    data.map(async (gallery) => {
+      const clientId = gallery.clientAssociated;
+      try {
+        const clientData = await fetchData(clientId);
+        return { ...gallery, clientData };
+      } catch (error) {
+        console.error(
+          `Failed to fetch data for client with id ${clientId}: `,
+          error
+        );
+        await deleteGallery(gallery.id);
+      }
+    })
+  );
+
+  // Filtra galerias que não possuem cliente associado
+  return filteredGalleries.filter((gallery) => gallery !== undefined);
 };
 
 export const deletePhotoFromGallery = async (galleryId, photoId) => {

@@ -1,19 +1,24 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
+from controllers.email import send_login_email
+from controllers.auth import verify_token
 from controllers.Client import createNewClient, deleteClient, getAllClients, getClientById, updateClient
 from controllers.gallery import createGallery, getGalleries, deleteGallery, uploadImages, downloadImages, updateGallery, deleteImage, getGalleryById
 from controllers.gallery.folder import createFolder, getFolderById, deleteFolder
 from controllers.financial import createNewFinancial,deleteFinancial,getAllFinancials,getFianancialById,updateFinancial
 from controllers.Calendar import listEvents,createNewEvent,deleteEvent,updateEvent
-from controllers.auth import login_admin
+from controllers.auth import login_admin, login_user, verify_token, logout_admin, logout_user
 from controllers.dashboard import aggregate
 from middlewares.cors import setup_cors
 
+
 app = FastAPI()
+
 setup_cors(app)
 
 
+
 #client
-app.include_router(deleteClient.router)
+app.include_router(deleteClient.router )
 app.include_router(createNewClient.router)
 app.include_router(getAllClients.router)
 app.include_router(getClientById.router)
@@ -50,6 +55,14 @@ app.include_router(updateEvent.router)
 
 #auth
 app.include_router(login_admin.router)
+app.include_router(logout_admin.router)
+app.include_router(login_user.router)
+app.include_router(logout_user.router)
+app.include_router(verify_token.router)
+
+
+#email
+app.include_router(send_login_email.router)
 
 #Dashboard
 app.include_router(aggregate.router)

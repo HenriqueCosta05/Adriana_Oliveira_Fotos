@@ -30,7 +30,7 @@ const FolderCard = ({
         state: { maxPhotosNumber },
       });
     }
-    if (userRole === "client") {
+    if (userRole === "user") {
       navigate(`/app/galerias/${id}/pastas/${folderId}/cliente`, {
         state: { maxPhotosNumber },
       });

@@ -1,11 +1,11 @@
-from helpers.auth.verify_password import verify_password
-from helpers.auth.get_user import get_user
+
+from helpers.client.consultar_banco import consultar_banco
 
 
-def authenticate_user(email: str, password: str):
-    user = get_user(email)
-    if not user:
+def authenticate_user(email: str):
+    user_list = consultar_banco()
+    user = next((user for user in user_list if user.email == email), None)
+    if user:
+        return True
+    else:
         return False
-    if not verify_password(password, user["password"]):
-        return False
-    return user

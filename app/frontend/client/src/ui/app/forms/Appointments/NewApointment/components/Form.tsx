@@ -10,10 +10,7 @@ import {
 import { AppointmentDataProps } from "../../../../../../types/AppointmentData/AppointmentDataProps";
 import { Controller, useForm } from "react-hook-form";
 import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
-import {
-  fetchAllData,
-  sendData,
-} from "../../../../../../services/UserDataService";
+import { fetchAllData } from "../../../../../../services/UserDataService";
 
 interface FormProps {
   data: AppointmentDataProps;
@@ -32,17 +29,18 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
   const [clientSelected, setClientSelected] = useState("");
 
   const submitForm = (formData) => {
-    // Create a Date object from formData.appointmentDate
-    const startDateTime = new Date(formData.appointmentDate);
+    const appointmentDate = new Date(formData.appointmentDate);
 
-    // Extract the hours and minutes from formData.appointmentTime
-    const [hours, minutes] = formData.appointmentTime.split(":").map(Number);
+    const startDateTime = new Date(appointmentDate);
+    const endDateTime = new Date(appointmentDate);
 
-    // Set the hours and minutes of startDateTime
-    startDateTime.setHours(hours, minutes);
+    const [startHours, startMinutes] = formData.startTime
+      .split(":")
+      .map(Number);
+    const [endHours, endMinutes] = formData.endTime.split(":").map(Number);
 
-    // Create a Date object for the end time (1 hour after the start time)
-    const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
+    startDateTime.setHours(startHours, startMinutes);
+    endDateTime.setHours(endHours, endMinutes);
 
     const newAppointment = {
       summary: formData.title,
@@ -73,6 +71,7 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
       },
     };
     setData(newAppointment);
+    sendData(newAppointment);
   };
 
   async function getClientList() {
@@ -217,18 +216,18 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
             <Label
               htmlFor="appointmentTime"
               className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
-              value="Horário do compromisso:"
+              value="Horário de início do compromisso:"
             />
             <Controller
               control={control}
-              name="appointmentTime"
+              name="startTime"
               render={({ field }) => (
                 <>
                   <TextInput
                     type="time"
-                    color={errors.appointmentTime ? "failure" : "primary"}
+                    color={errors.startTime ? "failure" : "primary"}
                     className="w-11/12 rounded-lg p-2 border-none"
-                    placeholder="Selecione o horário do compromisso..."
+                    placeholder="Selecione o horário de início compromisso..."
                     value={field.value}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
@@ -237,16 +236,53 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
                     type="hidden"
                     id="time"
                     {...field}
-                    {...register("appointmentTime", {
+                    {...register("startTime", {
                       required: "Campo obrigatório",
                     })}
                   />
                 </>
               )}
             />
-            {errors && errors.appointmentTime && (
+            {errors && errors.startTime && (
               <span className="text-red-500 font-medium text-[14px]">
-                {errors.appointmentTime.message}
+                {errors.startTime.message}
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="mb-[30px]">
+          <div className="flex flex-wrap items-baseline justify-center">
+            <Label
+              htmlFor="endTime"
+              className="mb-4 text-[15px] w-11/12 leading-[5px] text-secondary text-center"
+              value="Horário de término do compromisso:"
+            />
+            <Controller
+              control={control}
+              name="endTime"
+              render={({ field }) => (
+                <>
+                  <TextInput
+                    type="time"
+                    color={errors.endTime ? "failure" : "primary"}
+                    className="w-11/12 rounded-lg p-2 border-none"
+                    placeholder="Selecione o horário de término compromisso..."
+                    {...field}
+                  />
+                  <input
+                    type="hidden"
+                    id="time"
+                    {...field}
+                    {...register("endTime", {
+                      required: "Campo obrigatório",
+                    })}
+                  />
+                </>
+              )}
+            />
+            {errors && errors.endTime && (
+              <span className="text-red-500 font-medium text-[14px]">
+                {errors.endTime.message}
               </span>
             )}
           </div>

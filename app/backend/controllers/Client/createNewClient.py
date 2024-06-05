@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi import HTTPException
+from helpers.auth.verify_admin_session import verify_admin_session
 from config.mongodb_config import colecaoClient
 from models.client.Cliente import Cliente
 from helpers.client.consultar_banco import consultar_banco
@@ -7,7 +8,7 @@ from helpers.client.consultar_banco import consultar_banco
 router = APIRouter()
 
 @router.post('/app/novo-cliente')
-def cadastrar_banco(novo_cliente: Cliente):
+def cadastrar_cliente(novo_cliente: Cliente):
     clientes = consultar_banco()
     
     for cliente_existente in clientes:

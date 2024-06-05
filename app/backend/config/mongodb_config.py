@@ -6,26 +6,17 @@ from dotenv import load_dotenv
 import os
 
 
-load_dotenv(".env")
+load_dotenv()
 
 atlas_uri = os.getenv('ATLAS_URI')
 local_uri = os.getenv('LOCAL_URI')
 
 conected = False
 
-try:
-    client = MongoClient(atlas_uri)
-    client.server_info()
-    conected = True
-    print("MongoDB conectado via Atlas")
-except:
-    print("Falha ao conectar via Atlas")
-
 
 if not conected:
     try:
         client= MongoClient(local_uri)
-        client.server_info()
         conected = True
         print("MongoDB conectado via Local")
     except:

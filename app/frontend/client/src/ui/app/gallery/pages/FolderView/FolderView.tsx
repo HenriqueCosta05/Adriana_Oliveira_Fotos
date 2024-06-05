@@ -24,6 +24,7 @@ import { getMaxPhotosForAFolder } from "../../../../../helpers/gallery/getMaxPho
 import { FaEllipsisV } from "react-icons/fa";
 import { deleteFolder } from "../../../../../services/GalleryDataService";
 import { MdDelete } from "react-icons/md";
+import { useUserType } from "../../../../../contexts/auth/UserRoleContext";
 
 export default function FolderView({ userRole }) {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ export default function FolderView({ userRole }) {
     }
 
     // Lógica de limitação de seleção de fotos para clientes
-    if (userRole === "client") {
+    if (userRole === "user") {
       const maxPhotos = await getMaxPhotosForAFolder(
         state.galleryFetched.photosNumber,
         state.galleryFetched.folders.length
@@ -124,7 +125,7 @@ export default function FolderView({ userRole }) {
     if (userRole === "admin") {
       await handleImageDelete(id, state.selectedImages);
     }
-    if (userRole === "client") {
+    if (userRole === "user") {
       await handleImageDelete(id, state.unselectedImages);
     }
   }, [id, userRole, state.selectedImages, state.unselectedImages]);
@@ -214,7 +215,7 @@ export default function FolderView({ userRole }) {
               }
               icon={MdDelete}
             >
-              Excluir Galeria
+              Excluir Pasta
             </Dropdown.Item>
           </Dropdown>
         )}

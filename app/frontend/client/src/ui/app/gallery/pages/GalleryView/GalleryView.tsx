@@ -15,6 +15,7 @@ import { FaEllipsisV, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import ConfirmDeleteModal from "../../../modals/gallery/Warnings/ConfirmDelete/ConfirmDelete";
 import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
+import { useUserType } from "../../../../../contexts/auth/UserRoleContext";
 
 export default function GalleryView({ userRole }) {
   const { id } = useParams();

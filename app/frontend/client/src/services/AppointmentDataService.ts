@@ -28,9 +28,9 @@ export const fetchAllData = async () => {
   return data;
 };
 
-export const sendData = async (id?: string, data) => {
-  const url = id ? `${API}/atualizar-eventos/${id}` : `${API}/criar-evento`;
-  const method = id ? "PUT" : "POST";
+export const sendData = async (data) => {
+  const url = `${API}/criar-evento`;
+  const method = "POST";
 
   const response = await fetch(url, {
     method: method,

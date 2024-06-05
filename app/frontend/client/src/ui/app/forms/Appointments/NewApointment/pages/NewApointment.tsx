@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Provider } from "../../../../../../contexts/forms/FormContext";
 import {
   fetchData,
@@ -42,11 +41,8 @@ const initialData = {
 };
 
 export const NewAppointmentForm = () => {
-  const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
-  const [method, setMethod] = useState("POST");
   const [data, setData] = useState(initialData);
-  const [loading, setLoading] = useState(true);
 
   const [modal, setModal] = useState({
     isOpen: false,
@@ -59,46 +55,19 @@ export const NewAppointmentForm = () => {
     window.location.href = "/app/agenda";
   };
 
-  useEffect(() => {
-    if (id) {
-      fetchData(id)
-        .then((response) => {
-          setData(response);
-          setMethod("PUT");
-        })
-        .catch((error) => {
-          setModal({
-            isOpen: true,
-            type: "Error",
-            message: error.message,
-          });
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
+  const handleDataSend = async () => {
+    try {
+      await sendData(data);
+      setModal({
+        isOpen: true,
+        type: "success",
+        message: "Compromisso criado com sucesso!",
+      });
+    } catch (error) {
+      setErrorMessage(error.message);
+      setModal({ isOpen: true, type: "Error", message: error.message });
     }
-  }, [id]);
-
-  useEffect(() => {
-    if (loading) return;
-    if (data.summary !== "") {
-      sendData(id, data)
-        .then(() => {
-          setModal({
-            isOpen: true,
-            type: "success",
-            message: "Compromisso salvo com sucesso",
-          });
-        })
-        .catch((error) => {
-          setModal({
-            isOpen: true,
-            type: "Error",
-            message: error.message,
-          });
-        });
-    }
-  }, [data, id, loading]);
+  };
 
   return (
     <>
@@ -109,7 +78,7 @@ export const NewAppointmentForm = () => {
           currentSection={["Agenda", "/app/agenda"]}
           currentSubsection={["Novo Compromisso", `/app/novo-compromisso`]}
         />
-        <Form data={data} setData={setData} prevData={data} />
+        <Form data={data} setData={setData} sendData={handleDataSend} />
         <Footer />
       </Provider>
       {renderModal(modal, setModal, handleCloseModal, errorMessage)}

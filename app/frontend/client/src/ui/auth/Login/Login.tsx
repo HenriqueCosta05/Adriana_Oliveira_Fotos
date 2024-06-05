@@ -1,17 +1,15 @@
 import { Button, Label, TextInput } from "flowbite-react";
 import { Controller, useForm } from "react-hook-form";
 import NavBar from "../../portfolio/components/Navbar/NavBar";
-import { login } from "../../../services/LoginDataService";
+import { getToken, login } from "../../../services/LoginDataService";
 import Success from "../../app/modals/auth/Success";
 import Error from "../../app/modals/auth/Error";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { saveTokenToIndexedDB } from "../../../indexedDB";
+import { useUserType } from "../../../contexts/auth/UserRoleContext";
+import { AuthContext } from "../../../contexts/auth/AuthContext";
 
 export default function Login() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(null);
-
   const [modal, setModal] = useState({
     isOpen: false,
     type: "",
@@ -26,25 +24,21 @@ export default function Login() {
   } = useForm();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isLoggedIn && token) {
-      saveTokenToIndexedDB(token, isLoggedIn);
-    }
-  }, [isLoggedIn, token]);
-
+  const { userType, setUserType } = useUserType();
+  const { setIsLoggedIn } = useContext(AuthContext);
   const submitForm = async (data) => {
     try {
       const response = await login(data);
-      if (response && response.access_token !== "") {
+      const tokenResponse = await getToken();
+      if (tokenResponse && tokenResponse.role) {
+        setIsLoggedIn(true);
+        setUserType(tokenResponse.role);
         setModal({
           isOpen: true,
           type: "success",
           message: "Login efetuado com sucesso!",
           handleCloseModal: handleCloseModal,
         });
-        setIsLoggedIn(true);
-        setToken(response.access_token);
       } else {
         setModal({
           isOpen: true,
@@ -76,7 +70,7 @@ export default function Login() {
 
   return (
     <>
-      <NavBar />
+      <NavBar userType={userType} />
       <div className="lg:w-1/2 flex justify-center items-center flex-col mx-auto my-20">
         <h4 className="mt-6 text-center text-3xl font-extrabold text-secondary">
           Login

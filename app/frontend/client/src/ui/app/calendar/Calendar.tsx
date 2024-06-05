@@ -6,7 +6,7 @@ import brLocale from "@fullcalendar/core/locales/pt-br";
 import UserNavbar from "../components/UserNavbar";
 import Footer from "../../portfolio/components/Sections/Footer";
 import { Button, HelperText } from "flowbite-react";
-import { FaEdit, FaMinus, FaPlus } from "react-icons/fa";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 export default function Agenda() {
   return (
@@ -22,20 +22,13 @@ export default function Agenda() {
           relacionando-os aos clientes com facilidade. Utilize-se dos botões
           para gerenciar os eventos!
         </HelperText>
-        <div className="flex justify-center items-center mx-auto mt-20 lg:w-9/12 xxs:w-11/12 xxs:flex-wrap">
+        <div className="flex justify-center items-center mx-auto mt-20 lg:w-10/12 xxs:w-11/12 xxs:flex-wrap">
           <Button
             className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-secondary"
             href="/app/novo-compromisso"
           >
             <FaPlus className="mr-2 mt-0.5" />
             Novo compromisso
-          </Button>
-          <Button
-            className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-warning text-black"
-            href="/app/editar-compromisso"
-          >
-            <FaEdit className="mr-2 mt-0.5" />
-            Editar compromisso
           </Button>
           <Button
             className="w-max p-2 mx-auto mt-20 flex overflow-x-auto bg-error"

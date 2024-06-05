@@ -1,25 +1,20 @@
 import { Avatar, Dropdown } from "flowbite-react";
-import { useUserAuth, useAdminAuth } from "../../../../hooks/useAuth";
+import { useUserType } from "../../../../contexts/auth/UserRoleContext";
+import { AuthContext } from "../../../../contexts/auth/AuthContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
+  const isAdminLoggedIn = useUserType().userType === "admin";
+  const isUserLoggedIn = useUserType().userType === "user";
+  const isLoggedIn = isAdminLoggedIn || isUserLoggedIn;
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn: isUserLoggedIn,
-    setIsLoggedIn: setUserIsLoggedIn,
-  } = useUserAuth();
-
-  const {
-    authAdmin,
-    setAuthAdmin,
-    isLoggedIn: isAdminLoggedIn,
-    setIsLoggedIn: setAdminIsLoggedIn,
-  } = useAdminAuth();
-
-  const isLoggedIn = isUserLoggedIn || isAdminLoggedIn;
-  const setIsLoggedIn = isUserLoggedIn ? setUserIsLoggedIn : setAdminIsLoggedIn;
-
+  const handleLogout = () => {
+    logout();
+    navigate("/auth/login");
+  };
   return (
     <>
       {isAdminLoggedIn ? (
@@ -27,11 +22,7 @@ export default function Profile() {
           arrowIcon={false}
           inline
           label={
-            <Avatar
-              className="mr-2"
-              alt="Configurações do usuário"
-              rounded
-            />
+            <Avatar className="mr-2" alt="Configurações do usuário" rounded />
           }
         >
           <Dropdown.Header>
@@ -52,9 +43,7 @@ export default function Profile() {
           </Dropdown.Item>
           <Dropdown.Divider />
           {isLoggedIn && (
-            <Dropdown.Item onClick={() => setIsLoggedIn(false)}>
-              Sair
-            </Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>Sair</Dropdown.Item>
           )}
         </Dropdown>
       ) : isUserLoggedIn ? (
@@ -62,11 +51,7 @@ export default function Profile() {
           arrowIcon={false}
           inline
           label={
-            <Avatar
-              className="mr-2"
-              alt="Configurações do usuário"
-              rounded
-            />
+            <Avatar className="mr-2" alt="Configurações do usuário" rounded />
           }
         >
           <Dropdown.Header>

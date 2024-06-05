@@ -1,37 +1,40 @@
-from datetime import timedelta
-from fastapi import APIRouter, Depends, FastAPI, HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
+from datetime import datetime, timedelta
+from fastapi import APIRouter, Depends, FastAPI, HTTPException, Response
+from middlewares.auth import AuthMiddleware
+from helpers.auth.create_refresh_token import create_refresh_token
 from models.auth.LoginForm import LoginForm
-from helpers.auth.verify_password import HashPassword
-from models.auth.Token import Token
 from dotenv import load_dotenv
 from helpers.auth.create_access_token import  ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
-from config.mongodb_config import colecao_auth 
-from helpers.auth.authenticate_user import authenticate_user
+from helpers.auth.authenticate_admin import authenticate_admin
 import os
+import logging
 
-load_dotenv()
+logging.basicConfig(level=logging.INFO)
 
 router = APIRouter()
 
-os.getenv("SECRET_KEY")
-os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
-
-@router.post("/app/login", response_model=Token)
-def login_for_access_token(form_data: LoginForm):
-    user = authenticate_user(form_data.email, form_data.password)
+@router.post("/app/login")
+def login_admin(response: Response, form_data: LoginForm):
+    user = authenticate_admin(form_data.email, form_data.password)
     if not user:
         raise HTTPException(
             status_code=401,
             detail="E-mail ou senha incorretos.",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user["email"]}, expires_delta=access_token_expires
+        data={"sub": user["email"]}, role="admin", expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
 
+    logging.info(f"Access token: {access_token}")
+    
+    response.delete_cookie(key="access_token")
+
+    response.set_cookie(key="access_token", value=access_token, httponly=True, max_age=access_token_expires.total_seconds())
+
+    return {"access_token": access_token, "token_type": "bearer"}
 '''
 def add_test_user():
     email = "henrique@example.com"
