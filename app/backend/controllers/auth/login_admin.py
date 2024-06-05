@@ -6,6 +6,8 @@ from models.auth.LoginForm import LoginForm
 from dotenv import load_dotenv
 from helpers.auth.create_access_token import  ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
 from helpers.auth.authenticate_admin import authenticate_admin
+from helpers.auth.verify_password import HashPassword
+from config.mongodb_config import colecao_auth
 import os
 import logging
 
@@ -35,6 +37,7 @@ def login_admin(response: Response, form_data: LoginForm):
     response.set_cookie(key="access_token", value=access_token, httponly=True, max_age=access_token_expires.total_seconds())
 
     return {"access_token": access_token, "token_type": "bearer"}
+
 '''
 def add_test_user():
     email = "henrique@example.com"

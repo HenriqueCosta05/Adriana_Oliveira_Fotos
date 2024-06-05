@@ -88,7 +88,7 @@ export default function GalleryView({ userRole }) {
           />
         ) : (
           <BreadCrumb
-            home={["Página Inicial", "/app"]}
+            home={["Página Inicial", "/404"]}
             currentSection={[
               galleryData && galleryData.title,
               `/app/galerias/${id}/cliente`,
@@ -133,6 +133,8 @@ export default function GalleryView({ userRole }) {
                 <ClientCard
                   clientId={galleryData.clientAssociated}
                   photosNumber={galleryData.photosNumber}
+                  folderId={Object.values(foldersData).map((folder) => {return folder && folder.id})}
+                  galleryId={galleryData.id}
                 />
               )}
             </div>

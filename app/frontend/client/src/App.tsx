@@ -182,8 +182,8 @@ function App() {
               path="/app/galerias/:id/pastas/:pastaId/cliente"
               element={
                 <ProtectedRoute
-                  element={<FolderView userRole="client" />}
-                  userType="client"
+                  element={<FolderView userRole="user" />}
+                  userType="admin"
                 />
               }
             />
@@ -191,8 +191,8 @@ function App() {
               path="/app/galerias/:id/cliente"
               element={
                 <ProtectedRoute
-                  element={<GalleryView userRole="client" />}
-                  userType="client"
+                  element={<GalleryView userRole="user" />}
+                  userType="admin"
                 />
               }
             />

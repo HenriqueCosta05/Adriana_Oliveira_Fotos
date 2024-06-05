@@ -194,7 +194,7 @@ function Home() {
             </ResponsiveContainer>
           </div>
           <div className="w-full lg:w-1/2">
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={300} className="lg:flex sm:none">
               <LineChart
                 data={chartData}
                 margin={{

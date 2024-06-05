@@ -176,7 +176,7 @@ export default function FolderView({ userRole }) {
         />
       ) : (
         <BreadCrumb
-          home={["Página Inicial", "/app"]}
+          home={["Página Inicial", "/404"]}
           currentSection={["Galerias", ""]}
           currentSubsection={[
             state.galleryFetched.title,
@@ -398,8 +398,7 @@ export default function FolderView({ userRole }) {
           )}
         </div>
         <p className="mt-2 mb-4">
-          Ao selecionar os documentos, você poderá excluí-los em lote, caso
-          necessário.{" "}
+          {userRole === "admin" ? "Ao selecionar os documentos, você poderá excluí-los em lote, caso necessário." : "Baixe seus documentos relacionados abaixo!"}
         </p>
         {state.selectedDocuments.length > 0 && (
           <Button
