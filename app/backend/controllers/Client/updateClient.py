@@ -11,7 +11,10 @@ def atualizar_cliente(id, cliente: Cliente):
         cliente_existente = colecaoClient.find_one({"_id": ObjectId(id)})
         if cliente_existente is None:
             raise HTTPException(status_code=404, detail="Cliente não encontrado")
-    
+        
+        if colecaoClient.find_one({"email": cliente.email.lower(), "_id": {"$ne": ObjectId(id)}}):
+            raise HTTPException(status_code=400, detail="E-mail já cadastrado")
+        
         update_data = {
             "$set": {
                 "registryType": cliente.registryType,

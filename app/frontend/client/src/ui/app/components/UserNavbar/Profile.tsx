@@ -26,7 +26,9 @@ export default function Profile() {
           }
         >
           <Dropdown.Header>
-            <span className="block text-sm">Adriana Oliveira</span>
+            <Dropdown.Item className="block text-sm" href="/app">
+              Adriana Oliveira
+            </Dropdown.Item>
             <span className="block truncate text-sm font-medium"></span>
           </Dropdown.Header>
           <Dropdown.Item href="/app/clientes">
