@@ -27,6 +27,18 @@ export const login = async (data) => {
   return response;
 };
 
+export const sendEmail = async (url) => {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  await handleErrors(response);
+  return response;
+};
+
 export const getToken = async () => {
   const response = await fetch(`${API}/verify-token`, {
     method: "GET",

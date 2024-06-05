@@ -22,17 +22,22 @@ export default function GaleryComponent({ currentPage }) {
 
   const navigate = useNavigate();
   useEffect(() => {
-    fetchAllGalleries().then((data) => {
-      setGalleries(data);
-    });
+    const fetchData = async () => {
+      const [galleriesData, clients] = await Promise.all([
+        fetchAllGalleries(),
+        getClientList(),
+      ]);
 
-    getClientList().then((clients) => {
+      setGalleries(galleriesData);
+
       const names = {};
       clients.forEach((client) => {
         names[client.id] = client.fullName;
       });
       setClientNames(names);
-    });
+    };
+
+    fetchData();
   }, []);
 
   const handleGalleryClick = async (id) => {

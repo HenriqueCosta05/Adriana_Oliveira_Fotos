@@ -35,8 +35,7 @@ async def verify_token(request: Request):
                 detail="Não foi possível validar as credenciais",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-            
-        return {"status": "Token válido", "role": role, "token": "boa tentativa"}
+        return {"status": "Token válido", "role": role, "token": "boa tentativa", "email": email}
     except JWTError:
         raise HTTPException(
             status_code=401, 

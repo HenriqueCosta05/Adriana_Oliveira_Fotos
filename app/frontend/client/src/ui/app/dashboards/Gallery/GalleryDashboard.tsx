@@ -5,7 +5,7 @@ import Searchbar from "./components/Searchbar/Searchbar";
 import GaleryComponent from "./components/GalleryComponent/GaleryComponent";
 import { PaginationComponent } from "./components/PaginationComponent/PaginationComponent";
 import { FaPlus } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchAllGalleries } from "../../../../services/GalleryDataService";
 
 export default function GalleryDashboard() {
@@ -14,10 +14,15 @@ export default function GalleryDashboard() {
   const [totalItems, setTotalItems] = useState(0);
   const itemsPerPage = 3;
 
+  const fetchedRef = useRef(false);
+
   useEffect(() => {
-    fetchAllGalleries().then((data) => {
-      setTotalItems(data.length);
-    });
+    if (!fetchedRef.current) {
+      fetchAllGalleries().then((data) => {
+        setTotalItems(data.length);
+        fetchedRef.current = true;
+      });
+    }
   }, []);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);

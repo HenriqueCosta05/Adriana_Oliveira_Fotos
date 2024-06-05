@@ -29,14 +29,20 @@ export default function GalleryView({ userRole }) {
     handleConfirmAction: () => {},
   });
 
+  async function fetchGalleryAndFolders(id) {
+    const galleryData = await fetchGallery(id);
+    const foldersData = await fetchAllFoldersFromGallery(id);
+    return { galleryData, foldersData };
+  }
+
   useEffect(() => {
-    fetchGallery(id).then((data) => {
-      setGalleryData(data);
-    });
-    fetchAllFoldersFromGallery(id).then((data) => {
-      setFoldersData(data);
+    fetchGalleryAndFolders(id).then(({ galleryData, foldersData }) => {
+      setGalleryData(galleryData);
+      setFoldersData(foldersData);
     });
   }, [id]);
+
+  console.log(foldersData);
 
   const navigate = useNavigate();
 
@@ -133,7 +139,7 @@ export default function GalleryView({ userRole }) {
                 <ClientCard
                   clientId={galleryData.clientAssociated}
                   photosNumber={galleryData.photosNumber}
-                  folderId={Object.values(foldersData).map((folder) => {return folder && folder.id})}
+                  folderIds={foldersData.map((folder) => folder.id)}
                   galleryId={galleryData.id}
                 />
               )}

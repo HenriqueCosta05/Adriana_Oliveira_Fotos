@@ -34,7 +34,6 @@ import withAuthCheck from "./components/Auth/AuthWrapper";
 import RedirectPage from "./ui/email/RedirectPage";
 
 const ProtectedRoute = withAuthCheck(
-  //Precisa mudar a lógica dos contextos
   ({ element, userType: allowedUserType }) => {
     const { userType, setUserType } = useUserType();
     const { isLoggedIn } = useContext(AuthContext);
@@ -49,7 +48,7 @@ const ProtectedRoute = withAuthCheck(
 );
 
 function App() {
-  const { email } = useParams();
+  const { email, id, pastaId } = useParams();
   return (
     <BrowserRouter>
       <UserTypeProvider>
@@ -61,7 +60,10 @@ function App() {
             <Route path="*" element={<NotFound />} />
 
             <Route path="/auth/login" element={<Login />} />
-            <Route path="/auth/login-user/:email" element={<RedirectPage />} />
+            <Route
+              path="/auth/login-user/:email/:id/:pastaId"
+              element={<RedirectPage />}
+            />
             <Route
               path="/app"
               element={
@@ -183,7 +185,7 @@ function App() {
               element={
                 <ProtectedRoute
                   element={<FolderView userRole="user" />}
-                  userType="admin"
+                  userType="user"
                 />
               }
             />
@@ -192,7 +194,7 @@ function App() {
               element={
                 <ProtectedRoute
                   element={<GalleryView userRole="user" />}
-                  userType="admin"
+                  userType="user"
                 />
               }
             />

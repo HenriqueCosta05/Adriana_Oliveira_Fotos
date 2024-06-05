@@ -26,10 +26,13 @@ export async function retrieveGalleryInfo(galleryId) {
 
 export const fetchGalleryData = async (id, pastaId) => {
   //Fetch das informações da galeria e da pasta
-  const [galleryResponse, folderResponse] = await Promise.all([
-    fetchGallery(id),
-    fetchFolderById(id, pastaId),
-  ]);
+  let galleryResponse, folderResponse;
+  if (!galleryResponse) {
+    galleryResponse = await fetchGallery(id);
+  }
+  if (!folderResponse) {
+    folderResponse = await fetchFolderById(id, pastaId);
+  }
 
   //Fetch das imagens da pasta
   let pictures = [];

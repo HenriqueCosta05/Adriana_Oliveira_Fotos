@@ -64,7 +64,7 @@ export default function NavBar({ handleLogout, userType, actions }) {
               <Dropdown.Item href={actions && actions.enterGallery}>
                 Escolher Fotos
               </Dropdown.Item>
-
+              <Dropdown.Item onClick={handleLogout}>Sair</Dropdown.Item>
               <Dropdown.Divider />
             </Dropdown>
           ) : null}

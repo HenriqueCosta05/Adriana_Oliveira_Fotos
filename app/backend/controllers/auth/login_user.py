@@ -4,7 +4,8 @@ from helpers.auth.authenticate_user import authenticate_user
 from helpers.auth.create_access_token import create_access_token
 from dotenv import load_dotenv
 from datetime import timedelta
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, HTTPException, Response, Query
+from typing import List
 
 
 load_dotenv()
@@ -15,8 +16,9 @@ API_KEY = os.getenv("SECRET_KEY")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS"))
 
+
 @router.post("/app/login-user/{email}")
-def login_user(response: Response, email: str):
+def login_user(response: Response, email: str, galleryId: str = Query(None), folderIds: List[str] = Query(None)):
     user = authenticate_user(email)
     if user is False:
         raise HTTPException(
@@ -31,7 +33,7 @@ def login_user(response: Response, email: str):
     
     response.set_cookie(
         key="access_token", 
-        value=f"Bearer {access_token}", 
+        value=access_token, 
         httponly=True, 
         #secure=True, # Apenas para conexões HTTPS...
         max_age=access_token_expires.total_seconds()

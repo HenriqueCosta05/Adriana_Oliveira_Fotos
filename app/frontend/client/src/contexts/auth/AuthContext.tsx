@@ -67,7 +67,9 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, setIsLoggedIn, logout, setAuthState }}
+    >
       {children}
     </AuthContext.Provider>
   );
