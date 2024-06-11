@@ -1,4 +1,4 @@
-# Projeto Interdisciplinar III - Sistema de Gerenciamento de Fotografias (Em andamento)
+# Projeto Interdisciplinar III - Sistema de Gerenciamento de Fotografias
 
 <div align="center">
   <a href="https://github.com/HenriqueCosta05/Projeto_Interdisciplinar_III_FATEC">
@@ -28,9 +28,6 @@ O Micro-SaaS Adriana Oliveira Fotografias é uma solução completa e inovadora,
 - ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 - ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 - ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
-
-> [!NOTE]  
-> O arquivo `serviceWorker.js` está localizado no diretório `app/frontend/client`, e funções auxiliares do IndexedDB estão localizadas no arquivo `indexedDB.ts`, localizado no diretório `app/frontend/client/src`.
 
 ## Para executar o back-end
 

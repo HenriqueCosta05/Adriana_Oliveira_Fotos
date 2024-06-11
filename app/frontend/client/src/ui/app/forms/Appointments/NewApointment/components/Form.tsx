@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   TextInput,
   Datepicker,
@@ -7,19 +7,12 @@ import {
   Flowbite,
   Button,
 } from "flowbite-react";
-import { AppointmentDataProps } from "../../../../../../types/AppointmentData/AppointmentDataProps";
 import { Controller, useForm } from "react-hook-form";
 import { customTheme } from "../../../../../../components/Shared/FlowbiteCustomTheme/FlowbiteCustomTheme";
 import { fetchAllData } from "../../../../../../services/UserDataService";
+import FormContext from "../../../../../../contexts/forms/FormContext";
 
-interface FormProps {
-  data: AppointmentDataProps;
-  setData: () => void;
-  prevData?: AppointmentDataProps;
-  sendData: () => void;
-}
-
-export default function Form({ data, setData, prevData, sendData }: FormProps) {
+export default function Form() {
   const {
     handleSubmit,
     register,
@@ -27,6 +20,8 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
     formState: { errors },
   } = useForm();
   const [clientSelected, setClientSelected] = useState("");
+
+  const { data, setData, sendData, modal, setModal } = useContext(FormContext);
 
   const submitForm = (formData) => {
     const appointmentDate = new Date(formData.appointmentDate);
@@ -70,8 +65,24 @@ export default function Form({ data, setData, prevData, sendData }: FormProps) {
         ],
       },
     };
-    setData(newAppointment);
-    sendData(newAppointment);
+    try {
+      setData(newAppointment);
+      sendData(newAppointment);
+      setTimeout(setModal, 2000, {
+        ...modal,
+        isOpen: true,
+        type: "success",
+        message: "Compromisso criado com sucesso!",
+      });
+    } catch (error) {
+      console.error("Erro ao criar compromisso", error);
+      setModal({
+        ...modal,
+        isOpen: true,
+        type: "error",
+        message: "Erro ao criar compromisso!",
+      });
+    }
   };
 
   async function getClientList() {

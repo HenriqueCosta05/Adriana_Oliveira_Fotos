@@ -55,30 +55,16 @@ export const NewAppointmentForm = () => {
     window.location.href = "/app/agenda";
   };
 
-  const handleDataSend = async () => {
-    try {
-      await sendData(data);
-      setModal({
-        isOpen: true,
-        type: "success",
-        message: "Compromisso criado com sucesso!",
-      });
-    } catch (error) {
-      setErrorMessage(error.message);
-      setModal({ isOpen: true, type: "Error", message: error.message });
-    }
-  };
-
   return (
     <>
-      <Provider value={{ data, setData }}>
+      <Provider value={{ data, setData, sendData, modal, setModal }}>
         <UserNavbar />
         <BreadCrumb
           home={["Página Inicial", "/app"]}
           currentSection={["Agenda", "/app/agenda"]}
           currentSubsection={["Novo Compromisso", `/app/novo-compromisso`]}
         />
-        <Form data={data} setData={setData} sendData={handleDataSend} />
+        <Form />
         <Footer />
       </Provider>
       {renderModal(modal, setModal, handleCloseModal, errorMessage)}

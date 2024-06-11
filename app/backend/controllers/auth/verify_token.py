@@ -9,16 +9,13 @@ router = APIRouter()
 
 load_dotenv() 
 
-logging.basicConfig(level=logging.INFO)
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
 
 @router.get("/app/verify-token")
 async def verify_token(request: Request):
-    logging.info(f"Request cookies: {request.cookies}")
     token = request.cookies.get("access_token")
-    logging.info(f"Token: {token}")
     if not token:
         raise HTTPException(
             status_code=401, 
