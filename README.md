@@ -16,6 +16,12 @@
   </p>
 </div>
 
+## Exemplo de funcionamento
+
+<video controls>
+  <source src="./exemplo_funcionamento.mp4" type="video/mp4" />
+</video>
+
 ## Sobre o projeto
 
 O Micro-SaaS Adriana Oliveira Fotografias é uma solução completa e inovadora, projetada especificamente para atender às necessidades dos fotógrafos profissionais. Esta plataforma automatiza diversas tarefas diárias, permitindo que os fotógrafos concentrem-se no seu trabalho artístico enquanto o sistema cuida do restante.
